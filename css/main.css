@@ -47,7 +47,7 @@ body {
   width: 100%;
   padding: 30px 20px;
   background-color: #202020;
-  border-radius:0px 0px 10px 10px;
+  border-radius: 0px 0px 10px 10px;
   .header-title {
     font-weight: bold;
     color: #ffffff;
@@ -62,7 +62,6 @@ body {
     line-height: 1.5;
   }
 }
-
 .button {
   width: 100px;
   color: #ffffff;
@@ -79,74 +78,57 @@ body {
   background-color: #ffffff;
   color: #000000;
 }
-
 .note {
   width: 100%;
-  padding: 50px 0px;
+  margin-top: 50px;
+  padding-bottom: 30px;
   border-bottom: solid 2px #000000;
-  .note-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    .note-title {
-      font-size: 24px;
-      font-weight: bold;
-    }
-    .note-delete {
-      background-color: #ffffff;
-      color: #000000;
-      border: solid 2px #000000;
-      margin: 0;
-    }
-    .note-delete:hover {
-      background-color: #c91310;
-      color: #000000;
-    }
+  .note-title {
+    display: inline-block;
+    width: 95%;
+    font-size: 24px;
+    border: none;
+    resize: none;
+    padding: 5px;
+    font-family: inherit;
+    box-sizing: border-box;
+    outline: none;
+    line-height: 18px;
   }
   .note-text {
     font-size: 18px;
-    padding-top: 20px;
-  }
-  .note-title-input {
     width: 100%;
-    height: auto;
     border: none;
+    padding: 5px;
     font-family: inherit;
-    font-size: 24px;
     box-sizing: border-box;
+    outline: none;
+    resize: none;
+    line-height: 20px;
   }
-  .note-text-input {
-    width: 100%;
-    height: auto;
-    border: none;
-    font-weight: normal;
-    font-size: 18px;
-    box-sizing: border-box;
-    padding: 0;
+  textarea::placeholder {
+    color: #000000;
+    opacity: 1;
+  }
+  .note-delete {
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    background-color: #ffffff;
+    color: #000000;
+    border: solid 2px #000000;
     margin: 0;
-    line-height: 1.5;
-    padding-top: 20px;
+    .note-delete-img {
+      width: 30px;
+      height: 30px;
+    }
   }
-}
-
-textarea {
-  height: auto;
-  font-size: 18px; 
-  line-height: 1.5; 
-  padding: 0;
-  margin: 0; 
-  box-sizing: border-box;
-  width: 100%;
-}
-textarea:focus,
-input:focus {
-  outline: none;
-  margin: 0;
-  padding: 0;
-  font-weight: bold;
-  font-family: inherit;
-  height: auto;
-}
-.hidden {
-  display: none;
+  .note-delete:hover {
+    background-color: #d30400;
+    color: #000000;
+  }
+  .note-date {
+    padding: 5px;
+    color: #939393;
+  }
 }
