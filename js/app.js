@@ -7,7 +7,7 @@ document.querySelector(".note-add").addEventListener("click", () => {
   const dateString = `${currentDate.toLocaleDateString()} ${currentDate.toLocaleTimeString()}`;
   note.innerHTML = `
     <textarea placeholder="Title" class="note-title" maxlength="30"></textarea>
-    <button class="note-delete button"><img src="../img/delete.svg" alt="delete" class="note-delete-img"></button>
+    <button class="note-delete button"><img src="img/delete.svg" alt="delete" class="note-delete-img"></button>
     <textarea placeholder="Write new text here..." class="note-text" maxlength="2000" ></textarea>
     <div class="note-date">${dateString}</div>
   `;
