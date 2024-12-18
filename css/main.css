@@ -149,3 +149,21 @@ body {
     color: #939393;
   }
 }
+
+@media screen and (max-width: 480px) {
+  .note {
+    padding: 0px 10px;
+    .note-title {
+      display: inline-block;
+      width: 80%;
+      font-size: 24px;
+      border: none;
+      resize: none;
+      padding: 5px;
+      font-family: inherit;
+      box-sizing: border-box;
+      outline: none;
+      line-height: 18px;
+    }
+  }
+}
