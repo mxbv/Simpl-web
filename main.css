@@ -66,7 +66,7 @@ body {
     height: 50px;
     background-color: #201f22;
     padding: 0;
-    border-radius: 100px;
+    border-radius: 15px;
     border: solid 2px #242226;
     transition: 0.5s;
     margin: 0 auto;
@@ -99,7 +99,7 @@ body {
         border: solid 1px #1d1d1d;
         background-color: #201f22;
         padding: 0px 20px;
-        border-radius: 10px;
+        border-radius: 15px;
         text-decoration: none;
         transition: 0.5s;
         color: #ffffff;
@@ -120,22 +120,7 @@ p {
   color: #ffffff;
   line-height: 1.5;
 }
-button {
-  width: 140px;
-  color: #ffffff;
-  background-color: #ffffff00;
-  height: 50px;
-  padding: 0;
-  border-radius: 10px;
-  border: solid 2px #ffffff;
-  font-size: 16px;
-  transition: 0.5s;
-  margin-top: 20px;
-}
-button:hover {
-  background-color: #ffffff;
-  color: #000000;
-}
+
 .note {
   width: 100%;
   margin-top: 50px;
@@ -174,7 +159,9 @@ button:hover {
     background-color: #ffffff;
     color: #000000;
     border: solid 2px #000000;
+    border-radius: 15px;
     margin: 0;
+    transition: 0.5s;
     .note-delete-img {
       width: 30px;
       height: 30px;
@@ -208,6 +195,83 @@ footer {
   }
 }
 @media screen and (max-width: 480px) {
+  .side {
+    display: flex;
+    position: fixed;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0px 20px;
+    width: 100%;
+    background-color: #141315;
+    height: 100px;
+    z-index: 1000;
+    .side-header {
+      display: block;
+      font-weight: 400;
+      color: #ffffff;
+      text-align: center;
+      margin: 0;
+    }
+    button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 50px;
+      height: 50px;
+      background-color: #201f22;
+      padding: 0;
+      border-radius: 100px;
+      border: solid 2px #242226;
+      transition: 0.5s;
+      margin: 0;
+      /* margin-left: 20px; */
+      align-self: center;
+      img {
+        width: 30px;
+        height: 30px;
+      }
+    }
+    button:hover {
+      background-color: #2a292d;
+    }
+    .side-links {
+      display: none;
+      width: 100%;
+      position: absolute;
+      flex-direction: column;
+      align-items: center;
+      bottom: 50px;
+      li {
+        width: 80%;
+        height: 50px;
+        text-align: center;
+        margin-top: 20px;
+        a {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100%;
+          border: solid 1px #1d1d1d;
+          background-color: #201f22;
+          padding: 0px 20px;
+          border-radius: 10px;
+          text-decoration: none;
+          transition: 0.5s;
+          color: #ffffff;
+        }
+        a:hover {
+          background-color: #2a292d;
+        }
+      }
+    }
+  }
+  .notes {
+    height: 100%;
+    overflow-y: auto;
+    padding: 0;
+    padding-top: 100px;
+  }
   .note {
     padding: 0px 10px;
     .note-title {
@@ -221,6 +285,13 @@ footer {
       box-sizing: border-box;
       outline: none;
       line-height: 18px;
+    }
+    .note-date {
+      display: inline-block;
+      background-color: #141315;
+      padding: 5px;
+      color: #ffffff;
+      border-radius: 10px 10px 0px 0px;
     }
   }
 }
