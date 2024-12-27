@@ -64,6 +64,7 @@ body {
     color: #ffffff;
     text-align: center;
     margin-top: 20px;
+    font-family: monospace;
   }
   button {
     display: flex;
