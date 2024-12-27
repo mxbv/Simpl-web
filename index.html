@@ -11,17 +11,37 @@
   </head>
 </html>
 <body>
-  <main>
-    <header>
-      <h1>Simpl</h1>
-      <p>
-        Quick temporary notes for your stuff, no trackers, no ads.<br />
-        <strong>Warning:</strong> All notes are erased when the page reloads!
-      </p>
-      <button class="note-add" type="button">Create a note</button>
-    </header>
-    <section class="notes"></section>
-  </main>
+  <section class="side">
+    <h1 class="side-header">Simpl</h1>
+    <button class="note-add" type="button">
+      <img src="img/create-note.svg" alt="create-note" />
+    </button>
+    <ul class="side-links">
+      <li>
+        <a
+          href="https://github.com/mxbv"
+          target="_blank"
+          rel="noopener"
+          class="contact-link"
+          >GitHub</a
+        >
+      </li>
+
+      <li>
+        <a href="mailto:bv.maks@icloud.com" class="contact-link">Mail</a>
+      </li>
+      <li>
+        <a
+          href="Max_Baranov_CV_2024.pdf"
+          target="_blank"
+          rel="noopener"
+          class="contact-link"
+          >CV</a
+        >
+      </li>
+    </ul>
+  </section>
+  <section class="notes"></section>
   <footer><a href="https://mxbv.github.io/">Back to portfolio</a></footer>
   <script src="app.js"></script>
 </body>

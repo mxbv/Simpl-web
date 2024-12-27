@@ -36,24 +36,84 @@ img {
 
 /* End Minimal CSS Reset  */
 body {
-  width: 100%;
-  height: 100%;
+  max-width: 100%;
+  height: 100vh;
   font-family: "Open Sans", sans-serif;
   padding-bottom: 30px;
 }
-main {
-  max-width: 1100px;
-  margin: 0 auto;
+.side {
+  display: flex;
+  position: fixed;
+  flex-direction: column;
+  top: 0;
+  left: 0;
+  width: 100px;
+  background-color: #141315;
+  height: 100%;
+  z-index: 1000;
+  .side-header {
+    display: block;
+    font-weight: 400;
+    color: #ffffff;
+    text-align: center;
+    margin-top: 20px;
+  }
+  button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    background-color: #201f22;
+    padding: 0;
+    border-radius: 100px;
+    border: solid 2px #242226;
+    transition: 0.5s;
+    margin: 0 auto;
+    margin-top: 80px;
+    img {
+      width: 30px;
+      height: 30px;
+    }
+  }
+  button:hover {
+    background-color: #2a292d;
+  }
+  .side-links {
+    display: flex;
+    width: 100%;
+    position: absolute;
+    flex-direction: column;
+    align-items: center;
+    bottom: 50px;
+    li {
+      width: 80%;
+      height: 50px;
+      text-align: center;
+      margin-top: 20px;
+      a {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        border: solid 1px #1d1d1d;
+        background-color: #201f22;
+        padding: 0px 20px;
+        border-radius: 10px;
+        text-decoration: none;
+        transition: 0.5s;
+        color: #ffffff;
+      }
+      a:hover {
+        background-color: #2a292d;
+      }
+    }
+  }
 }
-header {
-  width: 100%;
-  padding: 30px 20px;
-  background-color: #202020;
-  border-radius: 0px 0px 10px 10px;
-}
-h1 {
-  font-weight: bold;
-  color: #ffffff;
+.notes {
+  height: 100%;
+  overflow-y: auto;
+  padding-left: 100px;
 }
 p {
   margin-top: 10px;
@@ -79,7 +139,6 @@ button:hover {
 .note {
   width: 100%;
   margin-top: 50px;
-  padding-bottom: 30px;
   border-bottom: solid 2px #000000;
   .note-title {
     display: inline-block;
@@ -126,8 +185,11 @@ button:hover {
     color: #000000;
   }
   .note-date {
+    display: inline-block;
+    background-color: #141315;
     padding: 5px;
-    color: #939393;
+    color: #ffffff;
+    border-radius: 0px 10px 0px 0px;
   }
 }
 footer {
@@ -139,7 +201,7 @@ footer {
   height: 40px;
   bottom: 10px;
   right: 10px;
-  background-color: #202020;
+  background-color: #141315;
   border-radius: 10px;
   a {
     color: #ffffff;
