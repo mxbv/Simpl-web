@@ -56,15 +56,16 @@ body {
   top: 0;
   left: 0;
   width: 100px;
+  justify-content: space-between;
   background-color: #141315;
   height: 100%;
   z-index: 1000;
+  padding: 20px 0px;
   .side-header {
     display: block;
     font-weight: 400;
     color: #ffffff;
     text-align: center;
-    margin-top: 20px;
     font-family: monospace;
   }
   button {
@@ -79,7 +80,6 @@ body {
     border: solid 2px #242226;
     transition: 0.5s;
     margin: 0 auto;
-    margin-top: 80px;
     img {
       width: 30px;
       height: 30px;
@@ -88,35 +88,15 @@ body {
   button:hover {
     background-color: #2a292d;
   }
-  .side-links {
-    display: flex;
-    width: 100%;
-    position: absolute;
-    flex-direction: column;
-    align-items: center;
-    bottom: 50px;
-    li {
-      width: 80%;
-      height: 50px;
-      text-align: center;
-      margin-top: 20px;
-      a {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100%;
-        border: solid 1px #1d1d1d;
-        background-color: #201f22;
-        padding: 0px 20px;
-        border-radius: 15px;
-        text-decoration: none;
-        transition: 0.5s;
-        color: #ffffff;
-      }
-      a:hover {
-        background-color: #2a292d;
-      }
-    }
+  .side-link {
+    color: #ffffff;
+    text-align: center;
+    text-decoration: none;
+    font-size: 14px;
+    font-family: monospace;
+  }
+  .side-link:hover {
+    color: #efefef;
   }
 }
 .notes {
@@ -198,14 +178,19 @@ footer {
   position: fixed;
   justify-content: center;
   align-items: center;
-  width: 130px;
+  width: 180px;
   height: 40px;
   bottom: 10px;
   right: 10px;
-  background-color: #141315;
-  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.29);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(12.9px);
+  -webkit-backdrop-filter: blur(12.9px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
   a {
-    color: #ffffff;
+    color: #141315;
+    text-decoration: none;
   }
 }
 @media screen and (max-width: 480px) {
@@ -248,7 +233,7 @@ footer {
     button:hover {
       background-color: #2a292d;
     }
-    .side-links {
+    .side-link {
       display: none;
     }
   }
