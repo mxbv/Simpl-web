@@ -2,8 +2,8 @@
 
 ### About
 
-Quick temporary notes for your stuff , no trackers and no ads
-Warning : All notes are erased when the page reloads !
+A minimalist notes application designed to store and manage notes locally using localStorage. 
+Simple, efficient, and always accessible without external dependencies.
 
 ### How it works
 
