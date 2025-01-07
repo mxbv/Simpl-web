@@ -22,7 +22,7 @@ function createNoteElement(noteData) {
     <textarea placeholder="Title" class="note-title" maxlength="30">${
       noteData.title || ""
     }</textarea>
-    <button class="note-delete button"><img src="img/delete.svg" alt="delete" class="note-delete-img"></button>
+    <button class="note-delete button" title="Delete"><img src="img/delete.svg" alt="delete" class="note-delete-img"></button>
     <textarea placeholder="Write new text here..." class="note-text" maxlength="2000">${
       noteData.text || ""
     }</textarea>
