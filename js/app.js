@@ -17,13 +17,12 @@ function saveNotes(notes) {
 function createNoteElement(noteData) {
   const note = document.createElement("div");
   note.className = "note";
-
   note.innerHTML = `
-    <textarea placeholder="Title" class="note-title" maxlength="30">${
-      noteData.title || ""
-    }</textarea>
-    <button class="note-delete button" title="Delete"><img src="img/delete.svg" alt="delete" class="note-delete-img"></button>
-    <textarea placeholder="Write new text here..." class="note-text" maxlength="2000">${
+  <div class="note-title-container"><textarea placeholder="Title" class="note-title" maxlength="50">${
+    noteData.title || ""
+  }</textarea>
+    <button class="note-delete button" title="Delete"><img src="icon/delete.svg" alt="delete" class="note-delete-img"></button></div>
+    <textarea placeholder="Write new text here..." class="note-text" maxlength="10000">${
       noteData.text || ""
     }</textarea>
     <div class="note-date">${noteData.date}</div>
@@ -90,3 +89,29 @@ addButton.addEventListener("click", () => {
 
 // Инициализация приложения
 renderNotes();
+
+// Экспорт заметок
+function exportNotes(notes) {
+  // Преобразуем каждый обьект заметки в строку с форматированием
+  const content = notes
+    .map((note) => `${note.title}\n ${note.text}`)
+    .join("\n\n");
+
+  // Создаем объект Blob с содержимым файла
+  const blob = new Blob([content], { type: "text/plain" });
+
+  // Создаем ссылку для скачивания файла
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = "export.txt"; // Имя файла
+
+  // Имитируем клик для загрузки
+  link.click();
+
+  // Освобождаем память, связанную с объектом URL
+  URL.revokeObjectURL(link.href);
+}
+document.querySelector(".note-export").addEventListener("click", () => {
+  const notes = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+  exportNotes(notes);
+});
