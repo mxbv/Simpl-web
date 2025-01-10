@@ -76,10 +76,9 @@ header {
   justify-content: center;
   align-items: center;
 }
-.header-img {
-  width: 35px;
-  height: 35px;
-  margin-right: 10px;
+.logo {
+  width: 100px;
+  height: 50px;
 }
 .header-buttons {
   display: flex;
@@ -120,56 +119,66 @@ a:hover {
 .notes {
   height: 100%;
   padding-top: 60px;
-  .note {
-    width: 100%;
-    margin-top: 50px;
-    border-radius: 15px;
-    padding: 15px;
-    background: #e9e9e9;
-    .note-title-container {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .note-title {
-      display: inline-block;
-      width: 90%;
-      font-size: 24px;
-      border: none;
-      resize: none;
-      padding: 5px;
-      font-family: inherit;
-      box-sizing: border-box;
-      outline: none;
-      line-height: 18px;
-      background: none;
-      color: var(--text-color);
-    }
-    .note-text {
-      font-size: 18px;
-      width: 100%;
-      border: none;
-      padding: 5px;
-      font-family: inherit;
-      box-sizing: border-box;
-      outline: none;
-      resize: none;
-      line-height: 20px;
-      background: none;
-      color: var(--text-color);
-    }
-    textarea::placeholder {
-      color: var(--text-color);
-      opacity: 1;
-    }
-    .note-date {
-      display: inline-block;
-      padding: 5px;
-      color: #595959;
-      font-size: 14px;
-      font-family: monospace;
-    }
+}
+.note {
+  width: 100%;
+  margin-top: 50px;
+  border-radius: 15px;
+  padding: 15px;
+  background: #e9e9e9;
+  animation: fadeIn 0.5s ease-out forwards;
+  opacity: 0;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
   }
+  to {
+    opacity: 1;
+  }
+}
+.note-title-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.note-title {
+  display: inline-block;
+  width: 90%;
+  font-size: 24px;
+  border: none;
+  resize: none;
+  padding: 5px;
+  font-family: inherit;
+  box-sizing: border-box;
+  outline: none;
+  line-height: 18px;
+  background: none;
+  color: var(--text-color);
+}
+.note-text {
+  font-size: 18px;
+  width: 100%;
+  border: none;
+  padding: 5px;
+  font-family: inherit;
+  box-sizing: border-box;
+  outline: none;
+  resize: none;
+  line-height: 20px;
+  background: none;
+  color: var(--text-color);
+}
+textarea::placeholder {
+  color: var(--text-color);
+  opacity: 1;
+}
+.note-date {
+  display: inline-block;
+  padding: 5px;
+  color: #595959;
+  font-size: 14px;
+  font-family: monospace;
 }
 p {
   margin-top: 10px;
@@ -189,27 +198,27 @@ p {
     overflow-y: auto;
     padding: 0;
     padding-top: 100px;
-    .note {
-      width: 95%;
-      padding: 20px 10px;
-      margin: 0 auto;
-      margin-top: 30px;
-      .note-title {
-        display: inline-block;
-        width: 80%;
-        font-size: 24px;
-        border: none;
-        resize: none;
-        padding: 5px;
-        font-family: inherit;
-        box-sizing: border-box;
-        outline: none;
-        line-height: 18px;
-      }
-      .note-date {
-        display: inline-block;
-        padding: 5px;
-      }
-    }
+  }
+  .note {
+    width: 95%;
+    padding: 20px 10px;
+    margin: 0 auto;
+    margin-top: 30px;
+  }
+  .note-title {
+    display: inline-block;
+    width: 80%;
+    font-size: 24px;
+    border: none;
+    resize: none;
+    padding: 5px;
+    font-family: inherit;
+    box-sizing: border-box;
+    outline: none;
+    line-height: 18px;
+  }
+  .note-date {
+    display: inline-block;
+    padding: 5px;
   }
 }

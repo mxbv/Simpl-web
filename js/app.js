@@ -2,18 +2,18 @@ const notesContainer = document.querySelector(".notes");
 const addButton = document.querySelector(".note-add");
 const STORAGE_KEY = "notes";
 
-// Функция для загрузки заметок из localStorage
+// Function for loading notes from localStorage
 function loadNotes() {
   const savedNotes = localStorage.getItem(STORAGE_KEY);
   return savedNotes ? JSON.parse(savedNotes) : [];
 }
 
-// Функция для сохранения заметок в localStorage
+// Function for saving notes to localStorage
 function saveNotes(notes) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(notes));
 }
 
-// Функция для отображения заметки
+// Function for displaying a note
 function createNoteElement(noteData) {
   const note = document.createElement("div");
   note.className = "note";
@@ -28,21 +28,21 @@ function createNoteElement(noteData) {
     <div class="note-date">${noteData.date}</div>
   `;
 
-  // Обработчик удаления заметки
+  // Note deletion handler
   note.querySelector(".note-delete").addEventListener("click", () => {
     note.remove();
     const updatedNotes = loadNotes().filter((n) => n.id !== noteData.id);
     saveNotes(updatedNotes);
   });
 
-  // Автоматическое изменение высоты textarea
+  // Automatic textarea height change
   const textArea = note.querySelector(".note-text");
   textArea.addEventListener("input", () => {
     textArea.style.height = "auto";
     textArea.style.height = `${textArea.scrollHeight}px`;
   });
 
-  // Сохранение изменений в заметке
+  // Saving changes to a note
   const titleArea = note.querySelector(".note-title");
   [titleArea, textArea].forEach((area) =>
     area.addEventListener("input", () => {
@@ -59,7 +59,7 @@ function createNoteElement(noteData) {
   return note;
 }
 
-// Функция для загрузки и отображения всех заметок
+// Function for downloading and displaying all notes
 function renderNotes() {
   notesContainer.innerHTML = "";
   const notes = loadNotes();
@@ -69,7 +69,7 @@ function renderNotes() {
   });
 }
 
-// Обработчик добавления новой заметки
+// Handler for adding a new note
 addButton.addEventListener("click", () => {
   const currentDate = new Date();
   const newNote = {
@@ -79,36 +79,37 @@ addButton.addEventListener("click", () => {
     date: `${currentDate.toLocaleDateString()} ${currentDate.toLocaleTimeString()}`,
   };
 
+  // Add a new note to the beginning of the array
   const notes = loadNotes();
-  notes.unshift(newNote); // Добавляем новую заметку в начало массива
+  notes.unshift(newNote);
   saveNotes(notes);
 
   const noteElement = createNoteElement(newNote);
   notesContainer.prepend(noteElement);
 });
 
-// Инициализация приложения
+// Application initialization
 renderNotes();
 
-// Экспорт заметок
+// Notes export function
 function exportNotes(notes) {
-  // Преобразуем каждый обьект заметки в строку с форматированием
+  // Convert each note object to a formatted string
   const content = notes
     .map((note) => `${note.title}\n ${note.text}`)
     .join("\n\n");
 
-  // Создаем объект Blob с содержимым файла
+  // Create a Blob object with the contents of the file
   const blob = new Blob([content], { type: "text/plain" });
 
-  // Создаем ссылку для скачивания файла
+  // Create a link to download the file
   const link = document.createElement("a");
   link.href = URL.createObjectURL(blob);
-  link.download = "export.txt"; // Имя файла
+  link.download = "exportNotes.txt"; // File name
 
-  // Имитируем клик для загрузки
+  // Simulate a click to download
   link.click();
 
-  // Освобождаем память, связанную с объектом URL
+  // Free the memory associated with the URL object
   URL.revokeObjectURL(link.href);
 }
 document.querySelector(".note-export").addEventListener("click", () => {
