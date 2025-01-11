@@ -3,10 +3,16 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="css/main.css" />
+    <meta
+      name="description"
+      content="Simpl - quick and easy notes management"
+    />
+    <meta name="author" content="Max" />
     <link rel="icon" href="icon/favicon.png" type="image/webp" />
+    <!-- Preload main CSS and JS -->
     <link rel="preload" href="css/main.css" as="style" />
     <link rel="preload" href="js/app.js" as="script" />
+    <link rel="stylesheet" href="css/main.css" />
     <title>Simpl - quick notes for your things</title>
   </head>
 </html>
@@ -15,7 +21,13 @@
     <div class="header-container">
       <div class="header-text">
         <img src="icon/logo.svg" alt="logo" class="logo" />
-        <a href="https://github.com/mxbv/Simpl">OpenSource</a>
+        <a
+          href="https://github.com/mxbv/Simpl"
+          target="_blank"
+          rel="noopener noreferrer"
+          title="Visit Simpl on GitHub"
+          >OpenSource</a
+        >
       </div>
       <div class="header-buttons">
         <button class="button note-export" type="button" title="Export">
@@ -27,6 +39,8 @@
       </div>
     </div>
   </header>
-  <section class="notes"></section>
-  <script src="js/app.js"></script>
+  <section class="notes" aria-labelledby="notes-section">
+    <!-- Notes will be dynamically added here -->
+  </section>
+  <script src="js/app.js" defer></script>
 </body>
