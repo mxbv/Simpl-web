@@ -27,12 +27,12 @@ function createNoteElement(noteData) {
     <textarea placeholder="Title" class="note-title" maxlength="50">${
       noteData.title || ""
     }</textarea>
-    <button class="note-delete button" title="Delete"><img src="icon/delete.svg" alt="delete" class="note-delete-img"></button>
+    <button class="note-delete" title="Delete"><img src="icon/delete.svg" alt="delete" class="note-delete-img"></button>
   </div>
   <textarea placeholder="Write new text here..." class="note-text" maxlength="10000">${
     noteData.text || ""
   }</textarea>
-  <div class="note-date">${noteData.date}</div>
+  <span class="note-date">${noteData.date}</span>
   `;
 
   const textArea = note.querySelector(".note-text");

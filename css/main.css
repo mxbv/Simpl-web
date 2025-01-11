@@ -37,7 +37,7 @@ ul {
   scrollbar-width: thin;
 }
 body {
-  max-width: 60%;
+  max-width: 60vw;
   font-family: "Open Sans", sans-serif;
   margin: 0 auto;
   background-color: #efefef;
@@ -47,19 +47,13 @@ body {
 header {
   display: flex;
   position: fixed;
-  z-index: 1000;
-  top: 10px;
-  left: 0;
-  width: 100%;
-  height: 80px;
-}
-.header-container {
-  display: flex;
-  width: 60%;
-  margin: 0 auto;
   align-items: center;
   justify-content: space-between;
-  height: 100%;
+  width: 60vw;
+  height: 80px;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
   padding: 20px 15px;
   background: rgba(207, 207, 207, 0.446);
   border-radius: 16px;
@@ -67,9 +61,6 @@ header {
   backdrop-filter: blur(10.4px);
   -webkit-backdrop-filter: blur(10.4px);
   border: 1px solid rgba(255, 255, 255, 0.51);
-  color: var(--text-color);
-  text-align: center;
-  font-size: 25px;
 }
 .header-text {
   display: flex;
@@ -79,9 +70,11 @@ header {
 .logo {
   width: 100px;
   height: 50px;
+  user-select: none;
 }
 .header-buttons {
   display: flex;
+  user-select: none;
 }
 .note-add {
   margin-left: 15px;
@@ -97,7 +90,7 @@ a {
 a:hover {
   color: #666666;
 }
-.button {
+button {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -108,12 +101,13 @@ a:hover {
   border-radius: 100px;
   border: solid 1px #efefef;
   transition: 0.3s;
-  img {
-    width: 30px;
-    height: 30px;
-  }
 }
-.button:hover {
+img {
+  width: 30px;
+  height: 30px;
+}
+
+button:hover {
   background-color: #ffffff;
 }
 .notes {
@@ -126,38 +120,15 @@ a:hover {
   border-radius: 15px;
   padding: 15px;
   background: #e9e9e9;
-  animation: fadeIn 0.5s ease-out forwards;
-  opacity: 0;
 }
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
+
 .note-title-container {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
-.note-title {
-  display: inline-block;
-  width: 90%;
+textarea {
   font-size: 24px;
-  border: none;
-  resize: none;
-  padding: 5px;
-  font-family: inherit;
-  box-sizing: border-box;
-  outline: none;
-  line-height: 18px;
-  background: none;
-  color: var(--text-color);
-}
-.note-text {
-  font-size: 18px;
   width: 100%;
   border: none;
   padding: 5px;
@@ -173,17 +144,17 @@ textarea::placeholder {
   color: var(--text-color);
   opacity: 1;
 }
-.note-date {
-  display: inline-block;
+.note-title {
+  font-size: 24px;
+}
+.note-text {
+  font-size: 18px;
+}
+span {
   padding: 5px;
   color: #595959;
   font-size: 14px;
   font-family: monospace;
-}
-p {
-  margin-top: 10px;
-  color: #ffffff;
-  line-height: 1.5;
 }
 @media screen and (max-width: 480px) {
   body {
