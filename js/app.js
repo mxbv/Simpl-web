@@ -90,10 +90,20 @@ addButton.addEventListener("click", () => {
 });
 
 // Exporting notes
+// it's a cool cat, but when downloading notes,
+// I would somehow separate them visually, 
+// for example, add ------------ 
+// Did I make such a design between them
+// -------------
+// Title
+// - text
+// -------------
+// + I also added checks for empty lines. which don't look good
 function exportNotes() {
   const content = notesCache
-    .map((note) => `${note.title}\n ${note.text}`)
-    .join("\n\n");
+    .map((note) => 
+    `-------------\n${note.title ? note.title : "empty"}\n ${note.text ? note.text : "empty"}\n`)
+    .join("");
 
   const blob = new Blob([content], { type: "text/plain" });
   const link = document.createElement("a");
