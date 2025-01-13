@@ -160,7 +160,7 @@ span {
   body {
     min-width: 100%;
   }
-  .header-container {
+  header {
     width: 98%;
   }
   .notes {
