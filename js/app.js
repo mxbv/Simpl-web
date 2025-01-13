@@ -81,7 +81,10 @@ addButton.addEventListener("click", () => {
     id: Date.now(),
     title: "",
     text: "",
-    date: `${currentDate.toLocaleDateString()} ${currentDate.toLocaleTimeString()}`,
+    date: `${currentDate.toLocaleDateString()} ${currentDate.toLocaleTimeString(
+      [],
+      { hour: "2-digit", minute: "2-digit" }
+    )}`,
   };
 
   notesCache.unshift(newNote); // Adding a new note to the beginning
@@ -94,9 +97,9 @@ function exportNotes() {
   const content = notesCache
     .map(
       (note) =>
-        `\n${(note.title || "empty").toUpperCase()}${
-          " " + "(" + note.date + ")"
-        }\n${note.text || "empty"}\n\n`
+        `\n| ${(note.title || "empty").toUpperCase()} (${note.date})\n\n${
+          note.text || "empty"
+        }\n\n`
     )
     .join("");
 
