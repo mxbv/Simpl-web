@@ -1,5 +1,5 @@
 ![logo](https://github.com/user-attachments/assets/f4a16ea9-c958-4bc7-b747-426abc07fb7f)
-
+# Simpl
 ### About
 
 A minimalist notes application designed to store and manage notes locally using localStorage. 
