@@ -40,7 +40,7 @@ body {
   max-width: 60vw;
   font-family: "Open Sans", sans-serif;
   margin: 0 auto;
-  background-color: #efefef;
+  background-color: #fffff0;
   padding-bottom: 50px;
 }
 
@@ -49,23 +49,20 @@ header {
   position: fixed;
   align-items: center;
   justify-content: space-between;
-  width: 60vw;
-  height: 80px;
+  height: 70px;
   top: 10px;
   left: 50%;
   transform: translateX(-50%);
-  padding: 20px 15px;
-  background: rgba(207, 207, 207, 0.446);
-  border-radius: 16px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(10.4px);
-  -webkit-backdrop-filter: blur(10.4px);
-  border: 1px solid rgba(255, 255, 255, 0.51);
+  padding-left: 30px;
+  background-color: #efefe0;
+  border: solid 1px #eaeadb;
+  border-radius: 100px;
 }
 .header-text {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-right: 50px;
 }
 .logo {
   width: 100px;
@@ -75,41 +72,28 @@ header {
 .header-buttons {
   display: flex;
   user-select: none;
+  border-radius: 100px;
+  background-color: #fffff0;
+  backdrop-filter: blur(20px);
 }
 .note-add {
-  margin-left: 15px;
-}
-a {
-  color: var(--text-color);
-  text-align: center;
-  text-decoration: none;
-  font-size: 14px;
-  margin-left: 15px;
-  transition: 0.3s;
-}
-a:hover {
-  color: #666666;
+  margin-left: 5px;
+  background-color: #000000;
 }
 button {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 50px;
-  height: 50px;
-  background-color: #f3f3f3;
+  width: 70px;
+  height: 70px;
+  background-color: #e4e4d5;
   padding: 0;
   border-radius: 100px;
-  border: solid 1px #efefef;
-  transition: 0.3s;
-  box-shadow: 0px 0.5px 2px#a0a0a0;
+  border: none;
 }
 img {
   width: 30px;
   height: 30px;
-}
-
-button:hover {
-  background-color: #ffffff;
 }
 .notes {
   height: 100%;
@@ -156,6 +140,17 @@ span {
   color: #595959;
   font-size: 14px;
   font-family: monospace;
+}
+.note-text-container {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out;
+}
+
+.note-text-container.open {
+  max-height: 10000px;
+  opacity: 1;
 }
 @media screen and (max-width: 480px) {
   body {
