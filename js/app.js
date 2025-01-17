@@ -1,4 +1,3 @@
-// Константы
 const STORAGE_KEY = "notes";
 const notesContainer = document.querySelector(".notes");
 const addButton = document.querySelector(".note-add");
@@ -6,6 +5,7 @@ const exportButton = document.querySelector(".note-export");
 
 // Статус заметок в памяти
 let notesCache = loadNotes();
+let activeNote = null; // Хранит ссылку на открытую заметку
 
 // Загрузка заметок из localStorage
 function loadNotes() {
@@ -31,7 +31,7 @@ function createNoteElement(noteData) {
         noteData.title || ""
       }</textarea>
       <button class="note-delete" title="Delete">
-        <img src="icons/delete.svg" alt="delete" class="note-delete-img">
+        <img src="../assets/icons/delete.svg" alt="delete" class="note-delete-img">
       </button>
     </div>
     <div class="note-text-container">
@@ -66,23 +66,11 @@ function initializeNoteEventListeners(note, noteData) {
     })
   );
 
-  // Открытие/закрытие текста заметки при клике на всю заметку
+  // Обработчик кликов на заметке
   note.addEventListener("click", (event) => {
-    if (!event.target.closest(".note-delete")) {
-      toggleNoteTextVisibility(noteTextContainer);
+    if (!noteTextContainer.classList.contains("open")) {
+      openNote(noteTextContainer, note);
     }
-  });
-
-  // Закрытие текста при клике за пределами заметки
-  document.addEventListener("click", (event) => {
-    if (!note.contains(event.target)) {
-      noteTextContainer.classList.remove("open");
-    }
-  });
-
-  // Остановка распространения события клика по контейнеру с текстом
-  noteTextContainer.addEventListener("click", (event) => {
-    event.stopPropagation();
   });
 
   // Удаление заметки
@@ -92,10 +80,34 @@ function initializeNoteEventListeners(note, noteData) {
   });
 }
 
-// Функция для скрытия или отображения текста заметки
-function toggleNoteTextVisibility(noteTextContainer) {
-  noteTextContainer.classList.toggle("open");
+// Открытие заметки
+function openNote(noteTextContainer, note) {
+  if (activeNote && activeNote !== note) {
+    closeNote(activeNote.querySelector(".note-text-container"));
+  }
+  noteTextContainer.classList.add("open");
+  activeNote = note;
+  adjustTextAreaHeight(noteTextContainer.querySelector(".note-text"));
 }
+
+// Закрытие заметки
+function closeNote(noteTextContainer) {
+  noteTextContainer.classList.remove("open");
+  activeNote = null;
+}
+
+// Автоматическое изменение высоты для текстового поля
+function adjustTextAreaHeight(textArea) {
+  textArea.style.height = "auto"; // Сначала сбрасываем высоту
+  textArea.style.height = `${textArea.scrollHeight}px`; // Устанавливаем нужную высоту
+}
+
+// Закрытие заметки при клике за ее пределами
+document.addEventListener("click", (event) => {
+  if (activeNote && !activeNote.contains(event.target)) {
+    closeNote(activeNote.querySelector(".note-text-container"));
+  }
+});
 
 // Удаление заметки
 function deleteNote(noteData) {
