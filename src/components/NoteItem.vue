@@ -103,6 +103,9 @@ textarea::placeholder {
   font-size: 24px;
   font-weight: 600;
 }
+.note-delete {
+  width: 70px;
+}
 .note-text {
   font-size: 18px;
 }
@@ -110,5 +113,36 @@ span {
   padding: 5px;
   color: #595959;
   font-size: 14px;
+}
+@media screen and (max-width: 480px) {
+  .notes {
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    padding: 0;
+    padding-top: 100px;
+  }
+  .note {
+    width: 95%;
+    padding: 20px 10px;
+    margin: 0 auto;
+    margin-top: 30px;
+  }
+  .note-title {
+    display: inline-block;
+    width: 80%;
+    font-size: 24px;
+    border: none;
+    resize: none;
+    padding: 5px;
+    font-family: inherit;
+    box-sizing: border-box;
+    outline: none;
+    line-height: 18px;
+  }
+  .note-date {
+    display: inline-block;
+    padding: 5px;
+  }
 }
 </style>

@@ -24,7 +24,7 @@ function addNote() {
     id: Date.now(),
     title: "",
     text: "",
-    date: `${currentDate.toLocaleDateString()} ${currentDate.toLocaleTimeString(
+    date: `${currentDate.toLocaleDateString()}${currentDate.toLocaleTimeString(
       [],
       { hour: "2-digit", minute: "2-digit" }
     )}`,
@@ -69,7 +69,7 @@ function exportNotes() {
 </script>
 
 <template>
-  <div id="app">
+  <body>
     <AppHeader @add-note="addNote" @export-notes="exportNotes" />
     <div class="notes">
       <NoteItem
@@ -80,7 +80,10 @@ function exportNotes() {
         @delete:note="deleteNote"
       />
     </div>
-  </div>
+    <footer>
+      <a href="https://github.com/mxbv/Simpl" rel="noreferrer">Open Source</a>
+    </footer>
+  </body>
 </template>
 
 <style scoped>

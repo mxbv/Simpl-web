@@ -21,3 +21,63 @@ img {
   width: 35px;
   height: 35px;
 }
+
+footer {
+  display: flex;
+  position: fixed;
+  justify-content: center;
+  align-self: center;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--header-footer-bg-color);
+  border: solid 1.3px var(--border-color);
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+}
+a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--text-color);
+  padding: 10px 30px;
+  border-radius: 15px;
+}
+
+@media screen and (max-width: 480px) {
+  body {
+    min-width: 100%;
+  }
+  header {
+    width: 95%;
+  }
+  .notes {
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    padding: 0;
+    padding-top: 100px;
+  }
+  .note {
+    width: 95%;
+    padding: 20px 10px;
+    margin: 0 auto;
+    margin-top: 30px;
+  }
+  .note-title {
+    display: inline-block;
+    width: 80%;
+    font-size: 24px;
+    border: none;
+    resize: none;
+    padding: 5px;
+    font-family: inherit;
+    box-sizing: border-box;
+    outline: none;
+    line-height: 18px;
+  }
+  .note-date {
+    display: inline-block;
+    padding: 5px;
+  }
+}
