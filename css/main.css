@@ -59,10 +59,11 @@ header {
   left: 50%;
   transform: translateX(-50%);
   padding-left: 30px;
-  background-color: #efefe05e;
+  background-color: #d6d6cc78;
   backdrop-filter: blur(10px);
-  border: solid 1.3px #eaeadb;
-  border-radius: 100px;
+  border-radius: 60px;
+  border-top-right-radius: 100px;
+  border-bottom-right-radius: 100px;
 }
 .header-text {
   display: flex;
@@ -79,12 +80,13 @@ header {
   display: flex;
   user-select: none;
   border-radius: 100px;
-  background-color: #fffff0;
-  backdrop-filter: blur(20px);
 }
 .note-add {
   margin-left: 5px;
   background-color: #000000;
+}
+.note-export {
+  background-color: #ffffff00;
 }
 button {
   display: flex;
@@ -108,9 +110,9 @@ img {
 .note {
   width: 100%;
   margin-top: 50px;
-  border-radius: 15px;
+  border-radius: 30px;
   padding: 15px;
-  border: solid 1px #d8d8c7;
+  border: solid 1.3px #eaeadb;
 }
 
 .note-title-container {
@@ -185,7 +187,7 @@ a :hover {
     min-width: 100%;
   }
   header {
-    width: 98%;
+    width: 95%;
   }
   .notes {
     width: 100%;
