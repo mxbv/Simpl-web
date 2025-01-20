@@ -3,28 +3,28 @@ const notesContainer = document.querySelector(".notes");
 const addButton = document.querySelector(".note-add");
 const exportButton = document.querySelector(".note-export");
 
-// Статус заметок в памяти
+// Status of notes in memory
 let notesCache = loadNotes();
-let activeNote = null; // Хранит ссылку на открытую заметку
+let activeNote = null; // Stores a link to an open note
 
-// Загрузка заметок из localStorage
+// Loading notes from localStorage
 function loadNotes() {
   const savedNotes = localStorage.getItem(STORAGE_KEY);
   return savedNotes ? JSON.parse(savedNotes) : [];
 }
 
-// Сохранение заметок в localStorage
+// Saving notes to localStorage
 function saveNotes(notes) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(notes));
-  notesCache = notes; // Обновление кэша
+  notesCache = notes; // Cache update
 }
 
-// Функция для создания элемента заметки
+// Function for creating a note item
 function createNoteElement(noteData) {
   const note = document.createElement("div");
   note.className = "note";
 
-  // Разметка заметки
+  // Note markup
   note.innerHTML = `
     <div class="note-title-container">
       <textarea class="note-title" placeholder="Title" maxlength="50">${
@@ -42,19 +42,19 @@ function createNoteElement(noteData) {
     <span class="note-date">${noteData.date}</span>
   `;
 
-  // Подключаем обработчики событий
+  // Connect event handlers
   initializeNoteEventListeners(note, noteData);
 
   return note;
 }
 
-// Инициализация событий для заметки
+// Initializing events for a note
 function initializeNoteEventListeners(note, noteData) {
   const textArea = note.querySelector(".note-text");
   const titleArea = note.querySelector(".note-title");
   const noteTextContainer = note.querySelector(".note-text-container");
 
-  // Слушатель на изменение текста заметки
+  // Listener to change the text of the note
   [titleArea, textArea].forEach((area) =>
     area.addEventListener("input", () => {
       const updatedNote = notesCache.find((n) => n.id === noteData.id);
@@ -66,21 +66,21 @@ function initializeNoteEventListeners(note, noteData) {
     })
   );
 
-  // Обработчик кликов на заметке
+  // Note click handler
   note.addEventListener("click", (event) => {
     if (!noteTextContainer.classList.contains("open")) {
       openNote(noteTextContainer, note);
     }
   });
 
-  // Удаление заметки
+  // Deleting a note
   note.querySelector(".note-delete").addEventListener("click", (event) => {
     event.stopPropagation();
     deleteNote(noteData);
   });
 }
 
-// Открытие заметки
+// Opening a note
 function openNote(noteTextContainer, note) {
   if (activeNote && activeNote !== note) {
     closeNote(activeNote.querySelector(".note-text-container"));
@@ -90,33 +90,33 @@ function openNote(noteTextContainer, note) {
   adjustTextAreaHeight(noteTextContainer.querySelector(".note-text"));
 }
 
-// Закрытие заметки
+// Closing a note
 function closeNote(noteTextContainer) {
   noteTextContainer.classList.remove("open");
   activeNote = null;
 }
 
-// Автоматическое изменение высоты для текстового поля
+// Automatic height change for a text field
 function adjustTextAreaHeight(textArea) {
-  textArea.style.height = "auto"; // Сначала сбрасываем высоту
-  textArea.style.height = `${textArea.scrollHeight}px`; // Устанавливаем нужную высоту
+  textArea.style.height = "auto"; // First, we're dropping altitude
+  textArea.style.height = `${textArea.scrollHeight}px`; // Set the desired height
 }
 
-// Закрытие заметки при клике за ее пределами
+// Closing a note when you click outside of it
 document.addEventListener("click", (event) => {
   if (activeNote && !activeNote.contains(event.target)) {
     closeNote(activeNote.querySelector(".note-text-container"));
   }
 });
 
-// Удаление заметки
+// Deleting a note
 function deleteNote(noteData) {
   const updatedNotes = notesCache.filter((n) => n.id !== noteData.id);
   saveNotes(updatedNotes);
   renderNotes();
 }
 
-// Функция для рисования всех заметок
+// Function for rendering all notes
 function renderNotes() {
   notesContainer.innerHTML = "";
   notesCache.forEach((note) => {
@@ -125,7 +125,7 @@ function renderNotes() {
   });
 }
 
-// Добавление новой заметки
+// Adding a new note
 addButton.addEventListener("click", () => {
   const currentDate = new Date();
   const newNote = {
@@ -143,7 +143,7 @@ addButton.addEventListener("click", () => {
   renderNotes();
 });
 
-// Экспорт заметок
+// Exporting notes
 function exportNotes() {
   const content = notesCache
     .map(
@@ -164,5 +164,5 @@ function exportNotes() {
 
 exportButton.addEventListener("click", exportNotes);
 
-// Инициализация приложения
+// Application initialization
 renderNotes();
