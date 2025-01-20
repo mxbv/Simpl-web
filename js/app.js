@@ -23,7 +23,6 @@ function saveNotes(notes) {
 function createNoteElement(noteData) {
   const note = document.createElement("div");
   note.className = "note";
-
   // Note markup
   note.innerHTML = `
     <div class="note-title-container">
@@ -31,7 +30,7 @@ function createNoteElement(noteData) {
         noteData.title || ""
       }</textarea>
       <button class="note-delete" title="Delete">
-        <img src="../assets/icons/delete.svg" alt="delete" class="note-delete-img">
+        <img src="./assets/icons/delete.svg" alt="delete" class="note-delete-img">
       </button>
     </div>
     <div class="note-text-container">

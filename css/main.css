@@ -1,51 +1,9 @@
-@font-face {
-  font-family: Raleway;
-  src: url(../assets/fonts/Raleway/Raleway-VariableFont_wght.ttf);
-}
-:root {
-  --text-color: #383838;
-}
-html {
-  box-sizing: border-box;
-  font-size: 16px;
-}
+@import url("./root.css");
 
-*,
-*:before,
-*:after {
-  box-sizing: inherit;
-}
-
-body,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-ol,
-ul {
-  margin: 0;
-  padding: 0;
-  font-weight: normal;
-  list-style: none;
-}
-::-webkit-scrollbar {
-  width: 10px;
-}
-::-webkit-scrollbar-thumb {
-  border-radius: 10px;
-}
-* {
-  scrollbar-width: thin;
-  font-family: Raleway;
-}
 body {
   max-width: 60vw;
-  font-family: "Open Sans", sans-serif;
   margin: 0 auto;
-  background-color: #fffff0;
+  background-color: var(--bg-color-light);
   padding-bottom: 60px;
 }
 
@@ -59,7 +17,7 @@ header {
   left: 50%;
   transform: translateX(-50%);
   padding-left: 30px;
-  background-color: #d6d6cc78;
+  background-color: var(--header-footer-bg-color);
   backdrop-filter: blur(10px);
   border-radius: 60px;
   border-top-right-radius: 100px;
@@ -112,7 +70,7 @@ img {
   margin-top: 50px;
   border-radius: 30px;
   padding: 15px;
-  border: solid 1.3px #eaeadb;
+  border: solid 1.3px var(--border-color);
 }
 
 .note-title-container {
@@ -121,7 +79,6 @@ img {
   justify-content: space-between;
 }
 textarea {
-  font-size: 24px;
   width: 100%;
   border: none;
   padding: 5px;
@@ -167,21 +124,20 @@ footer {
   bottom: 10px;
   left: 50%;
   transform: translateX(-50%);
+  background-color: var(--header-footer-bg-color);
+  border: solid 1.3px var(--border-color);
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
 }
 a {
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #000000;
+  color: var(--text-color);
   padding: 10px 30px;
-  background-color: #efefe05e;
-  backdrop-filter: blur(10px);
-  border: solid 1.3px #eaeadb;
-  border-radius: 20px;
+  border-radius: 15px;
 }
-a :hover {
-  color: #444444;
-}
+
 @media screen and (max-width: 480px) {
   body {
     min-width: 100%;
