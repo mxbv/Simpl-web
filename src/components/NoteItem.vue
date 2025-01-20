@@ -5,25 +5,25 @@ export default {
     note: {
       type: Object,
       required: true,
-    }, // Получаем заметку как пропс
+    }, // Getting a note as a props
   },
   data() {
     return {
-      localNote: { ...this.note }, // Создаем локальную копию заметки
+      localNote: { ...this.note }, // Create a local copy of the note
     };
   },
   methods: {
-    // Метод для удаления заметки
+    // Method for deleting a note
     deleteNote() {
-      this.$emit("delete:note", this.localNote); // Генерируем событие для родительского компонента
+      this.$emit("delete:note", this.localNote); // Generate event for parent component
     },
-    // Метод для синхронизации изменений с родительским компонентом
+    // Method for synchronizing changes with the parent component
     updateNote() {
       this.$emit("update:note", this.localNote);
     },
   },
   watch: {
-    // Следим за изменением пропса note и обновляем локальную копию
+    // Watch for changes to the note props and update the local copy
     note: {
       deep: true,
       handler(newNote) {

@@ -3,21 +3,21 @@ import { ref } from "vue";
 import AppHeader from "./components/AppHeader.vue";
 import NoteItem from "./components/NoteItem.vue";
 
-// Ссылки на данные заметок
+// Links to note data
 const notes = ref(loadNotes());
 
-// Загружаем заметки из localStorage
+// Load notes from localStorage
 function loadNotes() {
   const savedNotes = localStorage.getItem("notes");
   return savedNotes ? JSON.parse(savedNotes) : [];
 }
 
-// Сохраняем заметки в localStorage
+// Save notes to localStorage
 function saveNotes() {
   localStorage.setItem("notes", JSON.stringify(notes.value));
 }
 
-// Добавляем новую заметку
+// Adding a new note
 function addNote() {
   const currentDate = new Date();
   const newNote = {
@@ -29,26 +29,26 @@ function addNote() {
       { hour: "2-digit", minute: "2-digit" }
     )}`,
   };
-  notes.value.unshift(newNote); // Добавляем заметку в начало списка
+  notes.value.unshift(newNote); // Add a note to the top of the list
   saveNotes();
 }
 
-// Обновляем заметку
+// Updating the memo
 function updateNote(updatedNote) {
   const index = notes.value.findIndex((note) => note.id === updatedNote.id);
   if (index !== -1) {
-    notes.value[index] = updatedNote; // Обновляем заметку в массиве
+    notes.value[index] = updatedNote; // Updating a note in an array
     saveNotes();
   }
 }
 
-// Удаляем заметку
+// Deleting a note
 function deleteNote(noteToDelete) {
-  notes.value = notes.value.filter((note) => note.id !== noteToDelete.id); // Удаляем заметку
+  notes.value = notes.value.filter((note) => note.id !== noteToDelete.id);
   saveNotes();
 }
 
-// Экспортируем заметки
+// Exporting notes
 function exportNotes() {
   const content = notes.value
     .map(
