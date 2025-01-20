@@ -1,0 +1,23 @@
+@import url(./base.css);
+
+body {
+  max-width: 60vw;
+  margin: 0 auto;
+  background-color: var(--bg-color-light);
+  padding-bottom: 60px;
+}
+button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 70px;
+  height: 70px;
+  background-color: #ececdd;
+  padding: 0;
+  border-radius: 100px;
+  border: none;
+}
+img {
+  width: 35px;
+  height: 35px;
+}
