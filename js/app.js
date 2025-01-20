@@ -153,7 +153,7 @@ function exportNotes() {
     )
     .join("");
 
-  const blob = new Blob([content], { type: "text/plain" });
+  const blob = new Blob([content], { type: "text/plain; charset=utf-8"});
   const link = document.createElement("a");
   link.href = URL.createObjectURL(blob);
   link.download = "exportNotes.txt";
