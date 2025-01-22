@@ -87,19 +87,20 @@ function updateNoteData(noteId, title, text) {
   }
 }
 function deleteNotification() {
-  // Создаем уведомление
+  // Creating a notification
   const notification = document.createElement("div");
   notification.className = "notification";
   notification.textContent = "Note Deleted";
 
-  // Добавляем в DOM
+  // Add to the DOM
   document.body.appendChild(notification);
 
-  // Убираем уведомление через 3 секунды
+  // Remove the notification after 3 seconds
   setTimeout(() => {
     notification.remove();
   }, 1500);
 }
+
 // Deleting a note
 function deleteNote(noteId) {
   notesCache = notesCache.filter((note) => note.id !== noteId);

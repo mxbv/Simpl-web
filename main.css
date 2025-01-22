@@ -185,8 +185,8 @@ a {
   position: fixed;
   top: 20px;
   right: 20px;
-  background: var(--header-footer-bg-color);
-  color: #000000;
+  background: var(--black-color);
+  color: #ffffef;
   padding: 10px;
   border-radius: 5px;
   animation: fadeIn 0.3s ease-in-out;
@@ -236,5 +236,8 @@ a {
   .note-date {
     display: inline-block;
     padding: 5px;
+  }
+  .notification {
+    top: 150px;
   }
 }
