@@ -103,7 +103,6 @@ button {
 .note-export {
   background-color: #ffffff00;
 }
-
 .notes {
   height: 100%;
   padding-top: 60px;
@@ -138,7 +137,7 @@ textarea::placeholder {
   justify-content: space-between;
 }
 .note-title {
-  height: 30px;
+  height: 100%;
   width: 95%;
   font-size: 24px;
   font-weight: 500;

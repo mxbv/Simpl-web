@@ -25,6 +25,7 @@ function createNoteElement(noteData) {
   note.className = "note";
   // Note markup
   note.innerHTML = `
+    <span class="note-date">${noteData.date}</span>
     <div class="note-title-container">
       <textarea class="note-title" placeholder="Title" maxlength="50">${
         noteData.title || ""
@@ -41,7 +42,7 @@ function createNoteElement(noteData) {
         noteData.text || ""
       }</textarea>
     </div>
-    <span class="note-date">${noteData.date}</span>
+    
   `;
 
   // Connect event handlers
@@ -90,7 +91,7 @@ function deleteNotification() {
   // Creating a notification
   const notification = document.createElement("div");
   notification.className = "notification";
-  notification.textContent = "Note Deleted";
+  notification.textContent = "Entry deleted";
 
   // Add to the DOM
   document.body.appendChild(notification);
@@ -143,14 +144,20 @@ function renderNotes() {
 // Adding a new note
 addButton.addEventListener("click", () => {
   const currentDate = new Date();
+  const formattedDate = `${currentDate.toLocaleDateString("en-GB", {
+    weekday: "short",
+    year: "numeric",
+    day: "2-digit",
+    month: "2-digit",
+  })} ${currentDate.toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+  })}`;
   const newNote = {
     id: Date.now(),
     title: "",
     text: "",
-    date: `${currentDate.toLocaleDateString()} ${currentDate.toLocaleTimeString(
-      [],
-      { hour: "2-digit", minute: "2-digit" }
-    )}`,
+    date: formattedDate,
   };
 
   notesCache.unshift(newNote);
