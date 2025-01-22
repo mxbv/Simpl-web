@@ -22,13 +22,6 @@
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 
-/* Prevent font size inflation */
-html {
-  -moz-text-size-adjust: none;
-  -webkit-text-size-adjust: none;
-  text-size-adjust: none;
-}
-
 /* Remove default margin in favour of better control in authored CSS */
 body,
 h1,
@@ -53,44 +46,43 @@ body {
   padding-bottom: 60px;
 }
 
-header {
+header,
+footer {
   display: flex;
   position: fixed;
+  justify-content: center;
   align-items: center;
-  justify-content: space-between;
+  background-color: var(--header-footer-bg-color);
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+  border: solid 1.3px var(--border-color);
+}
+
+header {
   height: 70px;
   top: 10px;
   left: 50%;
   transform: translateX(-50%);
   padding-left: 30px;
-  background-color: var(--header-footer-bg-color);
-  backdrop-filter: blur(10px);
   border-radius: 60px;
   border-top-right-radius: 100px;
   border-bottom-right-radius: 100px;
 }
+
 .header-text {
   display: flex;
   justify-content: center;
   align-items: center;
   margin-right: 50px;
-}
-.logo {
-  width: 100px;
-  height: 50px;
+  font-size: 30px;
   user-select: none;
+  font-weight: 600;
 }
+
 .header-buttons {
   display: flex;
   user-select: none;
   border-radius: 100px;
-}
-.note-add {
-  margin-left: 5px;
-  background-color: #000000;
-}
-.note-export {
-  background-color: #ffffff00;
 }
 button {
   display: flex;
@@ -102,6 +94,13 @@ button {
   padding: 0;
   border-radius: 100px;
   border: none;
+}
+.note-add {
+  margin-left: 5px;
+  background-color: #000000;
+}
+.note-export {
+  background-color: #ffffff00;
 }
 
 .notes {
@@ -126,6 +125,7 @@ textarea {
   line-height: 20px;
   background: none;
   color: var(--text-color);
+  font-size: 18px;
 }
 textarea::placeholder {
   color: var(--text-color);
@@ -149,31 +149,19 @@ textarea::placeholder {
   transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out;
 }
 .note-text-container.open {
-  max-height: 10000px;
-  opacity: 1;
-}
-.note-text {
-  font-size: 18px;
   max-height: 400px;
+  opacity: 1;
 }
 span {
   padding: 5px;
   color: #595959;
   font-size: 14px;
 }
-
 footer {
-  display: flex;
-  position: fixed;
-  justify-content: center;
-  align-self: center;
+  top: auto;
   bottom: 10px;
   left: 50%;
   transform: translateX(-50%);
-  background-color: var(--header-footer-bg-color);
-  border: solid 1.3px var(--border-color);
-  border-radius: 15px;
-  backdrop-filter: blur(10px);
 }
 a {
   display: flex;
@@ -182,8 +170,8 @@ a {
   color: var(--text-color);
   padding: 10px 30px;
   border-radius: 15px;
+  font-weight: 300;
 }
-
 @media screen and (max-width: 480px) {
   body {
     min-width: 100%;
