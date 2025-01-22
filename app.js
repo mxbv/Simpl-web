@@ -161,7 +161,6 @@ function exportNotes() {
   link.click();
   URL.revokeObjectURL(link.href);
 }
-
 exportButton.addEventListener("click", exportNotes);
 
 // Application initialization
