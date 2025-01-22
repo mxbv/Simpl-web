@@ -1,7 +1,5 @@
-![logo](https://github.com/user-attachments/assets/71e01afd-1bc9-41e6-88c5-06fafe5b1e44)
-
 # Simpl
-
+<img width="573" alt="Screenshot" src="https://github.com/user-attachments/assets/1e005aca-06e6-4dcd-a0bb-e2da207e08e2" /> <br/>
 ### About
 
 A minimalist notebook application designed to store and manage notes locally using localStorage. 
