@@ -4,7 +4,7 @@
 
 ### About
 
-A minimalist notes application designed to store and manage notes locally using localStorage. 
+A minimalist notebook application designed to store and manage notes locally using localStorage. 
 Simple, efficient, and always accessible without external dependencies.
 
 ### How it works
