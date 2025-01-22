@@ -3,6 +3,7 @@
   --text-color: #383838;
   --border-color: #eaeadb;
   --header-footer-bg-color: #d6d6cc78;
+  --black-color: #000000;
 }
 
 ::-webkit-scrollbar {
@@ -97,7 +98,7 @@ button {
 }
 .note-add {
   margin-left: 5px;
-  background-color: #000000;
+  background-color: var(--black-color);
 }
 .note-export {
   background-color: #ffffff00;
@@ -179,6 +180,25 @@ a {
   padding: 10px 30px;
   border-radius: 15px;
   font-weight: 300;
+}
+.notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: var(--header-footer-bg-color);
+  color: #000000;
+  padding: 10px;
+  border-radius: 5px;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 @media screen and (max-width: 480px) {
   body {
