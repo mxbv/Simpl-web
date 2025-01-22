@@ -144,9 +144,16 @@ textarea::placeholder {
 }
 .note-text-container {
   max-height: 0;
-  overflow: hidden;
+  overflow: auto;
   opacity: 0;
   transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out;
+  margin-top: 10px;
+}
+.note-text-container ::-webkit-scrollbar {
+  width: 10px;
+}
+.note-text-container ::-webkit-scrollbar-thumb {
+  border-radius: 10px;
 }
 .note-text-container.open {
   max-height: 400px;
@@ -156,6 +163,7 @@ span {
   padding: 5px;
   color: #595959;
   font-size: 14px;
+  margin-top: 10px;
 }
 footer {
   top: auto;

@@ -30,21 +30,10 @@ function createNoteElement(noteData) {
         noteData.title || ""
       }</textarea>
       <button class="note-delete" title="Delete">
-        <svg
-          width="35px"
-          height="35px"
-          fill="none"
-          stroke="#000000"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-          >
+        <svg width="35px" height="35px" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <line x1="18" y1="6" x2="6" y2="18" />
           <line x1="6" y1="6" x2="18" y2="18" />
         </svg>
-
       </button>
     </div>
     <div class="note-text-container">
@@ -70,17 +59,12 @@ function initializeNoteEventListeners(note, noteData) {
   // Listener to change the text of the note
   [titleArea, textArea].forEach((area) =>
     area.addEventListener("input", () => {
-      const updatedNote = notesCache.find((n) => n.id === noteData.id);
-      if (updatedNote) {
-        updatedNote.title = titleArea.value;
-        updatedNote.text = textArea.value;
-        saveNotes(notesCache);
-      }
+      updateNoteData(noteData.id, titleArea.value, textArea.value);
     })
   );
 
   // Note click handler
-  note.addEventListener("click", (event) => {
+  note.addEventListener("click", () => {
     if (!noteTextContainer.classList.contains("open")) {
       openNote(noteTextContainer, note);
     }
@@ -89,8 +73,25 @@ function initializeNoteEventListeners(note, noteData) {
   // Deleting a note
   note.querySelector(".note-delete").addEventListener("click", (event) => {
     event.stopPropagation();
-    deleteNote(noteData);
+    deleteNote(noteData.id);
   });
+}
+
+// Function for updating note data
+function updateNoteData(noteId, title, text) {
+  const updatedNote = notesCache.find((note) => note.id === noteId);
+  if (updatedNote) {
+    updatedNote.title = title;
+    updatedNote.text = text;
+    saveNotes(notesCache);
+  }
+}
+
+// Deleting a note
+function deleteNote(noteId) {
+  notesCache = notesCache.filter((note) => note.id !== noteId);
+  saveNotes(notesCache);
+  renderNotes();
 }
 
 // Opening a note
@@ -113,20 +114,6 @@ function closeNote(noteTextContainer) {
 function adjustTextAreaHeight(textArea) {
   textArea.style.height = "auto"; // First, we're dropping altitude
   textArea.style.height = `${textArea.scrollHeight}px`; // Set the desired height
-}
-
-// Closing a note when you click outside of it
-document.addEventListener("click", (event) => {
-  if (activeNote && !activeNote.contains(event.target)) {
-    closeNote(activeNote.querySelector(".note-text-container"));
-  }
-});
-
-// Deleting a note
-function deleteNote(noteData) {
-  const updatedNotes = notesCache.filter((n) => n.id !== noteData.id);
-  saveNotes(updatedNotes);
-  renderNotes();
 }
 
 // Function for rendering all notes
