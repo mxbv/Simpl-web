@@ -1,4 +1,76 @@
-@import url("./root.css");
+@font-face {
+  font-family: Raleway;
+  src: url(./fonts/Raleway/Raleway-VariableFont_wght.ttf);
+}
+:root {
+  --bg-color-light: #fffff0;
+  --text-color: #383838;
+  --border-color: #eaeadb;
+  --header-footer-bg-color: #d6d6cc78;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+}
+
+/* Box sizing rules */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  scrollbar-width: thin;
+  font-family: Raleway;
+}
+
+/* Prevent font size inflation */
+html {
+  -moz-text-size-adjust: none;
+  -webkit-text-size-adjust: none;
+  text-size-adjust: none;
+}
+
+/* Remove default margin in favour of better control in authored CSS */
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+figure,
+blockquote,
+dl,
+dd {
+  margin-block-end: 0;
+}
+
+/* Remove list styles on ul, ol elements with a list role, which suggests default styling will be removed */
+ul[role="list"],
+ol[role="list"] {
+  list-style: none;
+}
+
+/* Set core body defaults */
+body {
+  min-height: 100vh;
+  line-height: 1.5;
+}
+
+/* Balance text wrapping on headings */
+h1,
+h2,
+h3,
+h4 {
+  text-wrap: balance;
+}
+
+/* A elements that don't have a class get default styles */
+a:not([class]) {
+  text-decoration-skip-ink: auto;
+  color: currentColor;
+}
 
 body {
   max-width: 60vw;
@@ -57,10 +129,7 @@ button {
   border-radius: 100px;
   border: none;
 }
-img {
-  width: 35px;
-  height: 35px;
-}
+
 .notes {
   height: 100%;
   padding-top: 60px;
@@ -72,7 +141,6 @@ img {
   padding: 15px;
   border: solid 1.3px var(--border-color);
 }
-
 .note-title-container {
   display: flex;
   align-items: center;
@@ -95,11 +163,14 @@ textarea::placeholder {
   opacity: 1;
 }
 .note-title {
+  height: 30px;
+  width: 95%;
   font-size: 24px;
   font-weight: 600;
 }
 .note-text {
   font-size: 18px;
+  max-height: 400px;
 }
 span {
   padding: 5px;

@@ -1,0 +1,27 @@
+{
+  "name": "simpl",
+  "version": "1.0.0",
+  "description": "![logo](https://github.com/user-attachments/assets/71e01afd-1bc9-41e6-88c5-06fafe5b1e44)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "vite", 
+    "build": "vite build",
+    "preview": "vite preview" 
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mxbv/Simpl.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/mxbv/Simpl/issues"
+  },
+  "homepage": "https://github.com/mxbv/Simpl#readme",
+  "devDependencies": {
+    "vite": "^6.0.11"
+  }
+}
