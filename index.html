@@ -14,48 +14,45 @@
   </head>
 </html>
 <body>
-  <header>
-    <div class="header-text">Simpl.</div>
-    <div class="header-buttons">
-      <button class="note-export" type="button" title="Export">
-        <svg
-          width="35px"
-          height="35px"
-          fill="none"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            stroke="#000"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M3 15c0 2.8284 0 4.2426 0.87868 5.1213s2.2929 0.8787 5.1213 0.8787h6c2.8284 0 4.2426 0 5.1213-0.8787s0.8787-2.2929 0.8787-5.1213M12 3v13l4-4.375m-4 4.375-4-4.375"
-          />
-        </svg>
-      </button>
-      <button class="note-add" type="button" title="Create new entry">
-        <svg
-          width="35px"
-          height="35px"
-          fill="none"
-          stroke="#FFFFF0"
-          stroke-width="2"
+  <div class="sidebar">
+    <button class="note-export" type="button" title="Export">
+      <svg
+        width="35px"
+        height="35px"
+        fill="none"
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          stroke="#000"
           stroke-linecap="round"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <line x1="12" y1="5" x2="12" y2="19" />
-          <line x1="5" y1="12" x2="19" y2="12" />
-        </svg>
-      </button>
-    </div>
-  </header>
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M3 15c0 2.8284 0 4.2426 0.87868 5.1213s2.2929 0.8787 5.1213 0.8787h6c2.8284 0 4.2426 0 5.1213-0.8787s0.8787-2.2929 0.8787-5.1213M12 3v13l4-4.375m-4 4.375-4-4.375"
+        />
+      </svg>
+    </button>
+    <button class="note-add" type="button" title="Create new entry">
+      <svg
+        width="35px"
+        height="35px"
+        fill="none"
+        stroke="#FFFFF0"
+        stroke-width="2"
+        stroke-linecap="round"
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <line x1="12" y1="5" x2="12" y2="19" />
+        <line x1="5" y1="12" x2="19" y2="12" />
+      </svg>
+    </button>
+  </div>
   <section class="notes" aria-labelledby="notes-section">
     <!-- Notes will be dynamically added here -->
   </section>
   <footer>
-    <a href="https://github.com/mxbv/Simpl" rel="noreferrer">Open Source</a>
+    <a href="https://github.com/mxbv/Simpl" rel="noreferrer">Simpl. view</a>
   </footer>
   <script src="./app.js" type="module" defer></script>
 </body>

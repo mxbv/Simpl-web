@@ -26,23 +26,34 @@ function createNoteElement(noteData) {
   // Note markup
   note.innerHTML = `
     <span class="note-date">${noteData.date}</span>
+    
     <div class="note-title-container">
       <textarea class="note-title" placeholder="Title" maxlength="50">${
         noteData.title || ""
-      }</textarea>
-      <button class="note-delete" title="Delete">
-        <svg width="35px" height="35px" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <line x1="18" y1="6" x2="6" y2="18" />
-          <line x1="6" y1="6" x2="18" y2="18" />
-        </svg>
-      </button>
+      }</textarea> 
     </div>
     <div class="note-text-container">
       <textarea class="note-text" placeholder="Write new text here..." maxlength="10000">${
         noteData.text || ""
       }</textarea>
+      <button class="note-delete" title="Delete">
+        <svg class="delete-svg"
+          width="20px" 
+          height="20px" 
+          fill="none" 
+          stroke="#FFFFEF" 
+          stroke-width="2" 
+          stroke-linecap="round" 
+          stroke-linejoin="round" 
+          viewBox="5 5 14 14" 
+          xmlns="http://www.w3.org/2000/svg"
+          >
+          <line x1="18" y1="6" x2="6" y2="18" />
+          <line x1="6" y1="6" x2="18" y2="18" />
+        </svg>
+        Delete record
+    </button>
     </div>
-    
   `;
 
   // Connect event handlers
