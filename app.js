@@ -37,7 +37,8 @@ function createNoteElement(noteData) {
         noteData.text || ""
       }</textarea>
       <div class="count">
-        <span class="current_count">0</span>
+        <span class="current_count">${noteData.text.length || "0"}</span> 
+        <span>/</span>
         <span class="maximum_count">10,000</span>
       </div>
       <button class="note-delete" title="Delete">
@@ -66,13 +67,13 @@ function createNoteElement(noteData) {
 }
 
 // Character counter
-document.addEventListener("DOMContentLoaded", function () {
-  document.querySelector(".note-text").addEventListener("keyup", function () {
-    var characterCount = this.value.length; // Получаем длину текста
-    var current_count = document.querySelector(".current_count"); // Элемент для текущего количества
-    current_count.textContent = characterCount; // Обновляем текст в элементе
-  });
-});
+// document.addEventListener("DOMContentLoaded", function () {
+//   document.querySelector(".note-text").addEventListener("keyup", function () {
+//     let characterCount = this.value.length; // Получаем длину текста
+//     let current_count = document.querySelector(".current_count"); // Элемент для текущего количества
+//     current_count.innerHTML = characterCount; // Обновляем текст в элементе
+//   });
+// });
 
 // Initializing events for a note
 function initializeNoteEventListeners(note, noteData) {
@@ -93,7 +94,6 @@ function initializeNoteEventListeners(note, noteData) {
       openNote(noteTextContainer, note);
     }
   });
-
   // Deleting a note
   note.querySelector(".note-delete").addEventListener("click", (event) => {
     event.stopPropagation();
@@ -132,6 +132,21 @@ function deleteNote(noteId) {
   renderNotes();
   deleteNotification();
 }
+// Automatic height change for a text field
+function adjustTextAreaHeight(textArea) {
+  textArea.style.height = "auto"; // First, we're dropping altitude
+  textArea.style.height = `${textArea.scrollHeight}px`; // Set the desired height
+}
+
+
+// Character counter
+document.addEventListener("DOMContentLoaded", function () {
+  document.querySelector(".note-text").addEventListener("keyup", function () {
+    let characterCount = this.value.length; // Получаем длину текста
+    let current_count = document.querySelector(".current_count"); // Элемент для текущего количества
+    current_count.innerHTML = characterCount; // Обновляем текст в элементе
+  });
+});
 
 // Opening a note
 function openNote(noteTextContainer, note) {
@@ -149,12 +164,6 @@ function closeNote(noteTextContainer) {
   activeNote = null;
 }
 
-// Automatic height change for a text field
-function adjustTextAreaHeight(textArea) {
-  textArea.style.height = "auto"; // First, we're dropping altitude
-  textArea.style.height = `${textArea.scrollHeight}px`; // Set the desired height
-}
-
 // Function for rendering all notes
 function renderNotes() {
   notesContainer.innerHTML = "";
@@ -165,7 +174,7 @@ function renderNotes() {
 }
 
 // Adding a new note
-addButton.addEventListener("click", () => {
+addButton.addEventListener("click", (note) => {
   const currentDate = new Date();
   const formattedDate = `${currentDate.toLocaleDateString("en-GB", {
     weekday: "short",
@@ -182,7 +191,6 @@ addButton.addEventListener("click", () => {
     text: "",
     date: formattedDate,
   };
-
   notesCache.unshift(newNote);
   saveNotes(notesCache);
   renderNotes();
@@ -210,3 +218,4 @@ exportButton.addEventListener("click", exportNotes);
 
 // Application initialization
 renderNotes();
+
