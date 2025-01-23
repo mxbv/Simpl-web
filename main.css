@@ -31,7 +31,33 @@ body {
   background-color: var(--bg-color-light);
   overflow: hidden;
 }
-
+header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  font-size: 18px;
+  font-weight: 300;
+  padding: 3px 0;
+}
+h1 {
+  font-size: 18px;
+  font-weight: 400;
+  margin: 0;
+  margin-left: 5px;
+}
+a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--text-color);
+  font-weight: 300;
+  margin-left: 15px;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
 .sidebar {
   display: flex;
   position: fixed;
@@ -76,6 +102,7 @@ button {
   padding: 15px 15px;
   font-size: 18px;
   font-weight: 300;
+  margin-top: 10px;
 }
 .delete-svg {
   margin-right: 10px;
@@ -138,8 +165,11 @@ textarea::placeholder {
   border-radius: 10px;
 }
 .note-text-container.open {
-  max-height: 400px;
+  max-height: fit-content;
   opacity: 1;
+}
+.note-text {
+  height: fit-content;
 }
 span {
   padding: 5px;
@@ -147,21 +177,15 @@ span {
   font-size: 14px;
   margin-top: 10px;
 }
-footer {
+/* footer {
+  display: flex;
+  position: fixed;
   top: auto;
-  bottom: 10px;
+  bottom: 5px;
   left: 50%;
   transform: translateX(-50%);
-}
-a {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: var(--text-color);
-  padding: 10px 30px;
-  border-radius: 15px;
-  font-weight: 300;
-}
+} */
+
 .notification {
   position: fixed;
   top: 20px;
