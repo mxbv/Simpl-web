@@ -36,6 +36,10 @@ function createNoteElement(noteData) {
       <textarea class="note-text" placeholder="Write new text here..." maxlength="10000">${
         noteData.text || ""
       }</textarea>
+      <div class="count">
+        <span class="current_count">0</span>
+        <span class="maximum_count">10,000</span>
+      </div>
       <button class="note-delete" title="Delete">
         <svg class="delete-svg"
           width="20px" 
@@ -58,9 +62,17 @@ function createNoteElement(noteData) {
 
   // Connect event handlers
   initializeNoteEventListeners(note, noteData);
-
   return note;
 }
+
+// Character counter
+document.addEventListener("DOMContentLoaded", function () {
+  document.querySelector(".note-text").addEventListener("keyup", function () {
+    var characterCount = this.value.length; // Получаем длину текста
+    var current_count = document.querySelector(".current_count"); // Элемент для текущего количества
+    current_count.textContent = characterCount; // Обновляем текст в элементе
+  });
+});
 
 // Initializing events for a note
 function initializeNoteEventListeners(note, noteData) {
