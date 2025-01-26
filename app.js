@@ -3,178 +3,90 @@ const notesContainer = document.querySelector(".notes");
 const addButton = document.querySelector(".note-add");
 const exportButton = document.querySelector(".note-export");
 
-// Status of notes in memory
-let notesCache = loadNotes();
-let activeNote = null; // Stores a link to an open note
+// Менеджер для работы с заметками
+const notesManager = {
+  cache: [],
+  activeNote: null,
 
-// Loading notes from localStorage
-function loadNotes() {
-  const savedNotes = localStorage.getItem(STORAGE_KEY);
-  return savedNotes ? JSON.parse(savedNotes) : [];
-}
+  saveNotes() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(this.cache));
+  },
 
-// Saving notes to localStorage
-function saveNotes(notes) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(notes));
-  notesCache = notes; // Cache update
-}
+  loadNotes() {
+    const savedNotes = localStorage.getItem(STORAGE_KEY);
+    this.cache = savedNotes ? JSON.parse(savedNotes) : [];
+  },
 
-// Function for creating a note item
-function createNoteElement(noteData) {
-  const note = document.createElement("div");
-  note.className = "note";
-  // Note markup
-  note.innerHTML = `
-    <span class="note-date">${noteData.date}</span>
-    
-    <div class="note-title-container">
-      <textarea class="note-title" placeholder="Title" maxlength="50">${
-        noteData.title || ""
-      }</textarea> 
-    </div>
-    <div class="note-text-container">
-      <textarea class="note-text" placeholder="Write new text here..." maxlength="10000">${
-        noteData.text || ""
-      }</textarea>
-      <div class="count">
-        <span class="current_count">${noteData.text.length || "0"}</span> 
-        <span>/</span>
-        <span class="maximum_count">10,000</span>
+  updateNote(id, title, text) {
+    const note = this.cache.find((note) => note.id === id);
+    if (note) {
+      note.title = title;
+      note.text = text;
+      this.saveNotes();
+    }
+  },
+
+  deleteNote(id) {
+    this.cache = this.cache.filter((note) => note.id !== id);
+    this.saveNotes();
+    renderNotes();
+    showNotification("Entry deleted");
+  },
+};
+
+// Создание HTML для заметки
+function createNoteHTML(note) {
+  return `
+    <div class="note" data-id="${note.id}">
+      <span class="note-date">${note.date}</span>
+      <div class="note-title-container">
+        <textarea class="note-title" placeholder="Title" maxlength="50">${
+          note.title || ""
+        }</textarea>
       </div>
-      <button class="note-delete" title="Delete">
-        <svg class="delete-svg"
-          width="20px" 
-          height="20px" 
-          fill="none" 
-          stroke="#FFFFEF" 
-          stroke-width="2" 
-          stroke-linecap="round" 
-          stroke-linejoin="round" 
-          viewBox="5 5 14 14" 
-          xmlns="http://www.w3.org/2000/svg"
-          >
-          <line x1="18" y1="6" x2="6" y2="18" />
-          <line x1="6" y1="6" x2="18" y2="18" />
+      <button class="note-toggle">
+        <svg width="35" height="35" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <path d="M5.707 9.711a1 1 0 0 0 0 1.414l4.892 4.887a2 2 0 0 0 2.828 0l4.89-4.89a1 1 0 1 0-1.414-1.414l-4.186 4.186a1 1 0 0 1-1.414 0l-4.182-4.182a1 1 0 0 0-1.414 0z" fill="#000000"/>
         </svg>
-        Delete record
-    </button>
+      </button>
+      <div class="note-text-container">
+        <textarea class="note-text" placeholder="Write new text here..." maxlength="10000">${
+          note.text || ""
+        }</textarea>
+        <div class="count">
+          <span class="current_count">${note.text.length || 0}</span>
+          <span>/</span>
+          <span class="maximum_count">10,000</span>
+        </div>
+        <button class="note-delete" title="Delete">
+          <svg class="delete-svg"
+            width="20px"
+            height="20px"
+            fill="none"
+            stroke="#ffffff"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            viewBox="5 5 14 14"
+            xmlns="http://www.w3.org/2000/svg"
+            >
+           <line x1="18" y1="6" x2="6" y2="18" />
+           <line x1="6" y1="6" x2="18" y2="18" />
+         </svg> Delete record
+        </button>
+        
+      </div>
     </div>
   `;
-
-  // Connect event handlers
-  initializeNoteEventListeners(note, noteData);
-  return note;
 }
 
-// Character counter
-// document.addEventListener("DOMContentLoaded", function () {
-//   document.querySelector(".note-text").addEventListener("keyup", function () {
-//     let characterCount = this.value.length; // Получаем длину текста
-//     let current_count = document.querySelector(".current_count"); // Элемент для текущего количества
-//     current_count.innerHTML = characterCount; // Обновляем текст в элементе
-//   });
-// });
-
-// Initializing events for a note
-function initializeNoteEventListeners(note, noteData) {
-  const textArea = note.querySelector(".note-text");
-  const titleArea = note.querySelector(".note-title");
-  const noteTextContainer = note.querySelector(".note-text-container");
-
-  // Listener to change the text of the note
-  [titleArea, textArea].forEach((area) =>
-    area.addEventListener("input", () => {
-      updateNoteData(noteData.id, titleArea.value, textArea.value);
-    })
-  );
-
-  // Note click handler
-  note.addEventListener("click", () => {
-    if (!noteTextContainer.classList.contains("open")) {
-      openNote(noteTextContainer, note);
-    }
-  });
-  // Deleting a note
-  note.querySelector(".note-delete").addEventListener("click", (event) => {
-    event.stopPropagation();
-    deleteNote(noteData.id);
-  });
-}
-
-// Function for updating note data
-function updateNoteData(noteId, title, text) {
-  const updatedNote = notesCache.find((note) => note.id === noteId);
-  if (updatedNote) {
-    updatedNote.title = title;
-    updatedNote.text = text;
-    saveNotes(notesCache);
-  }
-}
-function deleteNotification() {
-  // Creating a notification
-  const notification = document.createElement("div");
-  notification.className = "notification";
-  notification.textContent = "Entry deleted";
-
-  // Add to the DOM
-  document.body.appendChild(notification);
-
-  // Remove the notification after 3 seconds
-  setTimeout(() => {
-    notification.remove();
-  }, 1500);
-}
-
-// Deleting a note
-function deleteNote(noteId) {
-  notesCache = notesCache.filter((note) => note.id !== noteId);
-  saveNotes(notesCache);
-  renderNotes();
-  deleteNotification();
-}
-// Automatic height change for a text field
-function adjustTextAreaHeight(textArea) {
-  textArea.style.height = "auto"; // First, we're dropping altitude
-  textArea.style.height = `${textArea.scrollHeight}px`; // Set the desired height
-}
-
-
-// Character counter
-document.addEventListener("DOMContentLoaded", function () {
-  document.querySelector(".note-text").addEventListener("keyup", function () {
-    let characterCount = this.value.length; // Получаем длину текста
-    let current_count = document.querySelector(".current_count"); // Элемент для текущего количества
-    current_count.innerHTML = characterCount; // Обновляем текст в элементе
-  });
-});
-
-// Opening a note
-function openNote(noteTextContainer, note) {
-  if (activeNote && activeNote !== note) {
-    closeNote(activeNote.querySelector(".note-text-container"));
-  }
-  noteTextContainer.classList.add("open");
-  activeNote = note;
-  adjustTextAreaHeight(noteTextContainer.querySelector(".note-text"));
-}
-
-// Closing a note
-function closeNote(noteTextContainer) {
-  noteTextContainer.classList.remove("open");
-  activeNote = null;
-}
-
-// Function for rendering all notes
+// Рендер всех заметок
 function renderNotes() {
-  notesContainer.innerHTML = "";
-  notesCache.forEach((note) => {
-    const noteElement = createNoteElement(note);
-    notesContainer.append(noteElement);
-  });
+  notesContainer.innerHTML = notesManager.cache.map(createNoteHTML).join("");
 }
 
-// Adding a new note
-addButton.addEventListener("click", (note) => {
+// Добавление новой заметки
+addButton.addEventListener("click", () => {
   const currentDate = new Date();
   const formattedDate = `${currentDate.toLocaleDateString("en-GB", {
     weekday: "short",
@@ -191,21 +103,21 @@ addButton.addEventListener("click", (note) => {
     text: "",
     date: formattedDate,
   };
-  notesCache.unshift(newNote);
-  saveNotes(notesCache);
+  notesManager.cache.unshift(newNote);
+  notesManager.saveNotes();
   renderNotes();
 });
 
-// Exporting notes
-function exportNotes() {
-  const content = notesCache
+// Экспорт заметок
+exportButton.addEventListener("click", () => {
+  const content = notesManager.cache
     .map(
       (note) =>
-        `\n| ${(note.title || "empty").toUpperCase()} (${note.date})\n\n${
+        `| ${(note.title || "empty").toUpperCase()} (${note.date})\n${
           note.text || "empty"
-        }\n\n`
+        }\n`
     )
-    .join("");
+    .join("\n");
 
   const blob = new Blob([content], { type: "text/plain; charset=utf-8" });
   const link = document.createElement("a");
@@ -213,9 +125,114 @@ function exportNotes() {
   link.download = "exportNotes.txt";
   link.click();
   URL.revokeObjectURL(link.href);
+});
+
+// Делегирование событий для работы с заметками
+notesContainer.addEventListener("click", (event) => {
+  const target = event.target;
+
+  // Удаление заметки
+  if (target.classList.contains("note-delete")) {
+    const noteElement = target.closest(".note");
+    const noteId = parseInt(noteElement.dataset.id);
+    notesManager.deleteNote(noteId);
+    return;
+  }
+
+  // Переключение видимости заметки (клик по кнопке Toggle visibility)
+  if (target.classList.contains("note-toggle")) {
+    const noteElement = target.closest(".note");
+    toggleNoteVisibility(noteElement);
+  }
+});
+
+// Делегирование для автоувеличения textarea
+notesContainer.addEventListener("input", (event) => {
+  const target = event.target;
+
+  if (
+    target.classList.contains("note-title") ||
+    target.classList.contains("note-text")
+  ) {
+    const noteElement = target.closest(".note");
+    const noteId = parseInt(noteElement.dataset.id);
+    const title = noteElement.querySelector(".note-title").value;
+    const text = noteElement.querySelector(".note-text").value;
+
+    // Сохраняем изменения
+    notesManager.updateNote(noteId, title, text);
+
+    // Обновляем счётчик символов
+    if (target.classList.contains("note-text")) {
+      updateCharacterCounter(target);
+      autoResizeTextArea(target);
+    }
+  }
+});
+
+function toggleNoteVisibility(noteElement) {
+  const toggleButton = noteElement.querySelector(".note-toggle");
+
+  // Если заметка уже открыта, закрываем ее
+  if (notesManager.activeNote === noteElement) {
+    closeNote(noteElement);
+    toggleButton.classList.remove("open"); // Убираем класс поворота кнопки
+    return;
+  }
+
+  // Закрываем текущую активную заметку
+  if (notesManager.activeNote) {
+    const activeToggleButton =
+      notesManager.activeNote.querySelector(".note-toggle");
+    closeNote(notesManager.activeNote);
+    activeToggleButton.classList.remove("open"); // Убираем класс поворота у предыдущей кнопки
+  }
+
+  // Открываем выбранную заметку
+  const textContainer = noteElement.querySelector(".note-text-container");
+  textContainer.classList.add("open");
+  toggleButton.classList.add("open"); // Добавляем класс поворота кнопки
+
+  // Автоматически подстраиваем высоту textarea при раскрытии
+  const noteTextArea = noteElement.querySelector(".note-text");
+  autoResizeTextArea(noteTextArea);
+
+  notesManager.activeNote = noteElement;
 }
-exportButton.addEventListener("click", exportNotes);
 
-// Application initialization
+// Закрытие заметки
+function closeNote(noteElement) {
+  const textContainer = noteElement.querySelector(".note-text-container");
+  textContainer.classList.remove("open");
+  notesManager.activeNote = null;
+}
+
+// Автоувеличение высоты textarea
+function autoResizeTextArea(textArea) {
+  textArea.style.height = "auto";
+  textArea.style.height = `${textArea.scrollHeight}px`;
+}
+
+// Обновление счётчика символов
+function updateCharacterCounter(textArea) {
+  const currentCount = textArea
+    .closest(".note-text-container")
+    .querySelector(".current_count");
+  if (currentCount) currentCount.textContent = textArea.value.length;
+}
+
+// Уведомления
+function showNotification(message) {
+  const notification = document.createElement("div");
+  notification.className = "notification";
+  notification.textContent = message;
+  document.body.appendChild(notification);
+
+  setTimeout(() => {
+    notification.remove();
+  }, 1500);
+}
+
+// Инициализация приложения
+notesManager.loadNotes();
 renderNotes();
-

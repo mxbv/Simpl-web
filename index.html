@@ -13,61 +13,49 @@
     <title>Simpl - your daily stories</title>
   </head>
 </html>
-<body>
-  <header>
-    Write your own story with
-    <h1>Simpl.</h1>
-    <a href="https://github.com/mxbv/Simpl" rel="noreferrer">
-      View on GitHub<svg
-        width="20px"
-        height="20px"
-        fill="none"
-        viewBox="0 0 24 24"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="m21 9v-6m0 0h-6m6 0-9 9m-2-9h-2.2c-1.6802 0-2.5202 0-3.162 0.32698-0.56449 0.28762-1.0234 0.74656-1.311 1.311-0.32698 0.64173-0.32698 1.4818-0.32698 3.162v8.4c0 1.6802 0 2.5202 0.32698 3.162 0.28762 0.5645 0.74656 1.0234 1.311 1.311 0.64173 0.327 1.4818 0.327 3.162 0.327h8.4c1.6802 0 2.5202 0 3.162-0.327 0.5645-0.2876 1.0234-0.7465 1.311-1.311 0.327-0.6418 0.327-1.4818 0.327-3.162v-2.2"
-          stroke="#000"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-        />
-      </svg>
+<body id="app">
+  <div class="panel">
+    <a
+      href="https://github.com/mxbv/Simpl"
+      rel="noreferrer"
+      class="panel-title"
+    >
+      Simpl.
     </a>
-  </header>
-  <div class="sidebar">
-    <button class="note-export" type="button" title="Export">
-      <svg
-        width="35px"
-        height="35px"
-        fill="none"
-        viewBox="0 0 24 24"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          stroke="#000"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+    <div class="panel-batton">
+      <button class="note-export" type="button" title="Export">
+        <svg
+          width="35px"
+          height="35px"
+          fill="none"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            stroke="#000"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M3 15c0 2.8284 0 4.2426 0.87868 5.1213s2.2929 0.8787 5.1213 0.8787h6c2.8284 0 4.2426 0 5.1213-0.8787s0.8787-2.2929 0.8787-5.1213M12 3v13l4-4.375m-4 4.375-4-4.375"
+          />
+        </svg>
+      </button>
+      <button class="note-add" type="button" title="Create new entry">
+        <svg
+          width="35px"
+          height="35px"
+          fill="none"
+          stroke="#ffffff"
           stroke-width="2"
-          d="M3 15c0 2.8284 0 4.2426 0.87868 5.1213s2.2929 0.8787 5.1213 0.8787h6c2.8284 0 4.2426 0 5.1213-0.8787s0.8787-2.2929 0.8787-5.1213M12 3v13l4-4.375m-4 4.375-4-4.375"
-        />
-      </svg>
-    </button>
-    <button class="note-add" type="button" title="Create new entry">
-      <svg
-        width="35px"
-        height="35px"
-        fill="none"
-        stroke="#FFFFF0"
-        stroke-width="2"
-        stroke-linecap="round"
-        viewBox="0 0 24 24"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <line x1="12" y1="5" x2="12" y2="19" />
-        <line x1="5" y1="12" x2="19" y2="12" />
-      </svg>
-    </button>
+          stroke-linecap="round"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <line x1="12" y1="5" x2="12" y2="19" />
+          <line x1="5" y1="12" x2="19" y2="12" />
+        </svg>
+      </button>
+    </div>
   </div>
   <section class="notes" aria-labelledby="notes-section">
     <!-- Notes will be dynamically added here -->
