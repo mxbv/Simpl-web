@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Logs
 logs
 *.log
@@ -18,4 +19,8 @@ coverage
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
+=======
+# misc
+.DS_Store
+>>>>>>> 9e00c34992207d72420b3fb8f5e9acb9e2725a8b
 
