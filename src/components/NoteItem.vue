@@ -1,4 +1,4 @@
-<script>
+<script >
 export default {
   name: "NoteItem",
   props: {
@@ -66,14 +66,9 @@ export default {
 </template>
 
 <style scoped>
-.notes {
-  height: 100%;
-  padding-top: 60px;
-}
 .note {
   width: 100%;
-  margin-top: 50px;
-  border-radius: 30px;
+  height: 100dvh;
   padding: 15px;
   border: solid 1.3px var(--border-color);
 }
@@ -100,14 +95,16 @@ textarea::placeholder {
   opacity: 1;
 }
 .note-title {
+  width: 90%;
+  height: 35px;
   font-size: 24px;
   font-weight: 600;
 }
-.note-delete {
-  width: 70px;
-}
 .note-text {
+  height: 30px;
   font-size: 18px;
+  margin-top: 10px;
+  resize: vertical;
 }
 span {
   padding: 5px;

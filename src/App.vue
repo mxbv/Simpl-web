@@ -1,94 +1,70 @@
 <script setup>
-import { ref } from "vue";
-import AppHeader from "./components/AppHeader.vue";
+import { ref, onMounted } from "vue";
+import SideBar from "./components/SideBar.vue";
 import NoteItem from "./components/NoteItem.vue";
 
-// Links to note data
-const notes = ref(loadNotes());
+const STORAGE_KEY = "notes";
 
-// Load notes from localStorage
-function loadNotes() {
-  const savedNotes = localStorage.getItem("notes");
-  return savedNotes ? JSON.parse(savedNotes) : [];
-}
+const notes = ref([]);
+const activeNote = ref(null);
 
-// Save notes to localStorage
-function saveNotes() {
-  localStorage.setItem("notes", JSON.stringify(notes.value));
-}
+const loadNotes = () => {
+  const savedNotes = localStorage.getItem(STORAGE_KEY);
+  notes.value = savedNotes ? JSON.parse(savedNotes) : [];
+};
 
-// Adding a new note
-function addNote() {
-  const currentDate = new Date();
-  const newNote = {
-    id: Date.now(),
-    title: "",
-    text: "",
-    date: `${currentDate.toLocaleDateString()}${currentDate.toLocaleTimeString(
-      [],
-      { hour: "2-digit", minute: "2-digit" }
-    )}`,
-  };
-  notes.value.unshift(newNote); // Add a note to the top of the list
-  saveNotes();
-}
+const saveNotes = () => {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(notes.value));
+};
 
-// Updating the memo
-function updateNote(updatedNote) {
+const updateNote = (updatedNote) => {
   const index = notes.value.findIndex((note) => note.id === updatedNote.id);
   if (index !== -1) {
-    notes.value[index] = updatedNote; // Updating a note in an array
+    notes.value[index] = updatedNote;
     saveNotes();
   }
-}
+};
 
-// Deleting a note
-function deleteNote(noteToDelete) {
-  notes.value = notes.value.filter((note) => note.id !== noteToDelete.id);
+const deleteNote = (id) => {
+  notes.value = notes.value.filter((note) => note.id !== id);
   saveNotes();
-}
+};
 
-// Exporting notes
-function exportNotes() {
-  const content = notes.value
-    .map(
-      (note) =>
-        `\n| ${(note.title || "empty").toUpperCase()} (${note.date})\n\n${
-          note.text || "empty"
-        }\n\n`
-    )
-    .join("");
+const toggleNote = (note) => {
+  if (activeNote.value === note) {
+    activeNote.value = null;
+  } else {
+    activeNote.value = note;
+  }
+};
 
-  const blob = new Blob([content], { type: "text/plain; charset=utf-8" });
-  const link = document.createElement("a");
-  link.href = URL.createObjectURL(blob);
-  link.download = "exportNotes.txt";
-  link.click();
-  URL.revokeObjectURL(link.href);
-}
+// Load notes when component is mounted
+onMounted(() => {
+  loadNotes();
+});
 </script>
 
 <template>
   <body>
-    <AppHeader @add-note="addNote" @export-notes="exportNotes" />
-    <div class="notes">
+    <SideBar :notes="notes" @update:notes="notes = $event" />
+    <router-view></router-view>
+    <div class="notes-list">
       <NoteItem
         v-for="note in notes"
         :key="note.id"
         :note="note"
-        @update:note="updateNote"
-        @delete:note="deleteNote"
+        @update="updateNote"
+        @delete="deleteNote"
+        @open="toggleNote"
       />
     </div>
-    <footer>
-      <a href="https://github.com/mxbv/Simpl" rel="noreferrer">Open Source</a>
-    </footer>
   </body>
 </template>
 
 <style scoped>
-.notes {
+.notes-list {
+  width: 100%;
   height: 100%;
-  padding-top: 80px;
+  padding: 10px 0px;
 }
 </style>
