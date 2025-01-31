@@ -3,25 +3,43 @@ import { useRoute, useRouter } from "vue-router";
 import { ref, onMounted, nextTick } from "vue";
 import { getNotesFromDB, deleteNoteFromDB, saveNoteToDB } from "@/utils/db";
 
-const emit = defineEmits(["noteDeleted", "refreshNotes"]); // События для обновления
-
+const emit = defineEmits(["noteDeleted", "refreshNotes"]);
 const route = useRoute();
 const router = useRouter();
-
 const noteId = parseInt(route.params.id);
 const note = ref(null);
 
-const typingTimeout = ref(null);
-
 // Загружаем заметку при монтировании компонента
 onMounted(async () => {
-  const notes = await getNotesFromDB();
-  note.value = notes.find((n) => n.id === noteId);
+  note.value = (await getNotesFromDB()).find((n) => n.id === noteId);
   nextTick(() => {
-    autoExpand();
+    restoreHeight();
   });
 });
 
+// Восстановление сохранённой высоты
+const restoreHeight = () => {
+  const titleTextarea = document.querySelector(".note-title");
+  const contentTextarea = document.querySelector(".note-text");
+  const savedTitleHeight = localStorage.getItem("titleHeight");
+  const savedContentHeight = localStorage.getItem("contentHeight");
+
+  if (savedTitleHeight) {
+    titleTextarea.style.height = savedTitleHeight + "px";
+  }
+  if (savedContentHeight) {
+    contentTextarea.style.height = savedContentHeight + "px";
+  }
+};
+
+// Сохранение высоты textarea
+const saveHeight = (textarea, field) => {
+  localStorage.setItem(`${field}Height`, textarea.scrollHeight);
+  textarea.style.height = "auto";
+  textarea.style.height = `${textarea.scrollHeight}px`;
+};
+
+// Обновление заметки в базе данных
 const updateNote = async () => {
   if (note.value) {
     await saveNoteToDB(note.value);
@@ -32,32 +50,29 @@ const updateNote = async () => {
 const deleteNote = async () => {
   if (note.value) {
     await deleteNoteFromDB(note.value.id);
-    emit("noteDeleted"); // Генерируем событие для удаления
-    emit("refreshNotes"); // Генерируем событие для обновления списка заметок
-    router.push("/"); // Перенаправляем на главную страницу
+    emit("noteDeleted");
+    emit("refreshNotes");
+    router.push("/");
   }
 };
 
 // Переход на главную страницу
 const goBack = () => {
   router.push("/");
-  emit("refreshNotes"); // Отправка события для обновления списка при переходе назад
+  emit("refreshNotes");
 };
 
-// Автоматическое расширение поля ввода
-const autoExpand = () => {
-  const textareas = document.querySelectorAll("textarea");
-  textareas.forEach((textarea) => {
-    textarea.style.height = "auto";
-    textarea.style.height = `${textarea.scrollHeight}px`;
-  });
+// Автоматическое расширение textarea
+const autoExpand = (event) => {
+  event.target.style.height = "auto";
+  event.target.style.height = `${event.target.scrollHeight}px`;
+  saveHeight(event.target, event.target.classList.contains('note-title') ? 'title' : 'content');
 };
 
-const onInput = () => {
-  clearTimeout(typingTimeout.value);
-  typingTimeout.value = setTimeout(() => {
-    updateNote();
-  }, 1);
+// Обработчик ввода
+const onInput = (event) => {
+  updateNote();
+  autoExpand(event);
 };
 </script>
 
@@ -78,15 +93,10 @@ const onInput = () => {
       <textarea
         v-model="note.content"
         placeholder="Write your text here..."
+        class="note-text"
         @blur="updateNote"
         @input="onInput"
-        class="note-text"
       ></textarea>
-      <div class="count">
-        <span class="current_count"></span>
-        <span>/</span>
-        <span class="maximum_count">10,000</span>
-      </div>
       <button @click="deleteNote" class="delete-button">
         <img src="@/assets/icons/delete.svg" alt="Delete Note" /> Delete record
       </button>
@@ -103,22 +113,18 @@ const onInput = () => {
   overflow: hidden;
   position: absolute;
   width: 100%;
-  height: 100dvh;
+  min-height: 100%;
   background-color: #fffff0;
   top: 0;
   left: 0;
   justify-content: center;
-  align-items: center;
-  padding: 10px;
+  align-items: flex-start;
+  padding: 30px 0;
 }
 
 .note-container {
   width: 50%;
   height: 100%;
-}
-
-.go-back-button {
-  margin-top: 20px;
 }
 
 textarea {
@@ -134,6 +140,7 @@ textarea {
   background: none;
   color: var(--black-color);
   font-size: 20px;
+  border-bottom: solid 1px #000000;
 }
 
 textarea::placeholder {
