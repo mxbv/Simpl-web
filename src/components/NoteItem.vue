@@ -10,7 +10,7 @@ defineProps({
 <template>
   <router-link :to="`/note/${note.id}`" class="note-item">
     <h3>{{ note.title || "Write Your New Story..." }}</h3>
-    <p>{{note.date}}</p>
+    <p>{{ note.date }}</p>
   </router-link>
 </template>
 

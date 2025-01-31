@@ -29,7 +29,8 @@ const addNewNote = async () => {
     date: formattedDate,
   };
   await saveNoteToDB(newNote);
-  notes.value.push(newNote);
+  // Добавляем новую заметку в начало списка
+  notes.value.unshift(newNote);
 };
 
 // Функция для обновления списка заметок
