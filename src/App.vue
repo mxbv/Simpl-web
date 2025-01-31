@@ -12,11 +12,21 @@ onMounted(async () => {
 
 // Функция добавления новой заметки
 const addNewNote = async () => {
+  const currentDate = new Date();
+  const formattedDate = `${currentDate.toLocaleDateString("en-GB", {
+    weekday: "short",
+    year: "numeric",
+    day: "2-digit",
+    month: "2-digit",
+  })} ${currentDate.toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+  })}`;
   const newNote = {
-    id: Date.now(), // Уникальный id на основе текущего времени
-    title: "", // Заголовок по умолчанию
-    content: "", // Пустое содержание
-    timestamp: new Date().toLocaleString(), // Текущее время для метки
+    id: Date.now(),
+    title: "",
+    text: "",
+    date: formattedDate,
   };
 
   // Сохраняем новую заметку в IndexedDB

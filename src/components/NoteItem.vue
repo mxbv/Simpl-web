@@ -8,39 +8,34 @@ defineProps({
 </script>
 
 <template>
-  <div class="note-item">
-    <router-link :to="`/note/${note.id}`">
-      <h3>{{ note.title || "Write Your New Story..." }}</h3>
-      <p>{{ new Date().toLocaleString() }}</p>
-    </router-link>
-  </div>
+  <router-link :to="`/note/${note.id}`" class="note-item">
+    <h3>{{ note.title || "Write Your New Story..." }}</h3>
+    <p>{{note.date}}</p>
+  </router-link>
 </template>
 
-<style>
+<style scoped>
 .note-item {
-  padding: 10px;
-  margin: 10px 0;
-  background: #f4f4f4;
+  display: block;
+  padding: 20px;
+  margin-bottom: 30px;
+  background: #eaead2bd;
   border: 1px solid #ccc;
   border-radius: 8px;
-}
-
-.note-item a {
+  color: var(--text-color);
   text-decoration: none;
-  color: inherit;
 }
 
-.note-item:hover {
-  background-color: #ddd;
-}
-
-.note-item h3 {
+h3 {
   margin: 0;
-  font-size: 18px;
+  font-size: 25px;
+  font-weight: 500;
 }
 
-.note-item p {
-  font-size: 14px;
+p {
+  font-size: 18px;
   color: #777;
+  margin: 0;
+  margin-top: 20px;
 }
 </style>
