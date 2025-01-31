@@ -1,7 +1,18 @@
 import { createRouter, createWebHistory } from "vue-router";
-import NoteItem from "./components/NoteItem.vue"; // Компонент для отображения полной заметки
+import NoteDetails from "@/components/NoteDetail.vue"; // Компонент для детального просмотра заметки
 
-export default createRouter({
-  history: createWebHistory(),
-  routes: [{ path: "/note", component: NoteItem }],
+const routes = [
+  {
+    path: "/note/:id",
+    name: "NoteDetails",
+    component: NoteDetails, // Компонент для отображения деталей заметки
+  },
+  // другие маршруты...
+];
+
+const router = createRouter({
+  history: createWebHistory("/"),
+  routes,
 });
+
+export default router;
