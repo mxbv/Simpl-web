@@ -2,15 +2,13 @@
 import { ref, onMounted } from "vue";
 import { getNotesFromDB, saveNoteToDB } from "@/utils/db";
 import NoteItem from "./components/NoteItem.vue";
-// Массив для хранения заметок
+
 const notes = ref([]);
 
-// Загружаем все заметки при монтировании
 onMounted(async () => {
-  notes.value = await getNotesFromDB(); // Загружаем все заметки из IndexedDB
+  notes.value = await getNotesFromDB();
 });
 
-// Функция добавления новой заметки
 const addNewNote = async () => {
   const currentDate = new Date();
   const formattedDate = `${currentDate.toLocaleDateString("en-GB", {
@@ -18,9 +16,9 @@ const addNewNote = async () => {
     year: "numeric",
     day: "2-digit",
     month: "2-digit",
-  })} ${currentDate.toLocaleTimeString([], {
     hour: "2-digit",
     minute: "2-digit",
+    hour12: false,
   })}`;
   const newNote = {
     id: Date.now(),
@@ -28,23 +26,17 @@ const addNewNote = async () => {
     text: "",
     date: formattedDate,
   };
-
-  // Сохраняем новую заметку в IndexedDB
   await saveNoteToDB(newNote);
-
-  // Добавляем её в локальный список заметок
-  notes.value.push(newNote); // Обновление локального состояния
+  notes.value.push(newNote);
 };
 
-// Обновление заметок при удалении
 const refreshNotes = async () => {
-  notes.value = await getNotesFromDB(); // Перезагружаем все заметки
+  notes.value = await getNotesFromDB(); // Обновляем список заметок
 };
 </script>
 
 <template>
   <div>
-    <!-- Sidebar с кнопками -->
     <div class="sidebar">
       <button class="note-export" type="button" title="Export">
         <img src="@/assets/icons/export.svg" alt="Export Notes" />
@@ -59,13 +51,12 @@ const refreshNotes = async () => {
       </button>
     </div>
 
-    <!-- Список заметок, добавляем NoteItem сразу здесь -->
     <div class="note-list">
       <NoteItem v-for="note in notes" :key="note.id" :note="note" />
     </div>
 
     <!-- Основной контент для маршрутов -->
-    <router-view @noteDeleted="refreshNotes" />
+    <router-view @refreshNotes="refreshNotes" />
   </div>
 </template>
 

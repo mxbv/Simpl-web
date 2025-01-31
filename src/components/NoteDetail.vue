@@ -1,44 +1,61 @@
 <script setup>
 import { useRoute, useRouter } from "vue-router";
-import { ref, onMounted } from "vue";
-import { getNotesFromDB, deleteNoteFromDB, saveNoteToDB } from "@/utils/db"; // Утилиты для работы с IndexedDB
+import { ref, onMounted, nextTick } from "vue";
+import { getNotesFromDB, deleteNoteFromDB, saveNoteToDB } from "@/utils/db";
 
-// Определяем событие, которое будет отправляться
-const emit = defineEmits(["noteDeleted"]); // Теперь событие 'noteDeleted' правильно определено
+const emit = defineEmits(["noteDeleted"]);
 
-const route = useRoute(); // Получаем информацию о маршруте
-const router = useRouter(); // Для навигации
+const route = useRoute();
+const router = useRouter();
 
-const noteId = parseInt(route.params.id); // Преобразуем id в число
-const note = ref(null); // Создаем реактивную переменную для заметки
+const noteId = parseInt(route.params.id);
+const note = ref(null);
 
-// Загружаем заметку при монтировании компонента
+const typingTimeout = ref(null);
+
 onMounted(async () => {
-  const notes = await getNotesFromDB(); // Получаем все заметки из IndexedDB
-  note.value = notes.find((n) => n.id === noteId); // Находим нужную заметку по id
+  const notes = await getNotesFromDB();
+  note.value = notes.find((n) => n.id === noteId);
+  nextTick(() => {
+    autoExpand(); // Вызываем autoExpand для начальной загрузки
+  });
 });
 
-// Обновление заметки
 const updateNote = async () => {
   if (note.value) {
-    // Сохраняем изменения заметки в IndexedDB
     await saveNoteToDB(note.value);
   }
 };
 
-// Удаление заметки
 const deleteNote = async () => {
   if (note.value) {
-    await deleteNoteFromDB(note.value.id); // Удаляем заметку из IndexedDB
-    router.push("/"); // После удаления возвращаем на главную страницу
-    // Отправляем событие для обновления главной страницы
-    emit("noteDeleted"); // Это событие теперь отправляется
+    await deleteNoteFromDB(note.value.id);
+    router.push("/");
+    emit("noteDeleted"); // Генерируем событие noteDeleted
   }
 };
 
-// Возврат на главную страницу
 const goBack = () => {
-  router.push("/"); // Возврат на главную страницу
+  router.push("/");
+  emit("refreshNotes"); // Отправляем событие для обновления списка заметок
+};
+
+// Функция для авторасширения
+const autoExpand = () => {
+  const textareas = document.querySelectorAll("textarea");
+  textareas.forEach((textarea) => {
+    textarea.style.height = "auto"; // Сбрасываем высоту
+    textarea.style.height = `${textarea.scrollHeight}px`; // Устанавливаем высоту в зависимости от контента
+  });
+};
+
+const onInput = () => {
+  clearTimeout(typingTimeout.value);
+  typingTimeout.value = setTimeout(() => {
+    updateNote();
+  }, 1);
+
+  autoExpand(); // Автоматически расширяем textarea при вводе текста
 };
 </script>
 
@@ -48,19 +65,26 @@ const goBack = () => {
       <button @click="goBack" class="go-back-button">
         <img src="@/assets/icons/back.svg" alt="Go Back" />
       </button>
-      <!-- Поле для заголовка заметки -->
       <textarea
         v-model="note.title"
         placeholder="Title"
         class="note-title"
+        @blur="updateNote"
+        @input="onInput"
+        maxlength="50"
       ></textarea>
-      <!-- Поле для контента заметки -->
       <textarea
         v-model="note.content"
         placeholder="Write your text here..."
+        @blur="updateNote"
+        @input="onInput"
+        class="note-text"
       ></textarea>
-      <button @click="updateNote">Save changes</button>
-      <!-- Кнопка удаления заметки -->
+      <div class="count">
+        <span class="current_count"></span>
+        <span>/</span>
+        <span class="maximum_count">10,000</span>
+      </div>
       <button @click="deleteNote" class="delete-button">
         <img src="@/assets/icons/delete.svg" alt="Delete Note" /> Delete record
       </button>
@@ -90,9 +114,11 @@ const goBack = () => {
   width: 50%;
   height: 100%;
 }
+
 .go-back-button {
   margin-top: 20px;
 }
+
 textarea {
   width: 100%;
   height: auto;
@@ -107,10 +133,12 @@ textarea {
   color: var(--black-color);
   font-size: 20px;
 }
+
 textarea::placeholder {
   color: var(--black-color);
   opacity: 1;
 }
+
 .note-title {
   width: 100%;
   font-size: 28px;
@@ -119,6 +147,11 @@ textarea::placeholder {
   line-height: normal;
   margin-top: 50px;
 }
+
+.note-text {
+  max-height: 6000px;
+}
+
 .delete-button {
   display: flex;
   justify-content: space-between;
@@ -132,9 +165,10 @@ textarea::placeholder {
   padding: 15px 15px;
   font-size: 18px;
   font-weight: 300;
-  margin-top: 10px;
+  margin-top: 30px;
   color: #fffff0;
 }
+
 .delete-button img {
   margin-right: 8px;
 }

@@ -1,36 +1,43 @@
 import { openDB } from "idb";
 
-const DB_NAME = "notesApp";
-const DB_VERSION = 1;
-const STORE_NAME = "notes";
+const DB_NAME = "notesDB"; // Имя базы данных
+const STORE_NAME = "notes"; // Имя хранилища
 
-// Создаем или открываем базу данных
-export const initDB = async () => {
-  const db = await openDB(DB_NAME, DB_VERSION, {
+export const openDatabase = async () => {
+  return openDB(DB_NAME, 1, {
     upgrade(db) {
-      const store = db.createObjectStore(STORE_NAME, {
-        keyPath: "id", // id будет ключом для заметки
-      });
-      store.createIndex("timestamp", "timestamp"); // индекс для сортировки по времени
+      if (!db.objectStoreNames.contains(STORE_NAME)) {
+        db.createObjectStore(STORE_NAME, {
+          keyPath: "id",
+          autoIncrement: true,
+        });
+      }
     },
   });
-  return db;
 };
 
-// Сохраняем заметку в IndexedDB
 export const saveNoteToDB = async (note) => {
-  const db = await initDB();
-  await db.put(STORE_NAME, note); // Вставляем или обновляем заметку
+  const db = await openDatabase();
+  const tx = db.transaction(STORE_NAME, "readwrite");
+  const store = tx.objectStore(STORE_NAME);
+
+  const rawNote = JSON.parse(JSON.stringify(note)); // Убираем реактивность
+
+  await store.put(rawNote);
+  await tx.done;
 };
 
-// Получаем все заметки из IndexedDB
 export const getNotesFromDB = async () => {
-  const db = await initDB();
-  return await db.getAll(STORE_NAME); // Получаем все заметки
+  const db = await openDatabase();
+  const tx = db.transaction(STORE_NAME, "readonly");
+  const store = tx.objectStore(STORE_NAME);
+  return store.getAll();
 };
 
-// Удаляем заметку из IndexedDB
 export const deleteNoteFromDB = async (id) => {
-  const db = await initDB();
-  await db.delete(STORE_NAME, id);
+  const db = await openDatabase();
+  const tx = db.transaction(STORE_NAME, "readwrite");
+  const store = tx.objectStore(STORE_NAME);
+  await store.delete(id);
+  await tx.done;
 };
