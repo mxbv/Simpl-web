@@ -148,7 +148,8 @@ textarea::placeholder {
   height: 100%;
   font-size: 28px;
   font-weight: 500;
-  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: normal;
 }
 .note-text-container {
   min-width: 100%;
