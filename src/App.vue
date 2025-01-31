@@ -5,10 +5,12 @@ import NoteItem from "./components/NoteItem.vue";
 
 const notes = ref([]);
 
+// Загружаем список заметок при монтировании компонента
 onMounted(async () => {
   notes.value = await getNotesFromDB();
 });
 
+// Функция для добавления новой заметки
 const addNewNote = async () => {
   const currentDate = new Date();
   const formattedDate = `${currentDate.toLocaleDateString("en-GB", {
@@ -30,8 +32,9 @@ const addNewNote = async () => {
   notes.value.push(newNote);
 };
 
+// Функция для обновления списка заметок
 const refreshNotes = async () => {
-  notes.value = await getNotesFromDB(); // Обновляем список заметок
+  notes.value = await getNotesFromDB(); // Обновляем список заметок из IndexedDB
 };
 </script>
 

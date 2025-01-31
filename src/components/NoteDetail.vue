@@ -3,7 +3,7 @@ import { useRoute, useRouter } from "vue-router";
 import { ref, onMounted, nextTick } from "vue";
 import { getNotesFromDB, deleteNoteFromDB, saveNoteToDB } from "@/utils/db";
 
-const emit = defineEmits(["noteDeleted"]);
+const emit = defineEmits(["noteDeleted", "refreshNotes"]); // События для обновления
 
 const route = useRoute();
 const router = useRouter();
@@ -13,11 +13,12 @@ const note = ref(null);
 
 const typingTimeout = ref(null);
 
+// Загружаем заметку при монтировании компонента
 onMounted(async () => {
   const notes = await getNotesFromDB();
   note.value = notes.find((n) => n.id === noteId);
   nextTick(() => {
-    autoExpand(); // Вызываем autoExpand для начальной загрузки
+    autoExpand();
   });
 });
 
@@ -27,25 +28,28 @@ const updateNote = async () => {
   }
 };
 
+// Удаление заметки
 const deleteNote = async () => {
   if (note.value) {
     await deleteNoteFromDB(note.value.id);
-    router.push("/");
-    emit("noteDeleted"); // Генерируем событие noteDeleted
+    emit("noteDeleted"); // Генерируем событие для удаления
+    emit("refreshNotes"); // Генерируем событие для обновления списка заметок
+    router.push("/"); // Перенаправляем на главную страницу
   }
 };
 
+// Переход на главную страницу
 const goBack = () => {
   router.push("/");
-  emit("refreshNotes"); // Отправляем событие для обновления списка заметок
+  emit("refreshNotes"); // Отправка события для обновления списка при переходе назад
 };
 
-// Функция для авторасширения
+// Автоматическое расширение поля ввода
 const autoExpand = () => {
   const textareas = document.querySelectorAll("textarea");
   textareas.forEach((textarea) => {
-    textarea.style.height = "auto"; // Сбрасываем высоту
-    textarea.style.height = `${textarea.scrollHeight}px`; // Устанавливаем высоту в зависимости от контента
+    textarea.style.height = "auto"; 
+    textarea.style.height = `${textarea.scrollHeight}px`;
   });
 };
 
@@ -54,8 +58,6 @@ const onInput = () => {
   typingTimeout.value = setTimeout(() => {
     updateNote();
   }, 1);
-
-  autoExpand(); // Автоматически расширяем textarea при вводе текста
 };
 </script>
 
