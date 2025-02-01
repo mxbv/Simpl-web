@@ -1,101 +1,83 @@
 <script setup>
 import { useRoute, useRouter } from "vue-router";
-import { ref, onMounted, nextTick } from "vue";
+import { ref, onMounted, onUnmounted, watchEffect } from "vue";
 import { getNotesFromDB, deleteNoteFromDB, saveNoteToDB } from "@/utils/db";
 
 const emit = defineEmits(["noteDeleted", "refreshNotes"]);
 const route = useRoute();
 const router = useRouter();
-const noteId = parseInt(route.params.id);
+const noteId = ref(parseInt(route.params.id));
 const note = ref(null);
+let autoSaveInterval = null;
 
-// Загружаем заметку при монтировании компонента
-onMounted(async () => {
-  note.value = (await getNotesFromDB()).find((n) => n.id === noteId);
-  nextTick(() => {
-    restoreHeight();
-  });
+// Блокируем прокрутку при открытии заметки
+onMounted(() => {
+  document.body.style.overflow = "hidden";
+
+  // Запускаем авто-сохранение каждые 200 мс
+  autoSaveInterval = setInterval(() => {
+    if (note.value) saveNoteToDB(note.value);
+  }, 200);
 });
 
-// Восстановление сохранённой высоты
-const restoreHeight = () => {
-  const titleTextarea = document.querySelector(".note-title");
-  const contentTextarea = document.querySelector(".note-text");
-  const savedTitleHeight = localStorage.getItem("titleHeight");
-  const savedContentHeight = localStorage.getItem("contentHeight");
+// Восстанавливаем прокрутку при выходе из заметки
+onUnmounted(() => {
+  document.body.style.overflow = "";
+  clearInterval(autoSaveInterval);
+});
 
-  if (savedTitleHeight) {
-    titleTextarea.style.height = savedTitleHeight + "px";
-  }
-  if (savedContentHeight) {
-    contentTextarea.style.height = savedContentHeight + "px";
-  }
-};
-
-// Сохранение высоты textarea
-const saveHeight = (textarea, field) => {
-  localStorage.setItem(`${field}Height`, textarea.scrollHeight);
-  textarea.style.height = "auto";
-  textarea.style.height = `${textarea.scrollHeight}px`;
-};
-
-// Обновление заметки в базе данных
-const updateNote = async () => {
-  if (note.value) {
-    await saveNoteToDB(note.value);
-  }
-};
+// Загружаем заметку при изменении noteId
+watchEffect(async () => {
+  const notes = await getNotesFromDB();
+  note.value = notes.find((n) => n.id === noteId.value) || null;
+});
 
 // Удаление заметки
 const deleteNote = async () => {
   if (note.value) {
-    await deleteNoteFromDB(note.value.id);
-    emit("noteDeleted");
-    emit("refreshNotes");
-    router.push("/");
+    const isConfirmed = window.confirm(
+      "Are you sure you want to delete this note?"
+    );
+    if (isConfirmed) {
+      clearInterval(autoSaveInterval); // Останавливаем авто-сохранение
+      await deleteNoteFromDB(note.value.id);
+      note.value = null; // Обнуляем текущую заметку
+      emit("noteDeleted");
+      emit("refreshNotes");
+      router.push("/");
+    }
   }
 };
 
-// Переход на главную страницу
+// Переход назад
 const goBack = () => {
   router.push("/");
   emit("refreshNotes");
-};
-
-// Автоматическое расширение textarea
-const autoExpand = (event) => {
-  event.target.style.height = "auto";
-  event.target.style.height = `${event.target.scrollHeight}px`;
-  saveHeight(event.target, event.target.classList.contains('note-title') ? 'title' : 'content');
-};
-
-// Обработчик ввода
-const onInput = (event) => {
-  updateNote();
-  autoExpand(event);
 };
 </script>
 
 <template>
   <div v-if="note" class="note">
     <div class="note-container">
-      <button @click="goBack" class="go-back-button">
-        <img src="@/assets/icons/back.svg" alt="Go Back" />
-      </button>
-      <textarea
+      <div class="note-header">
+        <button @click="goBack" class="go-back-button">
+          <img src="@/assets/icons/back.svg" alt="Go Back" />
+        </button>
+        <span>{{ note.date }}</span>
+      </div>
+      <input
         v-model="note.title"
         placeholder="Title"
-        class="note-title"
-        @blur="updateNote"
-        @input="onInput"
+        class="note-input note-title"
+        ref="titleTextarea"
         maxlength="50"
-      ></textarea>
+        type="text"
+      />
       <textarea
         v-model="note.content"
         placeholder="Write your text here..."
-        class="note-text"
-        @blur="updateNote"
-        @input="onInput"
+        class="note-input note-text"
+        ref="contentTextarea"
       ></textarea>
       <button @click="deleteNote" class="delete-button">
         <img src="@/assets/icons/delete.svg" alt="Delete Note" /> Delete record
@@ -110,40 +92,47 @@ const onInput = (event) => {
 <style scoped>
 .note {
   display: flex;
-  overflow: hidden;
   position: absolute;
   width: 100%;
-  min-height: 100%;
+  height: 100dvh;
   background-color: #fffff0;
   top: 0;
   left: 0;
   justify-content: center;
-  align-items: flex-start;
-  padding: 30px 0;
+  z-index: 1000;
+  overflow: auto;
+  animation: fadeIn 0.3s ease-in-out;
 }
 
 .note-container {
-  width: 50%;
+  width: 70%;
   height: 100%;
+  padding: 30px 0;
 }
-
-textarea {
+.note-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.go-back-button {
+  background-color: #ececdd;
+}
+.note-input {
   width: 100%;
-  height: auto;
   border: none;
-  padding: 5px;
+  padding: 15px;
   font-family: inherit;
   box-sizing: border-box;
   outline: none;
   resize: none;
-  line-height: 20px;
-  background: none;
+  background-color: var(--content-color);
   color: var(--black-color);
   font-size: 20px;
-  border-bottom: solid 1px #000000;
+  border-radius: 15px;
+  margin-top: 30px;
 }
 
-textarea::placeholder {
+.note-input::placeholder {
   color: var(--black-color);
   opacity: 1;
 }
@@ -153,12 +142,12 @@ textarea::placeholder {
   font-size: 28px;
   font-weight: 500;
   text-overflow: ellipsis;
-  line-height: normal;
-  margin-top: 50px;
 }
 
 .note-text {
-  max-height: 6000px;
+  height: 50%;
+  min-height: 50%;
+  max-height: 50%;
 }
 
 .delete-button {
@@ -174,11 +163,16 @@ textarea::placeholder {
   padding: 15px 15px;
   font-size: 18px;
   font-weight: 300;
-  margin-top: 30px;
   color: #fffff0;
+  margin-top: 50px;
 }
 
 .delete-button img {
   margin-right: 8px;
 }
+span {
+  font-size: 18px;
+  font-weight: 300;
+}
+
 </style>
