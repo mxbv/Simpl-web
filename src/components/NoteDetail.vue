@@ -64,6 +64,9 @@ const goBack = () => {
           <img src="@/assets/icons/back.svg" alt="Go Back" />
         </button>
         <span>{{ note.date }}</span>
+        <button @click="deleteNote" class="delete-button">
+          <img src="@/assets/icons/delete.svg" alt="Delete Note" />
+        </button>
       </div>
       <input
         v-model="note.title"
@@ -78,10 +81,11 @@ const goBack = () => {
         placeholder="Write your text here..."
         class="note-input note-text"
         ref="contentTextarea"
+        maxlength="10000"
       ></textarea>
-      <button @click="deleteNote" class="delete-button">
-        <img src="@/assets/icons/delete.svg" alt="Delete Note" /> Delete record
-      </button>
+      <span>{{ note.content ? note.content.length : "0" }}</span>
+      <span> / </span>
+      <span>10,000</span>
     </div>
   </div>
   <div v-else>
@@ -116,6 +120,10 @@ const goBack = () => {
 }
 .go-back-button {
   background-color: #ececdd;
+  transition: .3s;
+}
+.go-back-button:hover {
+  background-color: #dedece;
 }
 .note-input {
   width: 100%;
@@ -130,6 +138,7 @@ const goBack = () => {
   font-size: 20px;
   border-radius: 15px;
   margin-top: 30px;
+  border: solid 1px var(--border-color);
 }
 
 .note-input::placeholder {
@@ -148,31 +157,18 @@ const goBack = () => {
   height: 50%;
   min-height: 50%;
   max-height: 50%;
+  margin-bottom: 10px;
 }
 
 .delete-button {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: fit-content;
-  height: fit-content;
   background-color: var(--black-color);
-  color: var(--white-color);
-  transition: 0.5s;
-  border-radius: 15px;
-  padding: 15px 15px;
-  font-size: 18px;
-  font-weight: 300;
-  color: #fffff0;
-  margin-top: 50px;
+  transition: 0.3s;
 }
-
-.delete-button img {
-  margin-right: 8px;
+.delete-button:hover {
+  background-color: red;
 }
 span {
   font-size: 18px;
   font-weight: 300;
 }
-
 </style>

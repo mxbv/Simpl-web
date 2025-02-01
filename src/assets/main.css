@@ -1,23 +1,13 @@
 @font-face {
-  font-family: Raleway;
-  src: url(./fonts/Raleway/Raleway-VariableFont_wght.ttf);
+  font-family: Montserrat;
+  src: url(./fonts/Montserrat/Montserrat-VariableFont_wght.ttf);
 }
 :root {
   --bg-color-light: #f8f6e9;
-  --text-color: #383838;
-  --border-color: #eaeadb;
+  --border-color: #ccc;
   --header-footer-bg-color: #d6d6cc78;
   --black-color: #000000;
   --content-color: #ececdc;
-}
-
-::-webkit-scrollbar {
-  width: 10px;
-  color: #ffff00;
-  background-color: #ffff00;
-}
-::-webkit-scrollbar-thumb {
-  border-radius: 10px;
 }
 html {
   min-height: 100%;
@@ -27,7 +17,7 @@ html {
 *::after {
   box-sizing: border-box;
   scrollbar-width: thin;
-  font-family: Raleway;
+  font-family: "Montserrat";
 }
 
 body {

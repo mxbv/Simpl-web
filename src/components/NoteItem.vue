@@ -14,7 +14,7 @@ defineProps({
       {{
         note.content
           ? note.content.substring(0, 50) +
-            (note.content.length > 40 ? "..." : "")
+            (note.content.length > 50 ? "..." : "")
           : ""
       }}
     </h4>
@@ -28,7 +28,7 @@ defineProps({
   padding-top: 30px;
   margin-bottom: 30px;
   background: var(--content-color);
-  border: 1px solid #ccc;
+  border: 1px solid var(--border-color);
   border-radius: 30px;
   color: var(--text-color);
   text-decoration: none;
@@ -64,5 +64,6 @@ p {
   padding: 20px 30px 30px 20px;
   width: fit-content;
   border-radius: 0 30px 0 30px;
+  font-weight: 300;
 }
 </style>
