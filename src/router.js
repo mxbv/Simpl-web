@@ -1,9 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
-import NoteDetails from "@/components/NoteDetail.vue"; // Компонент для детального просмотра заметки
-
-// const routes = [
-  
-// ];
+import NoteDetails from "@/components/NoteDetail.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -11,7 +7,7 @@ const router = createRouter({
     {
       path: "/note/:id",
       name: "NoteDetails",
-      component: NoteDetails, // Компонент для отображения деталей заметки
+      component: NoteDetails,
     },
   ],
 });

@@ -61,11 +61,34 @@ const goBack = () => {
     <div class="note-container">
       <div class="note-header">
         <button @click="goBack" class="go-back-button">
-          <img src="@/assets/icons/back.svg" alt="Go Back" />
+          <svg
+            transform="rotate(90)"
+            width="35"
+            height="35"
+            fill="none"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="m5.707 9.711a1 1 0 0 0 0 1.414l4.892 4.887a2 2 0 0 0 2.828 0l4.89-4.89a1 1 0 1 0-1.414-1.414l-4.186 4.186a1 1 0 0 1-1.414 0l-4.182-4.182a1 1 0 0 0-1.414 0z"
+              fill="#000"
+            />
+          </svg>
         </button>
         <span>{{ note.date }}</span>
         <button @click="deleteNote" class="delete-button">
-          <img src="@/assets/icons/delete.svg" alt="Delete Note" />
+          <svg
+            class="delete-icon"
+            width="35px"
+            height="35px"
+            fill="#fffff0"
+            viewBox="-3.5 0 19 19"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M11.383 13.644A1.03 1.03 0 0 1 9.928 15.1L6 11.172 2.072 15.1a1.03 1.03 0 1 1-1.455-1.456l3.928-3.928L.617 5.79a1.03 1.03 0 1 1 1.455-1.456L6 8.261l3.928-3.928a1.03 1.03 0 0 1 1.455 1.456L7.455 9.716z"
+            />
+          </svg>
         </button>
       </div>
       <input
@@ -120,7 +143,7 @@ const goBack = () => {
 }
 .go-back-button {
   background-color: #ececdd;
-  transition: .3s;
+  transition: 0.3s;
 }
 .go-back-button:hover {
   background-color: #dedece;
@@ -162,13 +185,15 @@ const goBack = () => {
 
 .delete-button {
   background-color: var(--black-color);
-  transition: 0.3s;
+  transition: 0.3s ease-in-out;
 }
 .delete-button:hover {
   background-color: red;
+  .delete-icon path {
+    fill: #000000;
+  }
 }
-span {
-  font-size: 18px;
-  font-weight: 300;
+.delete-icon {
+  transition: fill 0.4s;
 }
 </style>

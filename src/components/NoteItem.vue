@@ -18,7 +18,7 @@ defineProps({
           : ""
       }}
     </h4>
-    <p>{{ note.date }}</p>
+    <span>{{ note.date }}</span>
   </router-link>
 </template>
 
@@ -30,7 +30,7 @@ defineProps({
   background: var(--content-color);
   border: 1px solid var(--border-color);
   border-radius: 30px;
-  color: var(--text-color);
+  color: var(--black-color);
   text-decoration: none;
   animation: fadeIn 0.3s ease-in-out;
   transition: 0.3s;
@@ -54,16 +54,13 @@ h4 {
   color: #5d5d5d;
   padding-left: 20px;
 }
-p {
-  font-size: 18px;
-  color: var(--text-color);
-  margin: 0;
+span {
+  display: block;
   margin-top: 20px;
   padding-left: 20px;
   background-color: #dedecf;
   padding: 20px 30px 30px 20px;
   width: fit-content;
   border-radius: 0 30px 0 30px;
-  font-weight: 300;
 }
 </style>
