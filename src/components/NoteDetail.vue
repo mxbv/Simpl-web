@@ -196,4 +196,18 @@ const goBack = () => {
 .delete-icon {
   transition: fill 0.4s;
 }
+@media screen and (max-width: 728px) {
+  .note-container {
+    width: 98%;
+    height: 100%;
+  }
+  .note-title {
+    font-size: 22px;
+  }
+  .note-text {
+    height: 60%;
+    min-height: 60%;
+    max-height: 60%;
+  }
+}
 </style>

@@ -52,3 +52,9 @@ span {
     opacity: 1;
   }
 }
+@media screen and (max-width: 728px) {
+  body {
+    min-width: 100%;
+    padding-top: 100px;
+  }
+}

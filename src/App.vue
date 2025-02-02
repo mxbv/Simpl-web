@@ -37,12 +37,36 @@ const addNewNote = async () => {
 const refreshNotes = async () => {
   notes.value = await getNotesFromDB(); // Обновляем список заметок из IndexedDB
 };
+
+// Экспорт заметок
+const exportNotes = () => {
+  const content = notes.value
+    .map(
+      (note) =>
+        `| ${(note.title || "empty").toUpperCase()} (${note.date})\n${
+          note.content || "empty"
+        }\n`
+    )
+    .join("\n");
+
+  const blob = new Blob([content], { type: "text/plain; charset=utf-8" });
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = "exportNotes.txt";
+  link.click();
+  URL.revokeObjectURL(link.href);
+};
 </script>
 
 <template>
   <div>
     <div class="sidebar">
-      <button class="note-export" type="button" title="Export">
+      <button
+        class="note-export"
+        type="button"
+        title="Export"
+        @click="exportNotes"
+      >
         <svg
           width="35px"
           height="35px"
@@ -122,6 +146,7 @@ const refreshNotes = async () => {
   left: 10%;
   transform: translateY(-50%);
   border-radius: 60px;
+  z-index: 1000;
 }
 footer {
   display: flex;
@@ -141,5 +166,13 @@ footer {
 }
 .note-add {
   background-color: var(--black-color);
+}
+@media screen and (max-width: 728px) {
+  .sidebar {
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    flex-direction: row;
+  }
 }
 </style>

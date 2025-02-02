@@ -43,7 +43,7 @@ h3 {
   margin: 0;
   font-size: 25px;
   font-weight: 500;
-  padding-left: 20px;
+  padding: 0 20px;
 }
 
 h4 {
@@ -52,15 +52,32 @@ h4 {
   font-size: 18px;
   font-weight: 400;
   color: #5d5d5d;
-  padding-left: 20px;
+  padding: 0 20px;
 }
 span {
   display: block;
   margin-top: 20px;
-  padding-left: 20px;
   background-color: #dedecf;
   padding: 20px 30px 30px 20px;
   width: fit-content;
   border-radius: 0 30px 0 30px;
+}
+@media screen and (max-width: 728px) {
+  .note-item {
+    width: 98%;
+    margin: 0 auto;
+    margin-bottom: 20px;
+    padding-top: 20px;
+  }
+  h3 {
+    font-size: 22px;
+    padding: 0 15px;
+  }
+  h4 {
+    padding: 0 15px;
+  }
+  span {
+    padding: 20px 15px;
+  }
 }
 </style>
