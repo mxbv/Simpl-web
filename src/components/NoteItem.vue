@@ -51,7 +51,6 @@ h4 {
   margin-top: 20px;
   font-size: 18px;
   font-weight: 400;
-  color: #5d5d5d;
   padding: 0 20px;
 }
 span {

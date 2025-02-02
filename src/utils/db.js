@@ -1,10 +1,10 @@
 import { openDB } from "idb";
 
-const DB_NAME = "notesDB"; // Имя базы данных
-const STORE_NAME = "notes"; // Имя хранилища
+const DB_NAME = "notesDB";
+const STORE_NAME = "notes";
 
 export const openDatabase = async () => {
-  return openDB(DB_NAME, 1, {
+  return openDB(DB_NAME, 2, {
     upgrade(db) {
       if (!db.objectStoreNames.contains(STORE_NAME)) {
         const store = db.createObjectStore(STORE_NAME, {
@@ -24,13 +24,13 @@ export const saveNoteToDB = async (note) => {
 
   const existingNote = await store.get(note.id);
 
-  const rawNote = JSON.parse(JSON.stringify(note)); // Убираем реактивность
+  const rawNote = JSON.parse(JSON.stringify(note)); // Removing the reactivity
 
-  // Если заметка уже есть, сохраняем старый createdAt
+  // If the note already exists, save the old createdAt
   if (existingNote) {
     rawNote.createdAt = existingNote.createdAt;
   } else {
-    rawNote.createdAt = Date.now(); // Если новая заметка — устанавливаем createdAt
+    rawNote.createdAt = Date.now(); // If a new note - set createdAt
   }
 
   await store.put(rawNote);
@@ -43,7 +43,7 @@ export const getNotesFromDB = async () => {
   const store = tx.objectStore(STORE_NAME);
   const notes = await store.getAll();
 
-  return notes.sort((a, b) => b.createdAt - a.createdAt); // Сортируем по дате создания (новые сверху)
+  return notes.sort((a, b) => b.createdAt - a.createdAt); // Sort by date of creation (new on top)
 };
 
 export const deleteNoteFromDB = async (id) => {

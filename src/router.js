@@ -1,8 +1,8 @@
-import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHashHistory } from "vue-router";
 import NoteDetails from "@/components/NoteDetail.vue";
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHashHistory("/#/"),
   routes: [
     {
       path: "/note/:id",

@@ -10,48 +10,48 @@ const noteId = ref(parseInt(route.params.id));
 const note = ref(null);
 let autoSaveInterval = null;
 
-// Блокируем прокрутку при открытии заметки
+// Block scrolling when opening a note
 onMounted(() => {
   document.body.style.overflow = "hidden";
 
-  // Запускаем авто-сохранение каждые 200 мс
+  // Run auto-save every 200 ms.
   autoSaveInterval = setInterval(() => {
     if (note.value) saveNoteToDB(note.value);
   }, 200);
 });
 
-// Восстанавливаем прокрутку при выходе из заметки
+// Restore scrolling when exiting a note
 onUnmounted(() => {
   document.body.style.overflow = "";
   clearInterval(autoSaveInterval);
 });
 
-// Загружаем заметку при изменении noteId
+// Load note when noteId is changed
 watchEffect(async () => {
   const notes = await getNotesFromDB();
   note.value = notes.find((n) => n.id === noteId.value) || null;
 });
 
-// Удаление заметки
+// Deleting a note
 const deleteNote = async () => {
   if (note.value) {
     const isConfirmed = window.confirm(
       "Are you sure you want to delete this note?"
     );
     if (isConfirmed) {
-      clearInterval(autoSaveInterval); // Останавливаем авто-сохранение
+      clearInterval(autoSaveInterval); // Stop auto-save
       await deleteNoteFromDB(note.value.id);
-      note.value = null; // Обнуляем текущую заметку
+      note.value = null; // Zeroing the current note
       emit("noteDeleted");
       emit("refreshNotes");
-      router.push("/");
+      router.replace("/");
     }
   }
 };
 
-// Переход назад
+// Go back
 const goBack = () => {
-  router.push("/");
+  router.replace("/");
   emit("refreshNotes");
 };
 </script>
