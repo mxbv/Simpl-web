@@ -201,7 +201,7 @@ const goBack = async () => {
 .delete-icon {
   transition: fill 0.4s;
 }
-@media screen and (max-width: 728px) {
+@media screen and (max-width: 768px) {
   .note-container {
     width: 98%;
     height: 100%;

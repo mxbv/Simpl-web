@@ -43,7 +43,7 @@ span {
   font-weight: 300;
   font-size: 18px;
 }
-@media screen and (max-width: 728px) {
+@media screen and (max-width: 768px) {
   body {
     min-width: 100%;
     padding-top: 100px;

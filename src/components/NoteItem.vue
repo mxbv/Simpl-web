@@ -63,7 +63,7 @@ h4 {
 span {
   width: fit-content;
 }
-@media screen and (max-width: 728px) {
+@media screen and (max-width: 768px) {
   .note-item {
     width: 98%;
     margin: 0 auto;

@@ -172,7 +172,7 @@ const exportNotes = () => {
   }
 }
 
-@media screen and (max-width: 728px) {
+@media screen and (max-width: 768px) {
   .sidebar {
     top: 10px;
     left: 50%;
