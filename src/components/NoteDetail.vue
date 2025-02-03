@@ -13,7 +13,7 @@ let autoSaveInterval = null;
 // Block scrolling when opening a note
 onMounted(() => {
   document.body.style.overflow = "hidden";
-
+  window.scrollTo(0, 0);
   // Run auto-save every 200 ms.
   autoSaveInterval = setInterval(() => {
     if (note.value) saveNoteToDB(note.value);
@@ -49,10 +49,13 @@ const deleteNote = async () => {
   }
 };
 
-// Go back
-const goBack = () => {
+const goBack = async () => {
+  if (!note.value.title && !note.value.text) {
+    // Если заметка пустая, удаляем её
+    await deleteNoteFromDB(note.value.id);
+  }
   router.replace("/");
-  emit("refreshNotes");
+  emit("refreshNotes"); // Перенаправление на главную страницу
 };
 </script>
 
@@ -128,7 +131,6 @@ const goBack = () => {
   justify-content: center;
   z-index: 1000;
   overflow: auto;
-  animation: fadeIn 0.3s ease-in-out;
 }
 
 .note-container {
@@ -160,8 +162,6 @@ const goBack = () => {
   color: var(--black-color);
   font-size: 20px;
   border-radius: 15px;
-  margin-top: 30px;
-  border: solid 1px var(--border-color);
 }
 
 .note-input::placeholder {
@@ -174,13 +174,18 @@ const goBack = () => {
   font-size: 28px;
   font-weight: 500;
   text-overflow: ellipsis;
+  margin-top: 30px;
+  border-bottom: none;
+  border-radius: 15px 15px 0 0;
 }
 
 .note-text {
-  height: 50%;
-  min-height: 50%;
-  max-height: 50%;
+  height: 500px;
+  min-height: 400px;
+  max-height: 60%;
   margin-bottom: 10px;
+  border-radius: 0 0 15px 15px;
+  border-top: solid 1px var(--border-color);
 }
 
 .delete-button {

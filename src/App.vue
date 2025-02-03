@@ -2,9 +2,9 @@
 import { ref, onMounted } from "vue";
 import { getNotesFromDB, saveNoteToDB } from "@/utils/db";
 import NoteItem from "./components/NoteItem.vue";
-
+import { useRouter } from "vue-router";
 const notes = ref([]);
-
+const router = useRouter();
 // Load the list of notes when a component is mounted
 onMounted(async () => {
   notes.value = await getNotesFromDB();
@@ -13,11 +13,10 @@ onMounted(async () => {
 // Function for adding a new note
 const addNewNote = async () => {
   const currentDate = new Date();
-  const formattedDate = `${currentDate.toLocaleDateString("en-GB", {
-    weekday: "short",
-    year: "numeric",
+  const formattedDate = `${currentDate.toLocaleString("en-GB", {
     day: "2-digit",
-    month: "2-digit",
+    month: "short",
+    year: "numeric",
     hour: "2-digit",
     minute: "2-digit",
     hour12: false,
@@ -29,6 +28,7 @@ const addNewNote = async () => {
     date: formattedDate,
   };
   await saveNoteToDB(newNote);
+  router.replace(`/note/${newNote.id}`);
   // Add a new note to the top of the list
   notes.value.unshift(newNote);
 };
@@ -61,6 +61,13 @@ const exportNotes = () => {
 <template>
   <div>
     <div class="sidebar">
+      <a
+        href="https://github.com/mxbv/Simpl"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="sidebar-link"
+        >Simpl</a
+      >
       <button
         class="note-export"
         type="button"
@@ -92,6 +99,7 @@ const exportNotes = () => {
           stroke="#FFFFF0"
           viewBox="0 0 24 24"
           xmlns="http://www.w3.org/2000/svg"
+          class="add-icon"
         >
           <line
             x1="12"
@@ -120,15 +128,6 @@ const exportNotes = () => {
     </div>
     <!-- Основной контент для маршрутов -->
     <router-view @refreshNotes="refreshNotes" />
-    <footer>
-      <a
-        href="https://github.com/mxbv/Simpl"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="footer-link"
-        >Simpl (View on github)</a
-      >
-    </footer>
   </div>
 </template>
 
@@ -141,32 +140,38 @@ const exportNotes = () => {
   background-color: #d6d6cc6a;
   backdrop-filter: blur(5px);
   border: solid 1.3px var(--border-color);
-  flex-direction: column;
-  top: 50%;
-  left: 10%;
-  transform: translateY(-50%);
+  flex-direction: row;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
   border-radius: 60px;
   z-index: 1000;
 }
-footer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: fit-content;
-  margin-bottom: 10px;
-}
-.footer-link {
+
+.sidebar-link {
   color: var(--black-color);
-  font-size: 18px;
+  font-size: 22px;
   font-weight: 500;
   text-decoration: none;
+  margin-left: 20px;
+  margin-right: 20px;
 }
-.footer-link:hover {
+.sidebar-link:hover {
   text-decoration: underline;
 }
 .note-add {
   background-color: var(--black-color);
+  transition: 2s;
 }
+.add-icon {
+  transition: 0.5s;
+}
+.note-add:hover {
+  .add-icon {
+    transform: rotate(180deg);
+  }
+}
+
 @media screen and (max-width: 728px) {
   .sidebar {
     top: 10px;
