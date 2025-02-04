@@ -50,12 +50,12 @@ const deleteNote = async () => {
 };
 
 const goBack = async () => {
-  if (!note.value.title && !note.value.text) {
-    // Если заметка пустая, удаляем её
+  if (!note.value.title && !note.value.content) {
+    // If the note is empty, delete it
     await deleteNoteFromDB(note.value.id);
   }
   router.replace("/");
-  emit("refreshNotes"); // Перенаправление на главную страницу
+  emit("refreshNotes"); // Redirect to the home page
 };
 </script>
 

@@ -126,7 +126,7 @@ const exportNotes = () => {
     <div class="note-list">
       <NoteItem v-for="note in notes" :key="note.id" :note="note" />
     </div>
-    <!-- Основной контент для маршрутов -->
+    <!-- Main content for routes -->
     <router-view @refreshNotes="refreshNotes" />
   </div>
 </template>
