@@ -31,15 +31,16 @@ defineProps({
   padding: 20px;
   margin-bottom: 30px;
   background: var(--content-color);
-  border: 1px solid var(--border-color);
   border-radius: 30px;
   color: var(--black-color);
   text-decoration: none;
-  transition: 0.3s;
   overflow: hidden;
+  box-shadow: 0px 4px 10px #0000001a;
+  transition: box-shadow 0.3s ease, transform 0.2s ease;
 }
 .note-item:hover {
-  background-color: #dedecf;
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.15); /* Увеличенная тень при наведении */
+  transform: translateY(-2px);
 }
 
 h3 {

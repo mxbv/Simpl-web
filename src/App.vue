@@ -137,9 +137,8 @@ const exportNotes = () => {
   position: fixed;
   justify-content: center;
   align-items: center;
-  background-color: #d6d6cc6a;
-  backdrop-filter: blur(5px);
-  border: solid 1.3px var(--border-color);
+  background-color: #faf3e0;
+  border: 1px solid var(--bg-light);
   flex-direction: row;
   top: 10px;
   left: 50%;
