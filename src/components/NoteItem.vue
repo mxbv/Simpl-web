@@ -45,7 +45,7 @@ defineProps({
 
 h3 {
   margin: 0;
-  font-size: 20px;
+  font-size: 1.3rem;
   font-weight: 500;
   width: 100%;
   height: fit-content;
@@ -55,7 +55,7 @@ h3 {
 
 h4 {
   margin: 0;
-  font-size: 18px;
+  font-size: 1.1rem;
   font-weight: 400;
   width: fit-content;
   height: fit-content;
@@ -66,12 +66,9 @@ span {
 }
 @media screen and (max-width: 768px) {
   .note-item {
-    width: 98%;
+    width: 95%;
     margin: 0 auto;
     margin-bottom: 20px;
-  }
-  h3 {
-    font-size: 22px;
   }
 }
 </style>

@@ -158,7 +158,7 @@ const goBack = async () => {
   resize: none;
   background-color: var(--content-color);
   color: var(--black-color);
-  font-size: 20px;
+  font-size: 1.3rem;
   border-radius: 15px;
 }
 
@@ -169,7 +169,7 @@ const goBack = async () => {
 
 .note-title {
   width: 100%;
-  font-size: 28px;
+  font-size: 1.5rem;
   font-weight: 500;
   text-overflow: ellipsis;
   margin-top: 30px;
@@ -204,9 +204,6 @@ const goBack = async () => {
   .note-container {
     width: 98%;
     height: 100%;
-  }
-  .note-title {
-    font-size: 22px;
   }
   .note-text {
     height: 60%;

@@ -15,6 +15,7 @@
   box-sizing: border-box;
   scrollbar-width: thin;
   font-family: "Montserrat";
+  font-size: 1rem;
 }
 html {
   min-height: 100%;
@@ -41,7 +42,6 @@ button {
 span {
   color: #3a3a3a;
   font-weight: 300;
-  font-size: 18px;
 }
 @media screen and (max-width: 768px) {
   body {
