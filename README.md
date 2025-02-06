@@ -1,12 +1,38 @@
-![logo](https://github.com/user-attachments/assets/fa591b8b-678b-42ff-8ded-79e25fe1cae0)
+# Simpl 
 
-# Simpl
+
+<img width="1280" alt="img" src="https://github.com/user-attachments/assets/bc9e6ba2-7283-4826-b2e4-65491a1c5234" />
+
+
+[You can see it live](https://mxbv.github.io/simpl)
+
 
 ## About
-A minimalist journaling application designed to store and manage entries locally using localStorage. Simple, efficient, and always accessible without external dependencies.
 
-## How it works
-In this app you can create new entries, read, modify, and delete them. It uses localStorage and writes data to a single key. Using a single key simplifies data handling and makes it easy to add fields for entries without changing the storage structure. The app also allows you to export your journal to a TXT file for backup or sharing purposes.
+Simpl is a lightweight and efficient note-taking application built with Vue.js. It leverages Vue Router for navigation and IndexedDB for persistent data storage, ensuring a seamless and reliable user experience.
+
+## Features
+
+* Create, Edit, and Delete Notes: Easily manage your notes with a simple and intuitive interface.
+
+* Automatic Saving: All changes are saved instantly without the need for manual actions.
+
+* Persistent Storage: Uses IndexedDB to store notes locally, making them available even after closing the browser.
+
+* Export to TXT: Users can export all their notes into a single TXT file for backup or external use.
+
+## Technologies Used
+
+* Vue.js: Frontend framework for a responsive and interactive UI.
+
+* Vue Router: Enables smooth navigation between different views.
+
+* IndexedDB: Provides local storage for offline access and data persistence.
+
+Simpl is designed to be fast, minimalistic, and user-friendly, making it an excellent choice for those who need a reliable note-taking solution without unnecessary complexity.
+
+
 
 ## Let's do it together
+
 The code is open source, and I will be glad if you add something new and useful to it. Thank you!
