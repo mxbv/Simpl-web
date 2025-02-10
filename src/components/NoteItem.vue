@@ -39,7 +39,7 @@ defineProps({
   transition: box-shadow 0.3s ease, transform 0.2s ease;
 }
 .note-item:hover {
-  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.15); /* Увеличенная тень при наведении */
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.15);
   transform: translateY(-2px);
 }
 

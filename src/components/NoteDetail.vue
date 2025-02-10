@@ -184,6 +184,7 @@ const goBack = async () => {
   margin-bottom: 10px;
   border-radius: 0 0 15px 15px;
   border-top: solid 1px var(--border-color);
+  box-shadow: 0px 4px 10px #0000001a;
 }
 
 .delete-button {
@@ -202,7 +203,7 @@ const goBack = async () => {
 }
 @media screen and (max-width: 768px) {
   .note-container {
-    width: 98%;
+    width: 95%;
     height: 100%;
   }
   .note-text {
