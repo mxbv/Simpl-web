@@ -8,31 +8,24 @@
   --black-color: #000000;
   --content-color: #faf3e0;
 }
-/* Скрыть саму полосу прокрутки */
-::-webkit-scrollbar {
-  width: 8px; /* Ширина полосы прокрутки */
-  height: 8px; /* Высота полосы прокрутки */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(0, 0, 0) rgba(0, 0, 0, 0);
 }
 
-/* Настроить цвет фона полосы прокрутки */
-::-webkit-scrollbar-track {
-  background: transparent; /* Прозрачный фон для track */
+/* Works on Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 12px;
 }
 
-/* Настроить цвет и стиль самого ползунка */
-::-webkit-scrollbar-thumb {
-  background-color: rgba(0, 0, 0, 0.2); /* Полупрозрачный цвет ползунка */
-  border-radius: 10px; /* Округлость ползунка */
+*::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0);
 }
 
-/* Для горизонтальной полосы прокрутки */
-::-webkit-scrollbar-horizontal {
-  height: 8px;
-}
-
-/* Для вертикальной полосы прокрутки */
-::-webkit-scrollbar-vertical {
-  width: 8px;
+*::-webkit-scrollbar-thumb {
+  background-color: blue;
+  border-radius: 20px;
+  border: 3px solid rgba(0, 0, 0, 0);
 }
 *,
 *::before,
@@ -67,6 +60,9 @@ button {
 }
 button:hover {
   background-color: #beb3a1;
+}
+svg {
+  color: var(--black-color);
 }
 span {
   color: #3a3a3a;

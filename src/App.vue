@@ -131,10 +131,14 @@ const refreshNotes = async () => {
 
 @media screen and (max-width: 768px) {
   .main-header {
+    width: 95%;
     top: 10px;
     left: 50%;
     transform: translateX(-50%);
     flex-direction: row;
+  }
+  .main-header-link {
+    font-size: 2rem;
   }
 }
 </style>

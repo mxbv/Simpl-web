@@ -1,6 +1,6 @@
 <script setup>
 import { useRoute, useRouter } from "vue-router";
-import { ref, onMounted, onUnmounted, watchEffect } from "vue";
+import { ref, onMounted, onUnmounted, watchEffect, watch, nextTick } from "vue";
 import { getNotesFromDB, deleteNoteFromDB, saveNoteToDB } from "@/utils/db";
 
 const emit = defineEmits(["noteDeleted", "refreshNotes"]);
@@ -9,6 +9,7 @@ const router = useRouter();
 const noteId = ref(parseInt(route.params.id));
 const notes = ref([]);
 const note = ref(null);
+const contentTextarea = ref([]);
 let autoSaveInterval = null;
 
 // Block scrolling when opening a note
@@ -75,6 +76,32 @@ const goBack = async () => {
   router.replace("/");
   emit("refreshNotes"); // Redirect to the home page
 };
+
+// Adjust height
+const adjustTextareaHeight = () => {
+  if (contentTextarea.value) {
+    contentTextarea.value.style.height = "auto"; // Dropping altitude
+    contentTextarea.value.style.height =
+      contentTextarea.value.scrollHeight + "px"; // Set the new height
+  }
+};
+
+watch(
+  () => note.value,
+  (newNote) => {
+    if (newNote) {
+      nextTick(() => adjustTextareaHeight());
+    }
+  },
+  { immediate: true }
+);
+
+watch(
+  () => note.value?.content,
+  () => {
+    nextTick(() => adjustTextareaHeight());
+  }
+);
 </script>
 
 <template>
@@ -183,7 +210,7 @@ const goBack = async () => {
   left: 0;
   justify-content: center;
   z-index: 1000;
-  overflow: hidden;
+  overflow: auto;
 }
 .note-header {
   display: flex;
@@ -202,7 +229,7 @@ const goBack = async () => {
 .note-container {
   width: 100%;
   height: 100%;
-  padding: 20px 0;
+  padding: 20px 0 0 0;
 }
 
 .note-input {
@@ -228,15 +255,17 @@ const goBack = async () => {
   text-overflow: ellipsis;
   border-bottom: none;
   padding-bottom: 0;
-  margin-top: 20px;
+  margin-top: 50px;
 }
 
 .note-text {
-  min-height: 500px;
-  height: 90%;
-  margin-top: 10px;
+  margin-top: 20px;
+  overflow: hidden;
 }
 @media screen and (max-width: 768px) {
+  .note-header {
+    width: 100%;
+  }
   .note-container {
     width: 95%;
     height: 100%;
@@ -245,6 +274,9 @@ const goBack = async () => {
     height: 60%;
     min-height: 60%;
     max-height: 60%;
+  }
+  .note-input {
+    padding: 0 0;
   }
 }
 </style>
