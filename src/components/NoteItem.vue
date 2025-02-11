@@ -29,7 +29,7 @@ defineProps({
   width: 100%;
   margin: 0 auto;
   padding: 20px;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   background: var(--content-color);
   border-radius: 30px;
   color: var(--black-color);
