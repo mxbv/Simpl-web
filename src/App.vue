@@ -37,55 +37,19 @@ const addNewNote = async () => {
 const refreshNotes = async () => {
   notes.value = await getNotesFromDB(); // Updating the list of notes from IndexedDB
 };
-
-// Exporting notes
-const exportNotes = () => {
-  const content = notes.value
-    .map(
-      (note) =>
-        `| ${(note.title || "empty").toUpperCase()} (${note.date})\n${
-          note.content || "empty"
-        }\n`
-    )
-    .join("\n");
-
-  const blob = new Blob([content], { type: "text/plain; charset=utf-8" });
-  const link = document.createElement("a");
-  link.href = URL.createObjectURL(blob);
-  link.download = "exportNotes.txt";
-  link.click();
-  URL.revokeObjectURL(link.href);
-};
 </script>
 
 <template>
   <div>
-    <div class="sidebar">
+    <div class="main-header">
       <a
         href="https://github.com/mxbv/Simpl"
         target="_blank"
         rel="noopener noreferrer"
-        class="sidebar-link"
+        class="main-header-link"
         >Simpl</a
       >
-      <button
-        class="note-export"
-        type="button"
-        title="Export"
-        @click="exportNotes"
-      >
-        <svg
-          width="35px"
-          height="35px"
-          fill="#000000"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M8.71,7.71,11,5.41V15a1,1,0,0,0,2,0V5.41l2.29,2.3a1,1,0,0,0,1.42,0,1,1,0,0,0,0-1.42l-4-4a1,1,0,0,0-.33-.21,1,1,0,0,0-.76,0,1,1,0,0,0-.33.21l-4,4A1,1,0,1,0,8.71,7.71ZM21,14a1,1,0,0,0-1,1v4a1,1,0,0,1-1,1H5a1,1,0,0,1-1-1V15a1,1,0,0,0-2,0v4a3,3,0,0,0,3,3H19a3,3,0,0,0,3-3V15A1,1,0,0,0,21,14Z"
-          />
-        </svg>
-      </button>
+
       <button
         class="note-add"
         type="button"
@@ -93,8 +57,8 @@ const exportNotes = () => {
         @click="addNewNote"
       >
         <svg
-          width="35"
-          height="35"
+          width="24"
+          height="24"
           fill="none"
           stroke="#FFFFF0"
           viewBox="0 0 24 24"
@@ -132,30 +96,24 @@ const exportNotes = () => {
 </template>
 
 <style scoped>
-.sidebar {
+.main-header {
   display: flex;
-  position: fixed;
-  justify-content: center;
+  position: absolute;
+  justify-content: space-between;
   align-items: center;
-  background-color: #faf3e0;
-  border: 1px solid var(--bg-light);
-  flex-direction: row;
+  width: 40%;
   top: 10px;
   left: 50%;
   transform: translateX(-50%);
-  border-radius: 60px;
-  z-index: 1000;
 }
 
-.sidebar-link {
+.main-header-link {
   color: var(--black-color);
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   font-weight: 500;
   text-decoration: none;
-  margin-left: 20px;
-  margin-right: 20px;
 }
-.sidebar-link:hover {
+.main-header-link:hover {
   text-decoration: underline;
 }
 .note-add {
@@ -172,7 +130,7 @@ const exportNotes = () => {
 }
 
 @media screen and (max-width: 768px) {
-  .sidebar {
+  .main-header {
     top: 10px;
     left: 50%;
     transform: translateX(-50%);

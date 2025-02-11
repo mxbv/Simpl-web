@@ -7,6 +7,7 @@ const emit = defineEmits(["noteDeleted", "refreshNotes"]);
 const route = useRoute();
 const router = useRouter();
 const noteId = ref(parseInt(route.params.id));
+const notes = ref([]);
 const note = ref(null);
 let autoSaveInterval = null;
 
@@ -48,7 +49,24 @@ const deleteNote = async () => {
     }
   }
 };
+// Exporting notes
+const exportNotes = () => {
+  const content = notes.value
+    .map(
+      (note) =>
+        `| ${(note.title || "empty").toUpperCase()} (${note.date})\n${
+          note.content || "empty"
+        }\n`
+    )
+    .join("\n");
 
+  const blob = new Blob([content], { type: "text/plain; charset=utf-8" });
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = "exportNotes.txt";
+  link.click();
+  URL.revokeObjectURL(link.href);
+};
 const goBack = async () => {
   if (!note.value.title && !note.value.content) {
     // If the note is empty, delete it
@@ -63,55 +81,90 @@ const goBack = async () => {
   <div v-if="note" class="note">
     <div class="note-container">
       <div class="note-header">
-        <button @click="goBack" class="go-back-button">
+        <button @click="goBack" class="note-button go-back-button">
           <svg
-            transform="rotate(90)"
-            width="35"
-            height="35"
-            fill="none"
+            transform="matrix(-1 0 0 1 0 0)"
+            width="27px"
+            height="27px"
+            fill="#000000"
             viewBox="0 0 24 24"
             xmlns="http://www.w3.org/2000/svg"
           >
             <path
-              d="m5.707 9.711a1 1 0 0 0 0 1.414l4.892 4.887a2 2 0 0 0 2.828 0l4.89-4.89a1 1 0 1 0-1.414-1.414l-4.186 4.186a1 1 0 0 1-1.414 0l-4.182-4.182a1 1 0 0 0-1.414 0z"
-              fill="#000"
+              d="M4,12a1,1,0,0,0,1,1h7.59l-2.3,2.29a1,1,0,0,0,0,1.42,1,1,0,0,0,1.42,0l4-4a1,1,0,0,0,.21-.33,1,1,0,0,0,0-.76,1,1,0,0,0-.21-.33l-4-4a1,1,0,1,0-1.42,1.42L12.59,11H5A1,1,0,0,0,4,12ZM17,2H7A3,3,0,0,0,4,5V8A1,1,0,0,0,6,8V5A1,1,0,0,1,7,4H17a1,1,0,0,1,1,1V19a1,1,0,0,1-1,1H7a1,1,0,0,1-1-1V16a1,1,0,0,0-2,0v3a3,3,0,0,0,3,3H17a3,3,0,0,0,3-3V5A3,3,0,0,0,17,2Z"
             />
           </svg>
         </button>
-        <span>{{ note.date }}</span>
-        <button @click="deleteNote" class="delete-button">
-          <svg
-            class="delete-icon"
-            width="35px"
-            height="35px"
-            fill="#fffff0"
-            viewBox="-3.5 0 19 19"
-            xmlns="http://www.w3.org/2000/svg"
+        <div class="note-header-right">
+          <button
+            class="note-button export-button"
+            type="button"
+            title="Export"
+            @click="exportNotes"
           >
-            <path
-              d="M11.383 13.644A1.03 1.03 0 0 1 9.928 15.1L6 11.172 2.072 15.1a1.03 1.03 0 1 1-1.455-1.456l3.928-3.928L.617 5.79a1.03 1.03 0 1 1 1.455-1.456L6 8.261l3.928-3.928a1.03 1.03 0 0 1 1.455 1.456L7.455 9.716z"
-            />
-          </svg>
-        </button>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+          </button>
+          <button @click="deleteNote" class="note-button delete-button">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+              class="delete-icon"
+            >
+              <polyline points="3 6 5 6 21 6"></polyline>
+              <path
+                d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"
+              ></path>
+              <line x1="10" y1="11" x2="10" y2="17"></line>
+              <line x1="14" y1="11" x2="14" y2="17"></line>
+            </svg>
+          </button>
+        </div>
       </div>
-      <input
-        v-model="note.title"
-        placeholder="Title"
-        class="note-input note-title"
-        ref="titleTextarea"
-        maxlength="50"
-        type="text"
-      />
-      <textarea
-        v-model="note.content"
-        placeholder="Write your text here..."
-        class="note-input note-text"
-        ref="contentTextarea"
-        maxlength="10000"
-      ></textarea>
-      <span>{{ note.content ? note.content.length : "0" }}</span>
-      <span> / </span>
-      <span>10,000</span>
+      <div class="content-container">
+        <input
+          v-model="note.title"
+          placeholder="Title"
+          class="note-input note-title"
+          ref="titleTextarea"
+          maxlength="50"
+          type="text"
+        />
+        <textarea
+          v-model="note.content"
+          placeholder="Write your text here..."
+          class="note-input note-text"
+          ref="contentTextarea"
+          maxlength="10000"
+        ></textarea>
+      </div>
+      <div class="counter">
+        <span>{{ note.content ? note.content.length : "0" }}</span>
+        <span> / </span>
+        <span>10000</span>
+      </div>
     </div>
   </div>
   <div v-else>
@@ -132,34 +185,37 @@ const goBack = async () => {
   z-index: 1000;
   overflow: auto;
 }
-
+.note-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+.note-header-right {
+  display: flex;
+  justify-content: center;
+}
+.export-button {
+  margin-right: 20px;
+}
 .note-container {
   width: 70%;
   height: 100%;
-  padding: 30px 0;
+  padding: 20px 0;
 }
-.note-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.go-back-button {
-  background-color: var(--content-color);
-  transition: 0.3s;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-}
+
 .note-input {
   width: 100%;
   border: none;
-  padding: 15px;
+  padding: 20px;
   font-family: inherit;
   box-sizing: border-box;
   outline: none;
   resize: none;
-  background-color: var(--content-color);
+  background: none;
   color: var(--black-color);
-  font-size: 1.3rem;
-  border-radius: 15px;
+  font-size: 1.2rem;
+  background-color: #faf3e0;
 }
 
 .note-input::placeholder {
@@ -168,38 +224,25 @@ const goBack = async () => {
 }
 
 .note-title {
-  width: 100%;
-  font-size: 1.5rem;
+  display: block;
+  font-size: 1.7rem;
   font-weight: 500;
   text-overflow: ellipsis;
-  margin-top: 30px;
   border-bottom: none;
-  border-radius: 15px 15px 0 0;
+  padding-bottom: 0;
+  border-radius: 30px 30px 0 0;
+  margin-top: 40px;
 }
 
 .note-text {
-  height: 500px;
-  min-height: 400px;
-  max-height: 60%;
-  margin-bottom: 10px;
-  border-radius: 0 0 15px 15px;
-  border-top: solid 1px var(--border-color);
+  min-height: 500px;
+  height: 90%;
+  padding-bottom: 30px;
+  border-radius: 0 0 30px 30px;
   box-shadow: 0px 4px 10px #0000001a;
 }
-
-.delete-button {
-  background-color: var(--black-color);
-  transition: 0.3s ease-in-out;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-}
-.delete-button:hover {
-  background-color: red;
-  .delete-icon path {
-    fill: #000000;
-  }
-}
-.delete-icon {
-  transition: fill 0.4s;
+.counter {
+  margin-top: 10px;
 }
 @media screen and (max-width: 768px) {
   .note-container {
