@@ -53,7 +53,7 @@ const refreshNotes = async () => {
       <button
         class="note-add"
         type="button"
-        title="Create new entry"
+        title="Create new note"
         @click="addNewNote"
       >
         <svg

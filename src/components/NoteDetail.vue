@@ -95,6 +95,11 @@ const goBack = async () => {
             />
           </svg>
         </button>
+        <div class="counter">
+          <span>{{ note.content ? note.content.length : "0" }}</span>
+          <span> / </span>
+          <span>10000</span>
+        </div>
         <div class="note-header-right">
           <button
             class="note-button export-button"
@@ -160,11 +165,6 @@ const goBack = async () => {
           maxlength="10000"
         ></textarea>
       </div>
-      <div class="counter">
-        <span>{{ note.content ? note.content.length : "0" }}</span>
-        <span> / </span>
-        <span>10000</span>
-      </div>
     </div>
   </div>
   <div v-else>
@@ -183,13 +183,14 @@ const goBack = async () => {
   left: 0;
   justify-content: center;
   z-index: 1000;
-  overflow: auto;
+  overflow: hidden;
 }
 .note-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
+  width: 70%;
+  margin: 0 auto;
 }
 .note-header-right {
   display: flex;
@@ -199,7 +200,7 @@ const goBack = async () => {
   margin-right: 20px;
 }
 .note-container {
-  width: 70%;
+  width: 100%;
   height: 100%;
   padding: 20px 0;
 }
@@ -207,15 +208,12 @@ const goBack = async () => {
 .note-input {
   width: 100%;
   border: none;
-  padding: 20px;
-  font-family: inherit;
-  box-sizing: border-box;
+  padding: 0 15%;
   outline: none;
   resize: none;
   background: none;
   color: var(--black-color);
   font-size: 1.2rem;
-  background-color: #faf3e0;
 }
 
 .note-input::placeholder {
@@ -230,18 +228,12 @@ const goBack = async () => {
   text-overflow: ellipsis;
   border-bottom: none;
   padding-bottom: 0;
-  border-radius: 30px 30px 0 0;
-  margin-top: 40px;
+  margin-top: 20px;
 }
 
 .note-text {
   min-height: 500px;
   height: 90%;
-  padding-bottom: 30px;
-  border-radius: 0 0 30px 30px;
-  box-shadow: 0px 4px 10px #0000001a;
-}
-.counter {
   margin-top: 10px;
 }
 @media screen and (max-width: 768px) {
