@@ -3,6 +3,7 @@ import { ref, onMounted } from "vue";
 import { getNotesFromDB, saveNoteToDB } from "@/utils/db";
 import NoteItem from "./components/NoteItem.vue";
 import { useRouter } from "vue-router";
+import AddIcon from "./assets/icons/AddIcon.vue";
 const notes = ref([]);
 const router = useRouter();
 // Load the list of notes when a component is mounted
@@ -47,8 +48,8 @@ const refreshNotes = async () => {
         target="_blank"
         rel="noopener noreferrer"
         class="main-header-link"
-        >Simpl</a
-      >
+        >Simpl
+      </a>
 
       <button
         class="note-add"
@@ -56,34 +57,7 @@ const refreshNotes = async () => {
         title="Create new note"
         @click="addNewNote"
       >
-        <svg
-          width="24"
-          height="24"
-          fill="none"
-          stroke="#FFFFF0"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-          class="add-icon"
-        >
-          <line
-            x1="12"
-            x2="12"
-            y1="19"
-            y2="5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-          />
-          <line
-            x1="5"
-            x2="19"
-            y1="12"
-            y2="12"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-          />
-        </svg>
+        <AddIcon />
       </button>
     </div>
 
@@ -118,15 +92,6 @@ const refreshNotes = async () => {
 }
 .note-add {
   background-color: var(--black-color);
-  transition: 2s;
-}
-.add-icon {
-  transition: 0.5s;
-}
-.note-add:hover {
-  .add-icon {
-    transform: rotate(180deg);
-  }
 }
 
 @media screen and (max-width: 768px) {

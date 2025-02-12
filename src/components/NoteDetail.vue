@@ -2,6 +2,10 @@
 import { useRoute, useRouter } from "vue-router";
 import { ref, onMounted, onUnmounted, watchEffect, watch, nextTick } from "vue";
 import { getNotesFromDB, deleteNoteFromDB, saveNoteToDB } from "@/utils/db";
+// Icons
+import CloseIcon from "@/assets/icons/CloseIcon.vue";
+import ExportIcon from "@/assets/icons/ExportIcon.vue";
+import DeleteIcon from "@/assets/icons/DeleteIcon.vue";
 
 const emit = defineEmits(["noteDeleted", "refreshNotes"]);
 const route = useRoute();
@@ -109,18 +113,7 @@ watch(
     <div class="note-container">
       <div class="note-header">
         <button @click="goBack" class="note-button go-back-button">
-          <svg
-            transform="matrix(-1 0 0 1 0 0)"
-            width="27px"
-            height="27px"
-            fill="#000000"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M4,12a1,1,0,0,0,1,1h7.59l-2.3,2.29a1,1,0,0,0,0,1.42,1,1,0,0,0,1.42,0l4-4a1,1,0,0,0,.21-.33,1,1,0,0,0,0-.76,1,1,0,0,0-.21-.33l-4-4a1,1,0,1,0-1.42,1.42L12.59,11H5A1,1,0,0,0,4,12ZM17,2H7A3,3,0,0,0,4,5V8A1,1,0,0,0,6,8V5A1,1,0,0,1,7,4H17a1,1,0,0,1,1,1V19a1,1,0,0,1-1,1H7a1,1,0,0,1-1-1V16a1,1,0,0,0-2,0v3a3,3,0,0,0,3,3H17a3,3,0,0,0,3-3V5A3,3,0,0,0,17,2Z"
-            />
-          </svg>
+          <CloseIcon />
         </button>
         <div class="counter">
           <span>{{ note.content ? note.content.length : "0" }}</span>
@@ -134,44 +127,10 @@ watch(
             title="Export"
             @click="exportNotes"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              aria-hidden="true"
-            >
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-              <polyline points="7 10 12 15 17 10"></polyline>
-              <line x1="12" y1="15" x2="12" y2="3"></line>
-            </svg>
+            <ExportIcon />
           </button>
           <button @click="deleteNote" class="note-button delete-button">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              aria-hidden="true"
-              class="delete-icon"
-            >
-              <polyline points="3 6 5 6 21 6"></polyline>
-              <path
-                d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"
-              ></path>
-              <line x1="10" y1="11" x2="10" y2="17"></line>
-              <line x1="14" y1="11" x2="14" y2="17"></line>
-            </svg>
+            <DeleteIcon />
           </button>
         </div>
       </div>
