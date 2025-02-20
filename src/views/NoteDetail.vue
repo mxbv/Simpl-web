@@ -11,7 +11,6 @@ const emit = defineEmits(["noteDeleted", "refreshNotes"]);
 const route = useRoute();
 const router = useRouter();
 const noteId = ref(parseInt(route.params.id));
-const notes = ref([]);
 const note = ref(null);
 const contentTextarea = ref([]);
 let autoSaveInterval = null;
@@ -55,20 +54,15 @@ const deleteNote = async () => {
   }
 };
 // Exporting notes
-const exportNotes = () => {
-  const content = notes.value
-    .map(
-      (note) =>
-        `| ${(note.title || "empty").toUpperCase()} (${note.date})\n${
-          note.content || "empty"
-        }\n`
-    )
-    .join("\n");
-
+const exportNote = () => {
+  if (!note.value) return;
+  const content = `${(note.value.title || "Empty").toUpperCase()} | ${
+    note.value.date
+  }\n\n${note.value.content || "Empty"}`;
   const blob = new Blob([content], { type: "text/plain; charset=utf-8" });
   const link = document.createElement("a");
   link.href = URL.createObjectURL(blob);
-  link.download = "exportNotes.txt";
+  link.download = "note.txt";
   link.click();
   URL.revokeObjectURL(link.href);
 };
@@ -125,7 +119,7 @@ watch(
             class="note-button export-button"
             type="button"
             title="Export"
-            @click="exportNotes"
+            @click="exportNote"
           >
             <ExportIcon />
           </button>
@@ -220,6 +214,7 @@ watch(
 .note-text {
   margin-top: 20px;
   overflow: hidden;
+  padding-bottom: 20px;
 }
 @media screen and (max-width: 768px) {
   .note-header {

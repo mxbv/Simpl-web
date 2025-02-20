@@ -23,7 +23,7 @@
 }
 
 *::-webkit-scrollbar-thumb {
-  background-color: blue;
+  background-color: rgba(0, 0, 0, 0);
   border-radius: 20px;
   border: 3px solid rgba(0, 0, 0, 0);
 }
@@ -55,7 +55,8 @@ button {
   border: none;
   cursor: pointer;
   padding: 13px;
-  border-radius: 15px;
+  border-radius:
+   15px;
   transition: 0.3s ease-in-out;
 }
 button:hover {

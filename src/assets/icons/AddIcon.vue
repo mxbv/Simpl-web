@@ -1,13 +1,19 @@
 <template>
   <svg
-    width="26px"
-    height="26px"
-    fill="#FFFFFF"
-    viewBox="0 -960 960 960"
     xmlns="http://www.w3.org/2000/svg"
-    class="add-icon"
+    width="26"
+    height="26"
+    viewBox="0 0 24 24"
+    fill="#FFFFFF"
+    stroke="#FFFFFF"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    class="icon icon-tabler icons-tabler-outline icon-tabler-plus"
   >
-    <path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z" />
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+    <path d="M12 5l0 14" />
+    <path d="M5 12l14 0" />
   </svg>
 </template>
 

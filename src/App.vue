@@ -92,8 +92,13 @@ const refreshNotes = async () => {
 }
 .note-add {
   background-color: var(--black-color);
+  transition: 0.5s;
 }
-
+.note-add:hover {
+  svg {
+    transform: rotate(180deg);
+  }
+}
 @media screen and (max-width: 768px) {
   .main-header {
     width: 95%;
