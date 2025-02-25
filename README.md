@@ -1,11 +1,10 @@
 # Simpl 
 
-<img width="1280" alt="img" src="https://github.com/user-attachments/assets/71968b56-8b58-4a2d-8704-d8e1ccc28d0a" />
+<img width="1200" alt="1" src="https://github.com/user-attachments/assets/cd967294-e3eb-400f-aec8-29b4ae30cc4e" />
 
-<img width="1280" alt="img2" src="https://github.com/user-attachments/assets/b8732640-1c81-466d-9ed9-03b5551669f8" />
+<img width="1200" alt="2" src="https://github.com/user-attachments/assets/5150faed-8931-4675-8812-56b0220edd1d" />
 
-
-[You can see it live](https://mxbv.github.io/simpl)
+### [You can see it live](https://mxbv.github.io/simpl)
 
 
 ## About
