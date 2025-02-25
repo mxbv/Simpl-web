@@ -139,7 +139,7 @@ watch(
         />
         <textarea
           v-model="note.content"
-          placeholder="Write your text here..."
+          placeholder="Tell a new story..."
           class="note-input note-text"
           ref="contentTextarea"
           maxlength="10000"

@@ -50,19 +50,22 @@ const refreshNotes = async () => {
         class="main-header-link"
         >Simpl
       </a>
-
       <button
         class="note-add"
         type="button"
-        title="Create new note"
+        title="Create new record"
         @click="addNewNote"
       >
         <AddIcon />
       </button>
     </div>
-
     <div class="note-list">
-      <NoteItem v-for="note in notes" :key="note.id" :note="note" />
+      <NoteItem
+        v-for="note in notes"
+        :key="note.id"
+        :note="note"
+        class="note-item"
+      />
     </div>
     <!-- Main content for routes -->
     <router-view @refreshNotes="refreshNotes" />
@@ -75,7 +78,7 @@ const refreshNotes = async () => {
   position: absolute;
   justify-content: space-between;
   align-items: center;
-  width: 40%;
+  width: fit-content;
   top: 10px;
   left: 50%;
   transform: translateX(-50%);
@@ -86,6 +89,7 @@ const refreshNotes = async () => {
   font-size: 1.6rem;
   font-weight: 500;
   text-decoration: none;
+  margin-right: 20px;
 }
 .main-header-link:hover {
   text-decoration: underline;
@@ -98,6 +102,15 @@ const refreshNotes = async () => {
   svg {
     transform: rotate(180deg);
   }
+}
+.note-list {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+.note-item {
+  height: fit-content;
 }
 @media screen and (max-width: 768px) {
   .main-header {
