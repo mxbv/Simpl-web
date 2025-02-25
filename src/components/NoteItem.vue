@@ -47,7 +47,7 @@ defineProps({
 
 h3 {
   margin: 0;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   font-weight: 500;
   width: 100%;
   height: fit-content;
