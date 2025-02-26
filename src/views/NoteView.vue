@@ -1,6 +1,6 @@
 <script setup>
 import { useRoute, useRouter } from "vue-router";
-import { ref, onMounted, onUnmounted, watchEffect, watch, nextTick } from "vue";
+import { ref, onMounted, onUnmounted, watchEffect } from "vue";
 import { getNotesFromDB, deleteNoteFromDB, saveNoteToDB } from "@/utils/db";
 // Icons
 import CloseIcon from "@/assets/icons/CloseIcon.vue";
@@ -15,10 +15,7 @@ const note = ref(null);
 const contentTextarea = ref([]);
 let autoSaveInterval = null;
 
-// Block scrolling when opening a note
 onMounted(() => {
-  document.body.style.overflow = "hidden";
-  window.scrollTo(0, 0);
   // Run auto-save every 200 ms.
   autoSaveInterval = setInterval(() => {
     if (note.value) saveNoteToDB(note.value);
@@ -27,7 +24,6 @@ onMounted(() => {
 
 // Restore scrolling when exiting a note
 onUnmounted(() => {
-  document.body.style.overflow = "";
   clearInterval(autoSaveInterval);
 });
 
@@ -74,32 +70,6 @@ const goBack = async () => {
   router.replace("/");
   emit("refreshNotes"); // Redirect to the home page
 };
-
-// Adjust height
-const adjustTextareaHeight = () => {
-  if (contentTextarea.value) {
-    contentTextarea.value.style.height = "auto"; // Dropping altitude
-    contentTextarea.value.style.height =
-      contentTextarea.value.scrollHeight + "px"; // Set the new height
-  }
-};
-
-watch(
-  () => note.value,
-  (newNote) => {
-    if (newNote) {
-      nextTick(() => adjustTextareaHeight());
-    }
-  },
-  { immediate: true }
-);
-
-watch(
-  () => note.value?.content,
-  () => {
-    nextTick(() => adjustTextareaHeight());
-  }
-);
 </script>
 
 <template>
@@ -109,11 +79,6 @@ watch(
         <button @click="goBack" class="note-button go-back-button">
           <CloseIcon />
         </button>
-        <div class="counter">
-          <span>{{ note.content ? note.content.length : "0" }}</span>
-          <span> / </span>
-          <span>10000</span>
-        </div>
         <div class="note-header-right">
           <button
             class="note-button export-button"
@@ -128,23 +93,21 @@ watch(
           </button>
         </div>
       </div>
-      <div class="content-container">
-        <input
-          v-model="note.title"
-          placeholder="Title"
-          class="note-input note-title"
-          ref="titleTextarea"
-          maxlength="50"
-          type="text"
-        />
-        <textarea
-          v-model="note.content"
-          placeholder="Tell a new story..."
-          class="note-input note-text"
-          ref="contentTextarea"
-          maxlength="10000"
-        ></textarea>
-      </div>
+      <input
+        v-model="note.title"
+        placeholder="Title"
+        class="note-input note-title"
+        ref="titleTextarea"
+        type="text"
+        maxlength="100"
+      />
+      <textarea
+        v-model="note.content"
+        placeholder="Tell a new story..."
+        class="note-input note-text"
+        ref="contentTextarea"
+        maxlength="30000"
+      ></textarea>
     </div>
   </div>
   <div v-else>
@@ -157,20 +120,24 @@ watch(
   display: flex;
   position: absolute;
   width: 100%;
-  height: 100dvh;
-  background-color: var(--bg-light);
+  height: 100%;
+  min-height: 100dvh;
+  background-color: var(--main-bg);
   top: 0;
   left: 0;
   justify-content: center;
   z-index: 1000;
-  overflow: auto;
+  overflow: hidden;
+  color: var(--text);
 }
 .note-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 70%;
+  width: 60%;
   margin: 0 auto;
+  margin-top: 20px;
+  flex: none;
 }
 .note-header-right {
   display: flex;
@@ -180,25 +147,22 @@ watch(
   margin-right: 20px;
 }
 .note-container {
-  width: 100%;
+  display: flex;
+  flex-direction: column;
   height: 100%;
-  padding: 20px 0 0 0;
+  width: 100%;
+  overflow: hidden;
 }
 
 .note-input {
   width: 100%;
   border: none;
-  padding: 0 15%;
+  padding: 0 20%;
   outline: none;
   resize: none;
   background: none;
   color: var(--black-color);
   font-size: 1.2rem;
-}
-
-.note-input::placeholder {
-  color: var(--black-color);
-  opacity: 1;
 }
 
 .note-title {
@@ -208,13 +172,19 @@ watch(
   text-overflow: ellipsis;
   border-bottom: none;
   padding-bottom: 0;
-  margin-top: 50px;
+  margin-top: 20px;
+  flex: none;
 }
 
 .note-text {
+  box-sizing: border-box;
+  overflow: auto;
+  flex: 1;
+  margin-bottom: 20px;
   margin-top: 20px;
-  overflow: hidden;
-  padding-bottom: 20px;
+}
+svg {
+  color: var(--text);
 }
 @media screen and (max-width: 768px) {
   .note-header {
@@ -223,11 +193,6 @@ watch(
   .note-container {
     width: 95%;
     height: 100%;
-  }
-  .note-text {
-    height: 60%;
-    min-height: 60%;
-    max-height: 60%;
   }
   .note-input {
     padding: 0 0;

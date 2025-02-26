@@ -3,14 +3,15 @@
   src: url(./fonts/Montserrat/Montserrat-VariableFont_wght.ttf);
 }
 :root {
-  --bg-light: #eaddc7;
-  --border-color: #ccc;
-  --black-color: #000000;
-  --content-color: #faf3e0;
+  --main-bg: #0d0d0d;
+  --border: #1f1f1f;
+  --content-block: #181818;
+  --text: #e2e5e9;
+  --accent: #9671f8;
 }
 * {
   scrollbar-width: thin;
-  scrollbar-color: rgb(0, 0, 0) rgba(0, 0, 0, 0);
+  scrollbar-color: var(--accent) rgba(0, 0, 0, 0);
 }
 
 /* Works on Chrome, Edge, and Safari */
@@ -35,15 +36,19 @@
   font-family: "Montserrat";
   font-size: 1rem;
 }
+::selection {
+  background-color: #9671f8;
+  color: #000000;
+}
 html {
   min-height: 100%;
 }
 body {
-  width: 40vw;
+  width: 60vw;
   min-height: 100%;
   margin: 0 auto;
   padding: 100px 0 0 0;
-  background-color: var(--bg-light);
+  background-color: var(--main-bg);
 }
 button {
   display: flex;
@@ -51,25 +56,19 @@ button {
   align-items: center;
   width: fit-content;
   height: fit-content;
-  background-color: #d2c6b3;
+  background: none;
   border: none;
   cursor: pointer;
-  padding: 13px;
-  border-radius:
-   15px;
+  padding: 5px;
+  border-radius: 100px;
   transition: 0.3s ease-in-out;
 }
 button:hover {
-  background-color: #beb3a1;
-}
-svg {
-  color: var(--black-color);
+  svg {
+    color: var(--accent);
+  }
 }
 
-span {
-  color: #3a3a3a;
-  font-weight: 300;
-}
 @media screen and (max-width: 768px) {
   body {
     min-width: 100%;

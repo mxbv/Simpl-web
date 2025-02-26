@@ -9,16 +9,15 @@ defineProps({
 
 <template>
   <router-link :to="`/note/${note.id}`" class="note-item">
-    <h3>{{ note.title || "Write Your New Story" }}</h3>
-    <h4>
-      {{
-        note.content
-          ? note.content.substring(0, 50) +
-            (note.content.length > 50 ? "..." : "")
-          : ""
-      }}
+    <div class="note-head">
+      <h3 class="note-title">
+        {{ note.title || "Untitled" }}
+      </h3>
+      <div class="note-date">{{ note.date }}</div>
+    </div>
+    <h4 class="note-text">
+      {{ note.content || "" }}
     </h4>
-    <span>{{ note.date }}</span>
   </router-link>
 </template>
 
@@ -31,42 +30,50 @@ defineProps({
   margin: 0 auto;
   margin-bottom: 20px;
   padding: 20px;
-  background: var(--content-color);
-  border-radius: 30px;
-  color: var(--black-color);
+  background: var(--content-block);
+  border-radius: 15px;
   text-decoration: none;
   overflow: hidden;
-  box-shadow: 0px 4px 10px #0000001a;
-  transition: box-shadow 0.3s ease, transform 0.2s ease;
+  border: solid 1px var(--border);
+  transition: 0.3s ease-in-out;
+  color: var(--text);
 }
 
 .note-item:hover {
-  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.15);
-  transform: translateY(-2px);
+  background-color: #202020;
 }
-
-h3 {
+.note-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+.note-title {
   margin: 0;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-weight: 500;
   width: 100%;
   height: fit-content;
-  text-wrap-mode: wrap;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
-
-h4 {
+.note-date {
+  margin-left: 15px;
+  color: var(--accent);
+}
+.note-text {
   margin: 0;
   font-size: 1rem;
   font-weight: 400;
-  width: fit-content;
-  height: fit-content;
+  width: 100%;
   margin-top: 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #858585;
 }
-span {
-  width: fit-content;
-  font-size: 1rem;
-  margin-top: 10px;
-}
+
 @media screen and (max-width: 768px) {
   .note-item {
     width: 95%;
