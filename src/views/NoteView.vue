@@ -37,7 +37,7 @@ watchEffect(async () => {
 const deleteNote = async () => {
   if (note.value) {
     const isConfirmed = window.confirm(
-      "Are you sure you want to delete this note?"
+      "Are you sure you want to delete this record ?"
     );
     if (isConfirmed) {
       clearInterval(autoSaveInterval); // Stop auto-save
