@@ -1,0 +1,76 @@
+@font-face {
+  font-family: Montserrat;
+  src: url(./fonts/Montserrat/Montserrat-VariableFont_wght.ttf);
+}
+:root {
+  --main-bg: #0d0d0d;
+  --border: #1f1f1f;
+  --content-block: #181818;
+  --text: #e2e5e9;
+  --accent: #9671f8;
+}
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent) rgba(0, 0, 0, 0);
+}
+
+/* Works on Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 12px;
+}
+
+*::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0);
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0);
+  border-radius: 20px;
+  border: 3px solid rgba(0, 0, 0, 0);
+}
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  scrollbar-width: thin;
+  font-family: "Montserrat";
+  font-size: 1rem;
+}
+::selection {
+  background-color: #9671f8;
+  color: #000000;
+}
+html {
+  min-height: 100%;
+}
+body {
+  width: 60vw;
+  min-height: 100%;
+  margin: 0 auto;
+  padding: 100px 0 0 0;
+  background-color: var(--main-bg);
+}
+button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  height: fit-content;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  transition: 0.3s ease-in-out;
+}
+button:hover {
+  svg {
+    color: var(--accent);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  body {
+    min-width: 100%;
+    padding-top: 100px;
+  }
+}
