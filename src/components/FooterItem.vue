@@ -1,5 +1,5 @@
 <template>
-  <div class="footer">
+  <footer>
     <a
       href="https://github.com/mxbv/Simpl"
       rel="noreferrer noopener"
@@ -7,10 +7,10 @@
       class="footer-link"
       >View on GitHub</a
     >
-  </div>
+  </footer>
 </template>
 <style scoped>
-.footer {
+footer {
   display: flex;
   justify-content: center;
   align-items: center;

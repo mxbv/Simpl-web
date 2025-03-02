@@ -1,12 +1,12 @@
 <script setup>
 import { ref, watch } from "vue";
 import SearchIcon from "@/assets/icons/SearchIcon.vue";
-import { getNotesFromDB } from "@/utils/db"; // Импортируем функцию получения заметок
+import { getNotesFromDB } from "@/utils/db"; // Importing the note taking function
 const searchQuery = ref("");
 const filteredNotes = ref([]);
 
 const searchNotes = async (query) => {
-  const notes = await getNotesFromDB(); // Загружаем все заметки
+  const notes = await getNotesFromDB(); // Uploading all notes
   return notes.filter(
     (note) =>
       note.title.toLowerCase().includes(query.toLowerCase()) ||
@@ -14,7 +14,7 @@ const searchNotes = async (query) => {
   );
 };
 
-// Следим за изменением searchQuery и вызываем поиск
+// Watch the searchQuery change and call the search
 watch(searchQuery, async (newQuery) => {
   filteredNotes.value = await searchNotes(newQuery);
 });

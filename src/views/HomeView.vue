@@ -41,7 +41,7 @@ const refreshNotes = async () => {
 
 <template>
   <div>
-    <div class="main-header">
+    <header>
       <SearchBox />
       <button
         class="note-add"
@@ -51,7 +51,7 @@ const refreshNotes = async () => {
       >
         <AddIcon />
       </button>
-    </div>
+    </header>
     <div class="note-list">
       <NoteItem
         v-for="note in notes"
@@ -60,14 +60,14 @@ const refreshNotes = async () => {
         class="note-item"
       />
     </div>
-    <FooterItem/>
+    <FooterItem />
     <!-- Main content for routes -->
     <router-view @refreshNotes="refreshNotes" />
   </div>
 </template>
 
 <style scoped>
-.main-header {
+header {
   display: flex;
   position: absolute;
   justify-content: space-between;
@@ -76,17 +76,6 @@ const refreshNotes = async () => {
   top: 10px;
   left: 50%;
   transform: translateX(-50%);
-}
-
-.main-header-link {
-  font-size: 1.6rem;
-  font-weight: 500;
-  text-decoration: none;
-  margin-right: 20px;
-  color: var(--text);
-}
-.main-header-link:hover {
-  text-decoration: underline;
 }
 .note-add {
   transition: 0.5s;
@@ -102,19 +91,13 @@ const refreshNotes = async () => {
   flex-direction: column;
   flex-wrap: wrap;
 }
-.note-item {
-  height: fit-content;
-}
 @media screen and (max-width: 768px) {
-  .main-header {
+  header {
     width: 95%;
     top: 10px;
     left: 50%;
     transform: translateX(-50%);
     flex-direction: row;
-  }
-  .main-header-link {
-    font-size: 2rem;
   }
 }
 </style>
