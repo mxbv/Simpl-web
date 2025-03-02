@@ -1,12 +1,47 @@
 <script setup>
+import { ref, watch } from "vue";
 import SearchIcon from "@/assets/icons/SearchIcon.vue";
+import { getNotesFromDB } from "@/utils/db"; // Импортируем функцию получения заметок
+const searchQuery = ref("");
+const filteredNotes = ref([]);
+
+const searchNotes = async (query) => {
+  const notes = await getNotesFromDB(); // Загружаем все заметки
+  return notes.filter(
+    (note) =>
+      note.title.toLowerCase().includes(query.toLowerCase()) ||
+      note.content.toLowerCase().includes(query.toLowerCase())
+  );
+};
+
+// Следим за изменением searchQuery и вызываем поиск
+watch(searchQuery, async (newQuery) => {
+  filteredNotes.value = await searchNotes(newQuery);
+});
 </script>
 
 <template>
   <div class="search">
     <SearchIcon />
-    <input type="text" class="search-input" placeholder="Soon..." />
+    <input
+      v-model="searchQuery"
+      type="text"
+      class="search-input"
+      placeholder="Search in development"
+    />
   </div>
+  <ul v-if="searchQuery" class="search-result">
+    <li v-for="note in filteredNotes" :key="note.id" class="search-result-item">
+      <router-link :to="{ name: 'Note Details', params: { id: note.id } }">
+        <strong>{{ note.title }}</strong
+        >: {{ note.content }}
+      </router-link>
+    </li>
+    <!-- Если нет результатов, показываем сообщение -->
+    <li v-if="filteredNotes.length === 0" class="search-result-item">
+      <strong>No notes found. Please check your search query.</strong>
+    </li>
+  </ul>
 </template>
 
 <style scoped>
@@ -32,5 +67,28 @@ import SearchIcon from "@/assets/icons/SearchIcon.vue";
 }
 svg {
   color: var(--text);
+}
+.search-result {
+  display: flex;
+  position: fixed;
+  top: 70px;
+  left: 50%;
+  transform: translateX(-50%);
+  align-items: center;
+  flex-direction: column;
+  padding: 20px;
+  background-color: var(--accent);
+  list-style: none;
+  width: 150%;
+  border-radius: 15px;
+}
+.search-result-item {
+  width: 100%;
+  text-align: left;
+  margin-top: 10px;
+}
+.search-result-item a {
+  color: #000;
+  text-decoration: none;
 }
 </style>
