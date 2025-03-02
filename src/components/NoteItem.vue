@@ -51,7 +51,7 @@ defineProps({
 .note-title {
   margin: 0;
   font-size: 1.1rem;
-  font-weight: 500;
+  font-weight: 600;
   width: 100%;
   height: fit-content;
   white-space: nowrap;
