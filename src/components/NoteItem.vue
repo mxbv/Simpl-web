@@ -29,10 +29,10 @@ defineProps({
   width: 100%;
   height: fit-content;
   margin: 0 auto;
-  margin-bottom: 20px;
-  padding: 20px;
+  margin-bottom: 1rem;
+  padding: 1.2rem;
   background: var(--content-block);
-  border-radius: 15px;
+  border-radius: 1rem;
   text-decoration: none;
   overflow: hidden;
   border: solid 1px var(--border);
@@ -60,7 +60,7 @@ defineProps({
   text-overflow: ellipsis;
 }
 .note-date {
-  margin-left: 15px;
+  margin-left: 1rem;
   color: var(--accent);
 }
 .note-text {
@@ -79,7 +79,7 @@ defineProps({
   .note-item {
     width: 95%;
     margin: 0 auto;
-    margin-bottom: 20px;
+    margin-bottom: 1.2rem;
   }
 }
 </style>

@@ -37,7 +37,7 @@ watch(searchQuery, async (newQuery) => {
         >: {{ note.content }}
       </router-link>
     </li>
-    <!-- Если нет результатов, показываем сообщение -->
+    <!-- If there are no results, show the message -->
     <li v-if="filteredNotes.length === 0" class="search-result-item">
       <strong>No notes found. Please check your search query.</strong>
     </li>
@@ -49,10 +49,9 @@ watch(searchQuery, async (newQuery) => {
   display: flex;
   align-items: center;
   width: 100%;
-  height: 52px;
-  padding: 10px 15px;
+  padding: 0.8rem 1rem;
   background-color: var(--content-block);
-  border-radius: 15px;
+  border-radius: 1rem;
   margin-right: 10px;
 }
 .search-input {
@@ -76,11 +75,11 @@ svg {
   transform: translateX(-50%);
   align-items: center;
   flex-direction: column;
-  padding: 20px;
+  padding: 1.3rem;
   background-color: var(--accent);
   list-style: none;
   width: 150%;
-  border-radius: 15px;
+  border-radius: 1rem;
 }
 .search-result-item {
   width: 100%;
