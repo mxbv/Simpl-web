@@ -52,7 +52,7 @@ defineProps({
 .note-title {
   margin: 0;
   font-size: 1.1rem;
-  font-weight: 600;
+  font-weight: 400;
   width: 100%;
   height: fit-content;
   white-space: nowrap;
