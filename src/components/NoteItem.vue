@@ -15,8 +15,8 @@ defineProps({
       </h3>
       <div class="note-date">{{ note.date }}</div>
     </div>
-    <h4 class="note-text">
-      {{ note.content || "" }}
+    <h4 class="note-text" v-if="note.content">
+      {{ note.content }}
     </h4>
   </router-link>
 </template>
