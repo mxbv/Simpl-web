@@ -1,6 +1,6 @@
 # Simpl 
 
-<img width="1536" alt="simpl" src="https://github.com/user-attachments/assets/4b83eb45-2991-4906-b4e8-0adba5f37028" />
+<img width="1536" alt="simpl" src="https://github.com/user-attachments/assets/d5aa2db6-519c-4280-a1db-75d7a42c9225" />
 
 [You can see it live](https://mxbv.github.io/simpl)
 
