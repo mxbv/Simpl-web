@@ -19,6 +19,8 @@ Simpl is a lightweight and efficient note-taking application built with Vue.js. 
 
 * Export to TXT: Users can export all their notes into a single TXT file for backup or external use.
 
+* Search the local notes database on your device 
+
 ## Technologies Used
 
 * Vue.js: Frontend framework for a responsive and interactive UI.
