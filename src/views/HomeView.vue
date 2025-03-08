@@ -6,10 +6,12 @@ import SearchBox from "@/components/SearchBox.vue";
 import NoteItem from "@/components/NoteItem.vue";
 import FooterItem from "@/components/FooterItem.vue";
 import AddIcon from "@/assets/icons/AddIcon.vue";
+
 const notes = ref([]);
 const router = useRouter();
 const searchQuery = ref("");
 const filteredNotes = ref([]);
+
 // Load the list of notes when a component is mounted
 onMounted(async () => {
   notes.value = await getNotesFromDB();

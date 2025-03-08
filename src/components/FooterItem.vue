@@ -1,3 +1,6 @@
+<script setup>
+import CodeIcon from "@/assets/icons/CodeIcon.vue";
+</script>
 <template>
   <footer>
     <a
@@ -5,8 +8,8 @@
       rel="noreferrer noopener"
       target="_blank"
       class="footer-link"
-      >View on GitHub</a
-    >
+      ><CodeIcon
+    /></a>
   </footer>
 </template>
 <style scoped>
@@ -19,6 +22,7 @@ footer {
   left: 50%;
   transform: translateX(-50%);
   width: fit-content;
+  height: fit-content;
 }
 .footer-link {
   color: var(--text);

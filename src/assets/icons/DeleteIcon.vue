@@ -5,7 +5,6 @@
     height="26"
     viewBox="0 0 24 24"
     fill="currentColor"
-    class="icon icon-tabler icons-tabler-filled icon-tabler-trash-x"
   >
     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
     <path
