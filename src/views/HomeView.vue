@@ -4,9 +4,8 @@ import { getNotesFromDB, saveNoteToDB } from "@/utils/db";
 import { useRouter } from "vue-router";
 import SearchBox from "@/components/SearchBox.vue";
 import NoteItem from "@/components/NoteItem.vue";
-import FooterItem from "@/components/FooterItem.vue";
+// import FooterItem from "@/components/FooterItem.vue";
 import AddIcon from "@/assets/icons/AddIcon.vue";
-
 const notes = ref([]);
 const router = useRouter();
 const searchQuery = ref("");
@@ -67,7 +66,15 @@ watch(searchQuery, (newQuery) => {
 
 <template>
   <div>
-    <header>
+    <div class="note-list">
+      <NoteItem
+        v-for="note in filteredNotes"
+        :key="note.id"
+        :note="note"
+        class="note-item"
+      />
+    </div>
+    <nav>
       <SearchBox v-model:searchQuery="searchQuery" />
       <button
         class="note-add"
@@ -77,30 +84,25 @@ watch(searchQuery, (newQuery) => {
       >
         <AddIcon />
       </button>
-    </header>
-    <div class="note-list">
-      <NoteItem
-        v-for="note in filteredNotes"
-        :key="note.id"
-        :note="note"
-        class="note-item"
-      />
-    </div>
-    <FooterItem />
+    </nav>
     <router-view @refreshNotes="refreshNotes" />
   </div>
 </template>
 
 <style scoped>
-header {
+nav {
   display: flex;
-  position: absolute;
+  position: fixed;
   justify-content: space-between;
   align-items: center;
   width: fit-content;
-  top: 10px;
+  bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
+  background-color: #0e0e0e;
+  padding: 6px 10px 6px 6px;
+  border: solid 1px var(--border);
+  border-radius: 1rem;
 }
 .note-add {
   transition: 0.5s;
@@ -117,12 +119,8 @@ header {
   flex-wrap: wrap;
 }
 @media screen and (max-width: 768px) {
-  header {
+  nav {
     width: 95%;
-    top: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    flex-direction: row;
   }
 }
 </style>

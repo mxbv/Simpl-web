@@ -27,9 +27,10 @@ watch(searchInput, (newQuery) => {
   align-items: center;
   width: 100%;
   padding: 0.8rem 1rem;
-  background-color: var(--content-block);
+  border: solid 1px var(--border);
   border-radius: 1rem;
   margin-right: 10px;
+  background-color: #131313;
 }
 .search-input {
   display: block;

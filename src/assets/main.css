@@ -52,9 +52,9 @@ table {
 }
 /* End Reset CSS  */
 :root {
-  --main-bg: #0d0d0d;
-  --border: #1f1f1f;
-  --content-block: #181818;
+  --main-bg: #101010;
+  --border: #1C1C1C;
+  --content-block: #131313;
   --text: #e2e5e9;
   --accent: #9671f8;
 }
@@ -91,7 +91,7 @@ body {
   width: 50vw;
   min-height: 100%;
   margin: 0 auto;
-  padding: 100px 0 0 0;
+  padding: 2rem 0 6rem 0 ;
   background-color: var(--main-bg);
 }
 button {
@@ -114,6 +114,6 @@ button:hover {
 @media screen and (max-width: 768px) {
   body {
     min-width: 100%;
-    padding-top: 100px;
+    /* padding-top: 100px; */
   }
 }
