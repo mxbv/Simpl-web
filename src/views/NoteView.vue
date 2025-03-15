@@ -138,13 +138,17 @@ const goBack = async () => {
   margin: 0 auto;
   margin-top: 20px;
   flex: none;
+  background-color: var(--content-block);
+  border: solid 1px var(--border);
+  padding: 4px;
+  border-radius: 1rem;
 }
 .note-header-right {
   display: flex;
   justify-content: center;
 }
 .export-button {
-  margin-right: 20px;
+  margin-right: 10px;
 }
 .note-container {
   display: flex;
@@ -167,7 +171,7 @@ const goBack = async () => {
 
 .note-title {
   display: block;
-  font-size: 1.7rem;
+  font-size: 2rem;
   font-weight: 500;
   text-overflow: ellipsis;
   border-bottom: none;

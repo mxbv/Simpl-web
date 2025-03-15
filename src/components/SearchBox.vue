@@ -15,7 +15,7 @@ watch(searchInput, (newQuery) => {
     <input
       v-model="searchInput"
       type="text"
-      placeholder="Search notes..."
+      placeholder="Search"
       class="search-input"
     />
   </div>
@@ -26,11 +26,15 @@ watch(searchInput, (newQuery) => {
   display: flex;
   align-items: center;
   width: 100%;
-  padding: 0.8rem 1rem;
+  padding: 0.8rem;
   border: solid 1px var(--border);
   border-radius: 1rem;
-  margin-right: 10px;
-  background-color: #131313;
+  margin-right: 5px;
+  background-color: var(--content-block);
+  transition: .3s;
+}
+.search:hover {
+  border-color: var(--border-hover);
 }
 .search-input {
   display: block;

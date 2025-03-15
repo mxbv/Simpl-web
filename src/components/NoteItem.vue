@@ -36,12 +36,11 @@ defineProps({
   text-decoration: none;
   overflow: hidden;
   border: solid 1px var(--border);
-  transition: 0.3s ease-in-out;
   color: var(--text);
 }
 
 .note-item:hover {
-  background-color: #1b1b1b;
+  border-color: var(--border-hover);
 }
 .note-head {
   display: flex;

@@ -5,7 +5,7 @@ import { useRouter } from "vue-router";
 import SearchBox from "@/components/SearchBox.vue";
 import NoteItem from "@/components/NoteItem.vue";
 import AddIcon from "@/assets/icons/AddIcon.vue";
-import LogoIcon from "@/assets/icons/LogoIcon.vue";
+import SettingsIcon from "@/assets/icons/SettingsIcon.vue";
 const notes = ref([]);
 const router = useRouter();
 const searchQuery = ref("");
@@ -66,16 +66,8 @@ watch(searchQuery, (newQuery) => {
 
 <template>
   <div>
-    <a href="https://github.com/mxbv/Simpl" class="logo"><LogoIcon /></a>
-    <div class="note-list">
-      <NoteItem
-        v-for="note in filteredNotes"
-        :key="note.id"
-        :note="note"
-        class="note-item"
-      />
-    </div>
     <nav>
+      <div class="settings"><SettingsIcon /></div>
       <SearchBox v-model:searchQuery="searchQuery" />
       <button
         class="note-add"
@@ -86,37 +78,58 @@ watch(searchQuery, (newQuery) => {
         <AddIcon />
       </button>
     </nav>
+    <div class="note-list">
+      <NoteItem
+        v-for="note in filteredNotes"
+        :key="note.id"
+        :note="note"
+        class="note-item"
+      />
+    </div>
+
     <router-view @refreshNotes="refreshNotes" />
   </div>
 </template>
 
 <style scoped>
-.logo {
-  display: flex;
-  position: fixed;
-  right: 10px;
-  top: 10px;
-  transition: 0.3s;
-}
-.logo:hover {
-  transform: scale(1.1);
-}
 nav {
   display: flex;
   position: fixed;
   justify-content: space-between;
   align-items: center;
   width: fit-content;
-  bottom: 20px;
+  top: 20px;
   left: 50%;
   transform: translateX(-50%);
-  background-color: #0e0e0e;
-  padding: 6px 10px 6px 6px;
+  background-color: var(--content-block);
   border: solid 1px var(--border);
+  padding: 4px;
   border-radius: 1rem;
 }
+.settings {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: fit-content;
+  background-color: var(--content-block);
+  padding: 0.8rem;
+  border: solid 1px var(--border);
+  border-radius: 1rem;
+  margin-right: 5px;
+}
+.settings:hover,
+.note-add:hover {
+  border-color: var(--border-hover);
+}
 .note-add {
-  transition: 0.5s;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: fit-content;
+  background-color: var(--content-block);
+  padding: 0.8rem;
+  border: solid 1px var(--border);
+  border-radius: 1rem;
 }
 .note-add:hover {
   svg {
