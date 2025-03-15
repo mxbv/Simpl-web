@@ -4,8 +4,8 @@ import { getNotesFromDB, saveNoteToDB } from "@/utils/db";
 import { useRouter } from "vue-router";
 import SearchBox from "@/components/SearchBox.vue";
 import NoteItem from "@/components/NoteItem.vue";
-// import FooterItem from "@/components/FooterItem.vue";
 import AddIcon from "@/assets/icons/AddIcon.vue";
+import LogoIcon from "@/assets/icons/LogoIcon.vue";
 const notes = ref([]);
 const router = useRouter();
 const searchQuery = ref("");
@@ -66,6 +66,7 @@ watch(searchQuery, (newQuery) => {
 
 <template>
   <div>
+    <a href="https://github.com/mxbv/Simpl" class="logo"><LogoIcon /></a>
     <div class="note-list">
       <NoteItem
         v-for="note in filteredNotes"
@@ -90,6 +91,16 @@ watch(searchQuery, (newQuery) => {
 </template>
 
 <style scoped>
+.logo {
+  display: flex;
+  position: fixed;
+  right: 10px;
+  top: 10px;
+  transition: 0.3s;
+}
+.logo:hover {
+  transform: scale(1.1);
+}
 nav {
   display: flex;
   position: fixed;

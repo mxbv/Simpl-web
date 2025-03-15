@@ -41,7 +41,7 @@ defineProps({
 }
 
 .note-item:hover {
-  background-color: #171717;
+  background-color: #1b1b1b;
 }
 .note-head {
   display: flex;
