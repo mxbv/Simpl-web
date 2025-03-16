@@ -52,20 +52,13 @@ table {
 }
 /* End Reset CSS  */
 :root {
-  --main-bg: #101010;
+  --bg: #101010;
   --border: #292929;
   --border-hover: #3e3e3e;
   --content-block: #161616;
   --text: #ffffff;
   --accent: #9671f8;
 }
-/* :root {
-  --main-bg: #ffffff;
-  --border: #ECECEC;
-  --content-block: #ffffff;
-  --text: #000000;
-  --accent: #9671f8;
-} */
 * {
   scrollbar-width: thin;
   scrollbar-color: var(--border) rgba(0, 0, 0, 0);
@@ -100,8 +93,7 @@ body {
   width: 50vw;
   min-height: 100%;
   margin: 0 auto;
-  padding-top: 7rem;
-  background-color: var(--main-bg);
+  background-color: var(--bg);
 }
 button {
   display: flex;
@@ -112,16 +104,12 @@ button {
   padding: 0.8rem;
   border: solid 1px var(--border);
   border-radius: 1rem;
+  cursor: pointer;
 }
 button:hover {
   border-color: var(--border-hover);
-  svg {
-    stroke: var(--accent);
-  }
 }
-svg {
-  stroke: #ffffff;
-}
+
 @media screen and (max-width: 768px) {
   body {
     min-width: 100%;

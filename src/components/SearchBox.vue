@@ -29,9 +29,9 @@ watch(searchInput, (newQuery) => {
   padding: 0.8rem;
   border: solid 1px var(--border);
   border-radius: 1rem;
-  margin-right: 5px;
+  margin-right: 10px;
   background-color: var(--content-block);
-  transition: .3s;
+  transition: 0.3s;
 }
 .search:hover {
   border-color: var(--border-hover);

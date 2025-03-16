@@ -3,7 +3,7 @@ import { useRoute, useRouter } from "vue-router";
 import { ref, onMounted, onUnmounted, watchEffect } from "vue";
 import { getNotesFromDB, deleteNoteFromDB, saveNoteToDB } from "@/utils/db";
 // Icons
-import CloseIcon from "@/assets/icons/CloseIcon.vue";
+import BackIcon from "@/assets/icons/BackIcon.vue";
 import ExportIcon from "@/assets/icons/ExportIcon.vue";
 import DeleteIcon from "@/assets/icons/DeleteIcon.vue";
 
@@ -76,22 +76,28 @@ const goBack = async () => {
   <div v-if="note" class="note">
     <div class="note-container">
       <div class="note-header">
-        <button @click="goBack" class="note-button go-back-button">
-          <CloseIcon />
+        <button
+          @click="goBack"
+          class="note-button go-back-button"
+          title="Go Back"
+        >
+          <BackIcon />
         </button>
-        <div class="note-header-right">
-          <button
-            class="note-button export-button"
-            type="button"
-            title="Export"
-            @click="exportNote"
-          >
-            <ExportIcon />
-          </button>
-          <button @click="deleteNote" class="note-button delete-button">
-            <DeleteIcon />
-          </button>
-        </div>
+        <button
+          class="note-button export-button"
+          type="button"
+          title="Export"
+          @click="exportNote"
+        >
+          <ExportIcon />
+        </button>
+        <button
+          @click="deleteNote"
+          class="note-button delete-button"
+          title="Delete"
+        >
+          <DeleteIcon />
+        </button>
       </div>
       <input
         v-model="note.title"
@@ -134,11 +140,11 @@ const goBack = async () => {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 60%;
+  width: fit-content;
   margin: 0 auto;
   margin-top: 20px;
   flex: none;
-  background-color: var(--content-block);
+  background-color: var(--main-bg);
   border: solid 1px var(--border);
   padding: 4px;
   border-radius: 1rem;
@@ -147,7 +153,8 @@ const goBack = async () => {
   display: flex;
   justify-content: center;
 }
-.export-button {
+.export-button,
+.go-back-button {
   margin-right: 10px;
 }
 .note-container {
@@ -187,13 +194,7 @@ const goBack = async () => {
   margin-bottom: 20px;
   margin-top: 20px;
 }
-svg {
-  color: var(--text);
-}
 @media screen and (max-width: 768px) {
-  .note-header {
-    width: 100%;
-  }
   .note-container {
     width: 95%;
     height: 100%;

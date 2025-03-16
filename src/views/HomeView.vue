@@ -4,13 +4,14 @@ import { getNotesFromDB, saveNoteToDB } from "@/utils/db";
 import { useRouter } from "vue-router";
 import SearchBox from "@/components/SearchBox.vue";
 import NoteItem from "@/components/NoteItem.vue";
+import SettingsModal from "@/components/SettingsModal.vue";
 import AddIcon from "@/assets/icons/AddIcon.vue";
 import SettingsIcon from "@/assets/icons/SettingsIcon.vue";
 const notes = ref([]);
 const router = useRouter();
 const searchQuery = ref("");
 const filteredNotes = ref([]);
-
+const settingsModal = ref(null);
 // Load the list of notes when a component is mounted
 onMounted(async () => {
   notes.value = await getNotesFromDB();
@@ -62,12 +63,19 @@ const searchNotes = (query) => {
 watch(searchQuery, (newQuery) => {
   searchNotes(newQuery);
 });
+
+const openSettings = () => {
+  settingsModal.value.open();
+};
 </script>
 
 <template>
   <div>
     <nav>
-      <div class="settings"><SettingsIcon /></div>
+      <button type="menu" class="settings" @click="openSettings">
+        <SettingsIcon />
+      </button>
+      <SettingsModal ref="settingsModal" />
       <SearchBox v-model:searchQuery="searchQuery" />
       <button
         class="note-add"
@@ -86,7 +94,6 @@ watch(searchQuery, (newQuery) => {
         class="note-item"
       />
     </div>
-
     <router-view @refreshNotes="refreshNotes" />
   </div>
 </template>
@@ -101,25 +108,13 @@ nav {
   top: 20px;
   left: 50%;
   transform: translateX(-50%);
-  background-color: var(--content-block);
+  background-color: var(--bg);
   border: solid 1px var(--border);
   padding: 4px;
   border-radius: 1rem;
 }
 .settings {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: fit-content;
-  background-color: var(--content-block);
-  padding: 0.8rem;
-  border: solid 1px var(--border);
-  border-radius: 1rem;
-  margin-right: 5px;
-}
-.settings:hover,
-.note-add:hover {
-  border-color: var(--border-hover);
+  margin-right: 10px;
 }
 .note-add {
   display: flex;
@@ -132,6 +127,7 @@ nav {
   border-radius: 1rem;
 }
 .note-add:hover {
+  border-color: var(--border-hover);
   svg {
     transform: rotate(180deg);
   }
@@ -141,6 +137,8 @@ nav {
   justify-content: center;
   flex-direction: column;
   flex-wrap: wrap;
+  height: 100%;
+  padding-top: 7rem;
 }
 @media screen and (max-width: 768px) {
   nav {

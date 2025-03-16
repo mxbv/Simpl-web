@@ -7,7 +7,7 @@
     xmlns="http://www.w3.org/2000/svg"
   >
     <path
-      d="M5 5L19 19M5 19L19 5"
+      d="M21 12H3M3 12L10 5M3 12L10 19"
       stroke="#ffffff"
       stroke-width="1.5"
       stroke-linecap="round"
