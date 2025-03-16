@@ -72,7 +72,7 @@ const openSettings = () => {
 <template>
   <div>
     <nav>
-      <button type="menu" class="settings" @click="openSettings">
+      <button type="menu" class="settings" @click="openSettings" title="Settings">
         <SettingsIcon />
       </button>
       <SettingsModal ref="settingsModal" />
@@ -104,30 +104,18 @@ nav {
   position: fixed;
   justify-content: space-between;
   align-items: center;
-  width: fit-content;
+  width: 50%;
   top: 20px;
   left: 50%;
   transform: translateX(-50%);
   background-color: var(--bg);
-  border: solid 1px var(--border);
-  padding: 4px;
+  padding: 5px;
   border-radius: 1rem;
 }
 .settings {
   margin-right: 10px;
 }
-.note-add {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: fit-content;
-  background-color: var(--content-block);
-  padding: 0.8rem;
-  border: solid 1px var(--border);
-  border-radius: 1rem;
-}
 .note-add:hover {
-  border-color: var(--border-hover);
   svg {
     transform: rotate(180deg);
   }
@@ -139,10 +127,15 @@ nav {
   flex-wrap: wrap;
   height: 100%;
   padding-top: 7rem;
+  width: 100%;
 }
 @media screen and (max-width: 768px) {
   nav {
     width: 95%;
+    top: 10px;
+  }
+  .note-list {
+    padding-top: 6rem;
   }
 }
 </style>

@@ -35,12 +35,11 @@ defineProps({
   border-radius: 1rem;
   text-decoration: none;
   overflow: hidden;
-  border: solid 1px var(--border);
   color: var(--text);
 }
 
 .note-item:hover {
-  border-color: var(--border-hover);
+  background-color: var(--content-block-hover);
 }
 .note-head {
   display: flex;
@@ -50,7 +49,7 @@ defineProps({
 }
 .note-title {
   margin: 0;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   font-weight: 400;
   width: 100%;
   height: fit-content;
@@ -60,7 +59,7 @@ defineProps({
 }
 .note-date {
   margin-left: 1rem;
-  color: var(--accent);
+  color: var(--text);
 }
 .note-text {
   margin: 0;
@@ -71,7 +70,7 @@ defineProps({
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  color: #858585;
+  color: #adadad;
 }
 
 @media screen and (max-width: 768px) {

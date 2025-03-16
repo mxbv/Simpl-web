@@ -83,21 +83,23 @@ const goBack = async () => {
         >
           <BackIcon />
         </button>
-        <button
-          class="note-button export-button"
-          type="button"
-          title="Export"
-          @click="exportNote"
-        >
-          <ExportIcon />
-        </button>
-        <button
-          @click="deleteNote"
-          class="note-button delete-button"
-          title="Delete"
-        >
-          <DeleteIcon />
-        </button>
+        <div class="note-header-right">
+          <button
+            class="note-button export-button"
+            type="button"
+            title="Export"
+            @click="exportNote"
+          >
+            <ExportIcon />
+          </button>
+          <button
+            @click="deleteNote"
+            class="note-button delete-button"
+            title="Delete"
+          >
+            <DeleteIcon />
+          </button>
+        </div>
       </div>
       <input
         v-model="note.title"
@@ -140,21 +142,16 @@ const goBack = async () => {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: fit-content;
+  width: 50%;
   margin: 0 auto;
   margin-top: 20px;
   flex: none;
-  background-color: var(--main-bg);
-  border: solid 1px var(--border);
-  padding: 4px;
-  border-radius: 1rem;
 }
 .note-header-right {
   display: flex;
   justify-content: center;
 }
-.export-button,
-.go-back-button {
+.export-button {
   margin-right: 10px;
 }
 .note-container {
@@ -168,7 +165,7 @@ const goBack = async () => {
 .note-input {
   width: 100%;
   border: none;
-  padding: 0 20%;
+  padding: 0 25%;
   outline: none;
   resize: none;
   background: none;
@@ -195,6 +192,10 @@ const goBack = async () => {
   margin-top: 20px;
 }
 @media screen and (max-width: 768px) {
+  .note-header {
+    width: 100%;
+    margin-top: 10px;
+  }
   .note-container {
     width: 95%;
     height: 100%;

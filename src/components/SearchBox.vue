@@ -27,14 +27,10 @@ watch(searchInput, (newQuery) => {
   align-items: center;
   width: 100%;
   padding: 0.8rem;
-  border: solid 1px var(--border);
   border-radius: 1rem;
   margin-right: 10px;
   background-color: var(--content-block);
   transition: 0.3s;
-}
-.search:hover {
-  border-color: var(--border-hover);
 }
 .search-input {
   display: block;
@@ -48,5 +44,8 @@ watch(searchInput, (newQuery) => {
 }
 svg {
   color: var(--text);
+}
+.search:hover {
+  background-color: var(--content-block-hover);
 }
 </style>
