@@ -91,17 +91,16 @@ const openSettings = () => {
         <AddIcon />
       </button>
     </nav>
-    <div class="note-list">
-      <div v-if="notes.length > 0">
-        <NoteItem
-          v-for="note in filteredNotes"
-          :key="note.id"
-          :note="note"
-          class="note-item"
-        />
-      </div>
-      <div v-else class="hint">Click + to create a note</div>
+    <div v-if="notes.length > 0" class="note-list">
+      <NoteItem
+        v-for="note in filteredNotes"
+        :key="note.id"
+        :note="note"
+        class="note-item"
+      />
     </div>
+    <div v-else class="hint">Click + to create a note</div>
+
     <router-view @refreshNotes="refreshNotes" />
   </div>
 </template>
@@ -135,21 +134,8 @@ nav {
   flex-direction: column;
   flex-wrap: wrap;
   height: 100%;
+  width: 100%;
   padding-top: 7rem;
-  width: 100%;
-}
-.no-notes {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  width: 100%;
-  height: 100dvh;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  color: var(--content-block-hover);
-  font-size: 2rem;
 }
 @media screen and (max-width: 768px) {
   nav {
