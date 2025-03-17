@@ -52,12 +52,19 @@ table {
 }
 /* End Reset CSS  */
 :root {
+  --bg: #171717;
+  --content-block-hover: #2a2a2a;
+  --content-block: #232323;
+  --text: #f2f2f5;
+  --accent: #32d74b;
+}
+/* :root {
   --bg: #1c1c1e;
   --content-block-hover: #3a3a3c;
   --content-block: #2c2c2e;
   --text: #ebebf5;
   --accent: #32d74b;
-}
+} */
 * {
   scrollbar-width: thin;
   scrollbar-color: var(--content-block) rgba(0, 0, 0, 0);
@@ -105,7 +112,7 @@ body {
   background-color: var(--content-block);
   padding: 0.8rem;
   border: none;
-  border-radius: 1rem;
+  border-radius: 12px;
   cursor: pointer;
   color: var(--text);
   text-decoration: none;

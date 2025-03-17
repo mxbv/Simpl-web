@@ -27,7 +27,7 @@ watch(searchInput, (newQuery) => {
   align-items: center;
   width: 100%;
   padding: 0.8rem;
-  border-radius: 1rem;
+  border-radius: 12px;
   margin-right: 10px;
   background-color: var(--content-block);
   transition: 0.3s;

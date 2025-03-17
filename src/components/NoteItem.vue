@@ -29,10 +29,10 @@ defineProps({
   width: 100%;
   height: fit-content;
   margin: 0 auto;
-  margin-bottom: 1rem;
+  margin-bottom: 10px;
   padding: 1.2rem;
   background: var(--content-block);
-  border-radius: 1rem;
+  border-radius: 12px;
   text-decoration: none;
   overflow: hidden;
   color: var(--text);
@@ -70,7 +70,7 @@ defineProps({
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  color: #8b8b8b;
+  color: #818181;
 }
 
 @media screen and (max-width: 768px) {

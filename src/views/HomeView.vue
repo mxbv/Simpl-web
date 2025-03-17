@@ -117,7 +117,7 @@ nav {
   transform: translateX(-50%);
   background-color: var(--bg);
   padding: 5px;
-  border-radius: 1rem;
+  border-radius: 12px;
   z-index: 100;
 }
 .settings {

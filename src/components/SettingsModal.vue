@@ -41,9 +41,6 @@ defineExpose({ open });
           <a href="https://github.com/mxbv/Simpl" class="button">
             <LogoIcon /> <span>View source</span>
           </a>
-          <div class="settings-footer">
-            <a href="https://mxbv.github.io/" class="settings-footer-link">Made with ✨ by Max Baranov</a>
-          </div>
         </div>
       </div>
     </div></Teleport
@@ -69,7 +66,7 @@ defineExpose({ open });
 .settings-modal {
   background: var(--bg);
   padding: 1.5rem;
-  border-radius: 8px;
+  border-radius: 12px;
   width: 50%;
   border: solid 1px var(--accent);
   animation: fadeIn 0.3s ease;
@@ -107,17 +104,6 @@ defineExpose({ open });
   height: 1px;
   background-color: var(--content-block);
   margin: 20px 0;
-}
-.settings-footer {
-  margin-top: 20px;
-  text-align: center;
-}
-.settings-footer-link {
-  color: var(--text);
-  text-decoration: none var(--accent);
-}
-.settings-footer-link:hover {
-  text-decoration: underline var(--accent);
 }
 @media screen and (max-width: 768px) {
   .settings-modal {
