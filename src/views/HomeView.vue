@@ -72,13 +72,18 @@ const openSettings = () => {
 <template>
   <div>
     <nav>
-      <button type="menu" class="settings" @click="openSettings" title="Settings">
+      <button
+        type="menu"
+        class="settings button"
+        @click="openSettings"
+        title="Settings"
+      >
         <SettingsIcon />
       </button>
       <SettingsModal ref="settingsModal" />
       <SearchBox v-model:searchQuery="searchQuery" />
       <button
-        class="note-add"
+        class="note-add button"
         type="button"
         title="Create new record"
         @click="addNewNote"
@@ -87,12 +92,15 @@ const openSettings = () => {
       </button>
     </nav>
     <div class="note-list">
-      <NoteItem
-        v-for="note in filteredNotes"
-        :key="note.id"
-        :note="note"
-        class="note-item"
-      />
+      <div v-if="notes.length > 0">
+        <NoteItem
+          v-for="note in filteredNotes"
+          :key="note.id"
+          :note="note"
+          class="note-item"
+        />
+      </div>
+      <div v-else class="hint">Click + to create a note</div>
     </div>
     <router-view @refreshNotes="refreshNotes" />
   </div>
@@ -111,6 +119,7 @@ nav {
   background-color: var(--bg);
   padding: 5px;
   border-radius: 1rem;
+  z-index: 100;
 }
 .settings {
   margin-right: 10px;
@@ -128,6 +137,19 @@ nav {
   height: 100%;
   padding-top: 7rem;
   width: 100%;
+}
+.no-notes {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  width: 100%;
+  height: 100dvh;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--content-block-hover);
+  font-size: 2rem;
 }
 @media screen and (max-width: 768px) {
   nav {

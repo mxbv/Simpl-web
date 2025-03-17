@@ -70,7 +70,7 @@ defineProps({
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  color: #adadad;
+  color: #8b8b8b;
 }
 
 @media screen and (max-width: 768px) {

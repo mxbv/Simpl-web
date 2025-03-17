@@ -21,11 +21,11 @@ defineExpose({ open });
       <div class="settings-modal">
         <div class="settings-header">
           <h3>Settings</h3>
-          <button @click="close" class="close"><CloseIcon /></button>
+          <button @click="close" class="button"><CloseIcon /></button>
         </div>
         <div class="setting-item">
           <span class="setting-item-name">Themes ( in the next versions )</span>
-          <select name="theme" id="theme-toggle" class="setting-item-themes">
+          <select name="theme" id="theme-toggle" class="button">
             <option value="dark">Dark theme ( Default )</option>
             <option value="light">Light theme</option>
           </select>
@@ -38,7 +38,7 @@ defineExpose({ open });
             notes locally using IndexedDB for quick access, and you can export
             them as TXT files for backup or sharing.
           </p>
-          <a href="https://github.com/mxbv/Simpl" class="settings-item-link">
+          <a href="https://github.com/mxbv/Simpl" class="button">
             <LogoIcon /> <span>View source</span>
           </a>
         </div>
@@ -91,33 +91,12 @@ defineExpose({ open });
 .setting-item-name {
   display: block;
   color: #adadad;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
-.setting-item-themes {
-  padding: 0.8rem;
-  background-color: var(--content-block);
-  border-radius: 1rem;
-  color: var(--text);
-  border: none;
+.setting-item-text {
+  margin-bottom: 20px;
 }
-.setting-item-themes:hover {
-  background-color: var(--content-block-hover);
-}
-.settings-item-link {
-  display: flex;
-  align-items: center;
-  width: fit-content;
-  background-color: var(--content-block);
-  padding: 0.8rem;
-  border-radius: 1rem;
-  text-decoration: none;
-  margin-top: 20px;
-  color: var(--text);
-}
-.settings-item-link:hover {
-  background-color: var(--content-block-hover);
-}
-.settings-item-link span {
+.button span {
   margin-left: 5px;
 }
 .divider {
@@ -125,14 +104,6 @@ defineExpose({ open });
   height: 1px;
   background-color: var(--content-block);
   margin: 20px 0;
-}
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
 }
 @media screen and (max-width: 768px) {
   .settings-modal {

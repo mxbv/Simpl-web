@@ -78,14 +78,14 @@ const goBack = async () => {
       <div class="note-header">
         <button
           @click="goBack"
-          class="note-button go-back-button"
+          class="button go-back-button"
           title="Go Back"
         >
           <BackIcon />
         </button>
         <div class="note-header-right">
           <button
-            class="note-button export-button"
+            class="button export-button"
             type="button"
             title="Export"
             @click="exportNote"
@@ -94,7 +94,7 @@ const goBack = async () => {
           </button>
           <button
             @click="deleteNote"
-            class="note-button delete-button"
+            class="button delete-button"
             title="Delete"
           >
             <DeleteIcon />
@@ -118,8 +118,8 @@ const goBack = async () => {
       ></textarea>
     </div>
   </div>
-  <div v-else>
-    <p>Record not found</p>
+  <div v-else class="hint">Note not found
+    <router-link to="/" class="button">Back to main page</router-link>
   </div>
 </template>
 
@@ -137,6 +137,7 @@ const goBack = async () => {
   z-index: 1000;
   overflow: hidden;
   color: var(--text);
+  animation: fadeIn 0.3s ease;
 }
 .note-header {
   display: flex;
@@ -189,6 +190,9 @@ const goBack = async () => {
   overflow: auto;
   flex: 1;
   margin-bottom: 20px;
+  margin-top: 20px;
+}
+.hint .button{
   margin-top: 20px;
 }
 @media screen and (max-width: 768px) {
