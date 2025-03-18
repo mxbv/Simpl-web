@@ -76,11 +76,7 @@ const goBack = async () => {
   <div v-if="note" class="note">
     <div class="note-container">
       <div class="note-header">
-        <button
-          @click="goBack"
-          class="button go-back-button"
-          title="Go Back"
-        >
+        <button @click="goBack" class="button go-back-button" title="Go Back">
           <BackIcon />
         </button>
         <div class="note-header-right">
@@ -118,7 +114,8 @@ const goBack = async () => {
       ></textarea>
     </div>
   </div>
-  <div v-else class="hint">Note not found
+  <div v-else class="hint">
+    Note not found
     <router-link to="/" class="button">Back to main page</router-link>
   </div>
 </template>
@@ -192,7 +189,7 @@ const goBack = async () => {
   margin-bottom: 20px;
   margin-top: 20px;
 }
-.hint .button{
+.hint .button {
   margin-top: 20px;
 }
 @media screen and (max-width: 768px) {

@@ -1,10 +1,13 @@
 <script setup>
-import { ref, onMounted, watch } from "vue";
+import { ref, onMounted, watch, defineAsyncComponent } from "vue";
 import { getNotesFromDB, saveNoteToDB } from "@/utils/db";
 import { useRouter } from "vue-router";
+// Components
 import SearchBox from "@/components/SearchBox.vue";
 import NoteItem from "@/components/NoteItem.vue";
-import SettingsModal from "@/components/SettingsModal.vue";
+const SettingsModal = defineAsyncComponent(() =>
+  import("@/components/SettingsModal.vue")
+);
 import AddIcon from "@/assets/icons/AddIcon.vue";
 import SettingsIcon from "@/assets/icons/SettingsIcon.vue";
 const notes = ref([]);

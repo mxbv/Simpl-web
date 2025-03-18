@@ -58,13 +58,6 @@ table {
   --text: #f2f2f5;
   --accent: #32d74b;
 }
-/* :root {
-  --bg: #1c1c1e;
-  --content-block-hover: #3a3a3c;
-  --content-block: #2c2c2e;
-  --text: #ebebf5;
-  --accent: #32d74b;
-} */
 * {
   scrollbar-width: thin;
   scrollbar-color: var(--content-block) rgba(0, 0, 0, 0);
@@ -102,7 +95,6 @@ body {
   min-height: 100%;
   margin: 0 auto;
   background-color: var(--bg);
-  animation: fadeIn 0.3s ease;
 }
 .button {
   display: flex;
