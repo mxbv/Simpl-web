@@ -132,6 +132,11 @@ nav {
   }
 }
 .note-list {
+  /* display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: min-content;
+  grid-gap: 10px;
+  grid-auto-flow: dense; */
   display: flex;
   justify-content: center;
   flex-direction: column;
