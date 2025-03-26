@@ -122,6 +122,8 @@ nav {
   padding: 5px;
   border-radius: 12px;
   z-index: 100;
+  box-shadow: 3px 3px 3px #0e0e0e;
+  border: solid 0.2px var(--content-block-hover);
 }
 .settings {
   margin-right: 10px;
