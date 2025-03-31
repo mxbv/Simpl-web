@@ -30,7 +30,7 @@ defineProps({
   height: fit-content;
   margin: 0 auto;
   margin-bottom: 10px;
-  padding: 1.2rem;
+  padding: 1rem;
   background: var(--content-block);
   border-radius: 12px;
   text-decoration: none;
@@ -49,7 +49,7 @@ defineProps({
 }
 .note-title {
   margin: 0;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-weight: 400;
   width: 100%;
   height: fit-content;
@@ -60,6 +60,7 @@ defineProps({
 .note-date {
   margin-left: 1rem;
   color: var(--text);
+  font-weight: 300;
 }
 .note-text {
   margin: 0;
@@ -71,6 +72,7 @@ defineProps({
   overflow: hidden;
   text-overflow: ellipsis;
   color: #818181;
+  font-weight: 300;
 }
 
 @media screen and (max-width: 768px) {

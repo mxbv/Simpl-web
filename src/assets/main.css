@@ -54,7 +54,7 @@ table {
 :root {
   --bg: #171717;
   --content-block-hover: #2a2a2a;
-  --content-block: #232323;
+  --content-block: #1F1F1F;
   --text: #f2f2f5;
   --accent: #32d74b;
 }
@@ -102,9 +102,9 @@ body {
   align-items: center;
   width: fit-content;
   background-color: var(--content-block);
-  padding: 0.8rem;
+  padding: 10px;
   border: none;
-  border-radius: 12px;
+  border-radius: 13px;
   cursor: pointer;
   color: var(--text);
   text-decoration: none;

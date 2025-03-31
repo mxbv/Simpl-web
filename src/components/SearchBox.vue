@@ -26,11 +26,14 @@ watch(searchInput, (newQuery) => {
   display: flex;
   align-items: center;
   width: 100%;
-  padding: 0.8rem;
-  border-radius: 12px;
+  padding: 10px;
+  border-radius: 13px;
   margin-right: 10px;
   background-color: var(--content-block);
   transition: 0.3s;
+}
+.search:focus {
+  border: solid 1px var(--accent);
 }
 .search-input {
   display: block;
