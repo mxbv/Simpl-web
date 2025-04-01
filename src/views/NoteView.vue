@@ -1,55 +1,74 @@
 <script setup>
 import { useRoute, useRouter } from "vue-router";
-import { ref, onMounted, onUnmounted, watchEffect } from "vue";
+import { ref, onMounted, onUnmounted, watch } from "vue";
 import { getNotesFromDB, deleteNoteFromDB, saveNoteToDB } from "@/utils/db";
 // Icons
 import BackIcon from "@/assets/icons/BackIcon.vue";
 import ExportIcon from "@/assets/icons/ExportIcon.vue";
 import DeleteIcon from "@/assets/icons/DeleteIcon.vue";
 
+// Emits for events
 const emit = defineEmits(["noteDeleted", "refreshNotes"]);
 const route = useRoute();
 const router = useRouter();
 const noteId = ref(parseInt(route.params.id));
 const note = ref(null);
-const contentTextarea = ref([]);
 let autoSaveInterval = null;
 
+// Load the note when component is mounted or noteId changes
+const loadNote = async () => {
+  const notes = await getNotesFromDB();
+  note.value = notes.find((n) => n.id === noteId.value) || null;
+};
+
 onMounted(() => {
-  // Run auto-save every 200 ms.
+  loadNote();
+
+  // Auto-save only when the note is modified
   autoSaveInterval = setInterval(() => {
-    if (note.value) saveNoteToDB(note.value);
-  }, 200);
+    if (note.value && (note.value.title || note.value.content)) {
+      saveNoteToDB(note.value);
+    }
+  }, 1000); // Interval increased to 1 second
 });
 
-// Restore scrolling when exiting a note
+// Clean up on unmount
 onUnmounted(() => {
   clearInterval(autoSaveInterval);
 });
 
-// Load note when noteId is changed
-watchEffect(async () => {
-  const notes = await getNotesFromDB();
-  note.value = notes.find((n) => n.id === noteId.value) || null;
-});
+// Watch for noteId changes and reload the note
+watch(
+  () => route.params.id,
+  (newId) => {
+    noteId.value = parseInt(newId);
+    loadNote();
+  }
+);
 
-// Deleting a note
+// Deleting the note
 const deleteNote = async () => {
   if (note.value) {
     const isConfirmed = window.confirm(
-      "Are you sure you want to delete this record ?"
+      "Are you sure you want to delete this record?"
     );
     if (isConfirmed) {
-      clearInterval(autoSaveInterval); // Stop auto-save
-      await deleteNoteFromDB(note.value.id);
-      note.value = null; // Zeroing the current note
-      emit("noteDeleted");
-      emit("refreshNotes");
-      router.replace("/");
+      try {
+        clearInterval(autoSaveInterval); // Stop auto-save
+        await deleteNoteFromDB(note.value.id);
+        note.value = null; // Clear the note
+        emit("noteDeleted");
+        emit("refreshNotes");
+        router.replace("/");
+      } catch (error) {
+        console.error("Error deleting the note:", error);
+        alert("Failed to delete the note.");
+      }
     }
   }
 };
-// Exporting notes
+
+// Exporting the note
 const exportNote = () => {
   if (!note.value) return;
   const content = `${(note.value.title || "Empty").toUpperCase()} | ${
@@ -62,10 +81,15 @@ const exportNote = () => {
   link.click();
   URL.revokeObjectURL(link.href);
 };
+
+// Go back to the main page
 const goBack = async () => {
-  if (!note.value.title && !note.value.content) {
-    // If the note is empty, delete it
-    await deleteNoteFromDB(note.value.id);
+  if (note.value && !note.value.title && !note.value.content) {
+    try {
+      await deleteNoteFromDB(note.value.id); // If empty, delete it
+    } catch (error) {
+      console.error("Error deleting empty note:", error);
+    }
   }
   router.replace("/");
   emit("refreshNotes"); // Redirect to the home page

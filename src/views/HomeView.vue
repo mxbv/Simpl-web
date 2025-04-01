@@ -10,63 +10,64 @@ const SettingsModal = defineAsyncComponent(() =>
 );
 import AddIcon from "@/assets/icons/AddIcon.vue";
 import SettingsIcon from "@/assets/icons/SettingsIcon.vue";
+
 const notes = ref([]);
-const router = useRouter();
-const searchQuery = ref("");
 const filteredNotes = ref([]);
+const searchQuery = ref("");
 const settingsModal = ref(null);
-// Load the list of notes when a component is mounted
+const router = useRouter();
+
+// Load notes from IndexedDB
 onMounted(async () => {
   notes.value = await getNotesFromDB();
   filteredNotes.value = [...notes.value];
 });
 
-// Function for adding a new note
+// Add a new note
 const addNewNote = async () => {
-  const currentDate = new Date();
-  const formattedDate = `${currentDate.toLocaleString("ru-RU", {
+  const currentDate = new Date().toLocaleString("ru-RU", {
     day: "2-digit",
     month: "2-digit",
     year: "numeric",
-  })}`;
+  });
+
   const newNote = {
     id: Date.now(),
     title: "",
-    text: "",
-    date: formattedDate,
+    content: "",
+    date: currentDate,
+    createdAt: Date.now(),
   };
+
   await saveNoteToDB(newNote);
+  notes.value.unshift(newNote); // Add new note to the beginning
   router.replace(`/note/${newNote.id}`);
-  // Add a new note to the top of the list
-  notes.value.unshift(newNote);
 };
 
-// Function for updating the list of notes
+// Refresh notes (reload from DB)
 const refreshNotes = async () => {
-  notes.value = await getNotesFromDB(); // Updating the list of notes from IndexedDB
+  notes.value = await getNotesFromDB();
 };
 
+// Search notes based on query
 const searchNotes = (query) => {
   if (!query) {
-    filteredNotes.value = [...notes.value]; // If the search is empty, show all notes
-    return;
+    filteredNotes.value = [...notes.value];
+  } else {
+    filteredNotes.value = notes.value
+      .filter(
+        (note) =>
+          (note.title || "").toLowerCase().includes(query.toLowerCase()) ||
+          (note.content || "").toLowerCase().includes(query.toLowerCase())
+      )
+      .sort((a, b) => b.createdAt - a.createdAt);
   }
-  filteredNotes.value = notes.value
-    .filter((note) => {
-      const title = note.title ? note.title.toLowerCase() : "";
-      const content = note.content ? note.content.toLowerCase() : "";
-      return (
-        title.includes(query.toLowerCase()) ||
-        content.includes(query.toLowerCase())
-      );
-    })
-    .sort((a, b) => b.createdAt - a.createdAt); // Sort by date
 };
 
-watch(searchQuery, (newQuery) => {
-  searchNotes(newQuery);
-});
+// Watch search query to filter notes
+watch(searchQuery, searchNotes);
 
+// Open settings modal
 const openSettings = () => {
   settingsModal.value.open();
 };
@@ -74,27 +75,24 @@ const openSettings = () => {
 
 <template>
   <div>
+    <!-- Navigation bar with settings and search -->
     <nav>
-      <button
-        type="menu"
-        class="settings button"
-        @click="openSettings"
-        title="Settings"
-      >
+      <button class="settings button" @click="openSettings" title="Settings">
         <SettingsIcon />
       </button>
       <SettingsModal ref="settingsModal" />
       <SearchBox v-model:searchQuery="searchQuery" />
       <button
         class="note-add button"
-        type="button"
-        title="Create new record"
         @click="addNewNote"
+        title="Create new record"
       >
         <AddIcon />
       </button>
     </nav>
-    <div v-if="notes.length > 0" class="note-list">
+
+    <!-- Notes List -->
+    <div v-if="filteredNotes.length" class="note-list">
       <NoteItem
         v-for="note in filteredNotes"
         :key="note.id"
@@ -102,8 +100,11 @@ const openSettings = () => {
         class="note-item"
       />
     </div>
+
+    <!-- Message when no notes -->
     <div v-else class="hint">Click + to create a note</div>
 
+    <!-- View for other routes (e.g. note view) -->
     <router-view @refreshNotes="refreshNotes" />
   </div>
 </template>
@@ -125,23 +126,27 @@ nav {
   box-shadow: 3px 3px 3px #0e0e0e;
   border: solid 0.2px var(--content-block-hover);
 }
+
 .settings {
   margin-right: 10px;
 }
-.note-add:hover {
-  svg {
-    transform: rotate(180deg);
-  }
+
+.note-add:hover svg {
+  transform: rotate(180deg);
 }
+
 .note-list {
   display: flex;
   justify-content: center;
   flex-direction: column;
-  flex-wrap: wrap;
-  height: 100%;
   width: 100%;
   padding-top: 7rem;
 }
+
+.hint .button {
+  margin-top: 20px;
+}
+
 @media screen and (max-width: 768px) {
   nav {
     width: 95%;
