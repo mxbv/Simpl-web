@@ -1,20 +1,15 @@
 <script setup>
 import SearchBox from "./control-items/SearchBox.vue";
-import { ref, onMounted, watch, defineAsyncComponent } from "vue";
+import { ref, onMounted, watch } from "vue";
 import { getNotesFromDB, saveNoteToDB } from "@/utils/db";
 import { useRouter } from "vue-router";
 // Components
 import NoteItem from "@/components/control/control-items/NoteItem.vue";
-const SettingsModal = defineAsyncComponent(() =>
-  import("@/components/control/control-items/SettingsModal.vue")
-);
 import AddIcon from "@/assets/icons-control/AddIcon.vue";
-import SettingsIcon from "@/assets/icons-control/SettingsIcon.vue";
 
 const notes = ref([]);
 const filteredNotes = ref([]);
 const searchQuery = ref("");
-const settingsModal = ref(null);
 const router = useRouter();
 
 // Load notes from IndexedDB
@@ -23,7 +18,6 @@ onMounted(async () => {
   filteredNotes.value = [...notes.value];
 });
 
-// Add a new note
 const addNewNote = async () => {
   const currentDate = new Date().toLocaleString("ru-RU", {
     day: "2-digit",
@@ -41,13 +35,16 @@ const addNewNote = async () => {
 
   await saveNoteToDB(newNote);
   notes.value.unshift(newNote); // Add new note to the beginning
+  filteredNotes.value = [...notes.value]; // Обновляем filteredNotes
+  searchNotes(searchQuery.value); // Перезапускаем фильтрацию с текущим запросом
+
   router.replace(`/note/${newNote.id}`);
 };
 
-// Refresh notes (reload from DB)
-const refreshNotes = async () => {
-  notes.value = await getNotesFromDB();
-};
+// // Refresh notes (reload from DB)
+// const refreshNotes = async () => {
+//   notes.value = await getNotesFromDB();
+// };
 
 // Search notes based on query
 const searchNotes = (query) => {
@@ -66,11 +63,6 @@ const searchNotes = (query) => {
 
 // Watch search query to filter notes
 watch(searchQuery, searchNotes);
-
-// Open settings modal
-const openSettings = () => {
-  settingsModal.value.open();
-};
 </script>
 
 <template>
@@ -94,10 +86,6 @@ const openSettings = () => {
         class="note-item"
       />
     </div>
-    <button class="settings button" @click="openSettings" title="Settings">
-      <SettingsIcon />
-    </button>
-    <SettingsModal ref="settingsModal" />
   </div>
 </template>
 
@@ -107,23 +95,25 @@ const openSettings = () => {
   width: 250px;
   flex-direction: column;
   padding: 10px;
-  background-color: var(--content-block);
+  background-color: var(--block);
   overflow: auto;
 }
 .control {
   height: fit-content;
 }
-.note-add,
-.settings {
+.note-add {
   width: 100%;
   margin-top: 1rem;
   background-color: #141414;
   padding: 10px;
   border-radius: 13px;
+}
+.note-add {
   svg {
     margin-left: 10px;
   }
 }
+
 .note-add:hover {
   background-color: #000000;
 }
@@ -131,5 +121,6 @@ const openSettings = () => {
   display: flex;
   flex-direction: column;
   margin-top: 20px;
+  flex-grow: 1;
 }
 </style>

@@ -5,7 +5,7 @@ import { getNotesFromDB, deleteNoteFromDB, saveNoteToDB } from "@/utils/db";
 // Icons
 import ExportIcon from "@/assets/icons-editor/ExportIcon.vue";
 import DeleteIcon from "@/assets/icons-editor/DeleteIcon.vue";
-
+import LogoIcon from "@/assets/icons-editor/LogoIcon.vue";
 // Emits for events
 const emit = defineEmits(["noteDeleted", "refreshNotes"]);
 const route = useRoute();
@@ -103,6 +103,12 @@ const exportNote = () => {
       ></textarea>
       <div class="note-control">
         <div class="note-info">
+          <a
+            href="https://github.com/mxbv/Simpl"
+            class="button note-info-link"
+          >
+            <LogoIcon /> View Source
+          </a>
           <span class="created">Created: {{ note.date }}</span>
           <span class="chars">
             Characrters:
@@ -182,8 +188,7 @@ const exportNote = () => {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: var(--content-block);
-  padding: 5px 1rem;
+  background-color: var(--block);
   .note-info,
   .note-control-buttons {
     display: flex;
@@ -199,18 +204,10 @@ const exportNote = () => {
       margin-right: 15px;
     }
   }
-}
-@media screen and (max-width: 768px) {
-  .note-header {
-    width: 100%;
-    margin-top: 10px;
-  }
-  .note-container {
-    width: 95%;
-    height: 100%;
-  }
-  .note-input {
-    padding: 0 0;
+  .note-info-link {
+    color: #a5a5a5;
+    font-size: 13px;
+    margin-right: 15px;
   }
 }
 </style>

@@ -32,7 +32,7 @@ defineProps({
 }
 
 .note-item:hover {
-  background-color: var(--content-block-hover);
+  background-color: var(--block-hover);
 }
 .note-head {
   display: flex;
