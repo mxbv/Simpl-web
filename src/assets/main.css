@@ -90,21 +90,13 @@ html {
   min-height: 100%;
   background-color: var(--bg);
 }
-body {
-  width: 50%;
-  min-height: 100%;
-  margin: 0 auto;
-  background-color: var(--bg);
-}
 .button {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: fit-content;
-  background-color: var(--content-block);
-  padding: 10px;
+  background: none;
+  padding: 5px;
   border: none;
-  border-radius: 13px;
   cursor: pointer;
   color: var(--text);
   text-decoration: none;
@@ -113,16 +105,6 @@ body {
   background-color: var(--content-block-hover);
 }
 .hint {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  flex-direction: column;
-  width: 100%;
-  height: 100dvh;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
   color: #626262;
   font-size: 2rem;
 }

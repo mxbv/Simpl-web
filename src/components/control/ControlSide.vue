@@ -1,15 +1,15 @@
 <script setup>
+import SearchBox from "./control-items/SearchBox.vue";
 import { ref, onMounted, watch, defineAsyncComponent } from "vue";
 import { getNotesFromDB, saveNoteToDB } from "@/utils/db";
 import { useRouter } from "vue-router";
 // Components
-import SearchBox from "@/components/SearchBox.vue";
-import NoteItem from "@/components/NoteItem.vue";
+import NoteItem from "@/components/control/control-items/NoteItem.vue";
 const SettingsModal = defineAsyncComponent(() =>
-  import("@/components/SettingsModal.vue")
+  import("@/components/control/control-items/SettingsModal.vue")
 );
-import AddIcon from "@/assets/icons/AddIcon.vue";
-import SettingsIcon from "@/assets/icons/SettingsIcon.vue";
+import AddIcon from "@/assets/icons-control/AddIcon.vue";
+import SettingsIcon from "@/assets/icons-control/SettingsIcon.vue";
 
 const notes = ref([]);
 const filteredNotes = ref([]);
@@ -74,24 +74,18 @@ const openSettings = () => {
 </script>
 
 <template>
-  <div>
-    <!-- Navigation bar with settings and search -->
-    <nav>
-      <button class="settings button" @click="openSettings" title="Settings">
-        <SettingsIcon />
-      </button>
-      <SettingsModal ref="settingsModal" />
-      <SearchBox v-model:searchQuery="searchQuery" />
+  <div class="container-control">
+    <div class="control">
+      <SearchBox />
       <button
         class="note-add button"
         @click="addNewNote"
         title="Create new record"
       >
+        New note
         <AddIcon />
       </button>
-    </nav>
-
-    <!-- Notes List -->
+    </div>
     <div v-if="filteredNotes.length" class="note-list">
       <NoteItem
         v-for="note in filteredNotes"
@@ -100,60 +94,42 @@ const openSettings = () => {
         class="note-item"
       />
     </div>
-
-    <!-- Message when no notes -->
-    <div v-else class="hint">Click + to create a note</div>
-
-    <!-- View for other routes (e.g. note view) -->
-    <router-view @refreshNotes="refreshNotes" />
+    <button class="settings button" @click="openSettings" title="Settings">
+      <SettingsIcon />
+    </button>
+    <SettingsModal ref="settingsModal" />
   </div>
 </template>
 
 <style scoped>
-nav {
+.container-control {
   display: flex;
-  position: fixed;
-  justify-content: space-between;
-  align-items: center;
-  width: 50%;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: var(--bg);
-  padding: 5px;
-  border-radius: 12px;
-  z-index: 100;
-  box-shadow: 3px 3px 3px #0e0e0e;
-  border: solid 0.2px var(--content-block-hover);
+  width: 250px;
+  flex-direction: column;
+  padding: 10px;
+  background-color: var(--content-block);
+  overflow: auto;
 }
-
+.control {
+  height: fit-content;
+}
+.note-add,
 .settings {
-  margin-right: 10px;
+  width: 100%;
+  margin-top: 1rem;
+  background-color: #141414;
+  padding: 10px;
+  border-radius: 13px;
+  svg {
+    margin-left: 10px;
+  }
 }
-
-.note-add:hover svg {
-  transform: rotate(180deg);
+.note-add:hover {
+  background-color: #000000;
 }
-
 .note-list {
   display: flex;
-  justify-content: center;
   flex-direction: column;
-  width: 100%;
-  padding-top: 7rem;
-}
-
-.hint .button {
   margin-top: 20px;
-}
-
-@media screen and (max-width: 768px) {
-  nav {
-    width: 95%;
-    top: 10px;
-  }
-  .note-list {
-    padding-top: 6rem;
-  }
 }
 </style>

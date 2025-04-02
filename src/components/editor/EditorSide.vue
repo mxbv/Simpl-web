@@ -3,9 +3,8 @@ import { useRoute, useRouter } from "vue-router";
 import { ref, onMounted, onUnmounted, watch } from "vue";
 import { getNotesFromDB, deleteNoteFromDB, saveNoteToDB } from "@/utils/db";
 // Icons
-import BackIcon from "@/assets/icons/BackIcon.vue";
-import ExportIcon from "@/assets/icons/ExportIcon.vue";
-import DeleteIcon from "@/assets/icons/DeleteIcon.vue";
+import ExportIcon from "@/assets/icons-editor/ExportIcon.vue";
+import DeleteIcon from "@/assets/icons-editor/DeleteIcon.vue";
 
 // Emits for events
 const emit = defineEmits(["noteDeleted", "refreshNotes"]);
@@ -81,29 +80,40 @@ const exportNote = () => {
   link.click();
   URL.revokeObjectURL(link.href);
 };
-
-// Go back to the main page
-const goBack = async () => {
-  if (note.value && !note.value.title && !note.value.content) {
-    try {
-      await deleteNoteFromDB(note.value.id); // If empty, delete it
-    } catch (error) {
-      console.error("Error deleting empty note:", error);
-    }
-  }
-  router.replace("/");
-  emit("refreshNotes"); // Redirect to the home page
-};
 </script>
 
 <template>
-  <div v-if="note" class="note">
-    <div class="note-container">
-      <div class="note-header">
-        <button @click="goBack" class="button go-back-button" title="Go Back">
-          <BackIcon />
-        </button>
-        <div class="note-header-right">
+  <div class="container-editor">
+    <div v-if="note" class="note">
+      <input
+        v-model="note.title"
+        placeholder="Title"
+        class="note-input note-title"
+        ref="titleTextarea"
+        type="text"
+        maxlength="100"
+      />
+      <textarea
+        v-model="note.content"
+        placeholder="Tell a new story..."
+        class="note-input note-text"
+        ref="contentTextarea"
+        type="text"
+        maxlength="30000"
+      ></textarea>
+      <div class="note-control">
+        <div class="note-info">
+          <span class="created">Created: {{ note.date }}</span>
+          <span class="chars">
+            Characrters:
+            {{
+              note.content + note.title
+                ? note.content.length + note.title.length
+                : "0"
+            }}
+          </span>
+        </div>
+        <div class="note-control-buttons">
           <button
             class="button export-button"
             type="button"
@@ -121,100 +131,74 @@ const goBack = async () => {
           </button>
         </div>
       </div>
-      <input
-        v-model="note.title"
-        placeholder="Title"
-        class="note-input note-title"
-        ref="titleTextarea"
-        type="text"
-        maxlength="100"
-      />
-      <textarea
-        v-model="note.content"
-        placeholder="Tell a new story..."
-        class="note-input note-text"
-        ref="contentTextarea"
-        maxlength="30000"
-      ></textarea>
     </div>
-  </div>
-  <div v-else class="hint">
-    Note not found
-    <router-link to="/" class="button">Back to main page</router-link>
+    <div v-else class="hint">Note not selected</div>
   </div>
 </template>
 
 <style scoped>
+.container-editor {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+}
 .note {
   display: flex;
-  position: absolute;
+  flex-direction: column;
   width: 100%;
   height: 100%;
-  min-height: 100dvh;
-  background-color: var(--main-bg);
-  top: 0;
-  left: 0;
-  justify-content: center;
-  z-index: 1000;
-  overflow: hidden;
   color: var(--text);
   animation: fadeIn 0.3s ease;
-}
-.note-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 50%;
-  margin: 0 auto;
-  margin-top: 20px;
-  flex: none;
-}
-.note-header-right {
-  display: flex;
-  justify-content: center;
 }
 .export-button {
   margin-right: 10px;
 }
-.note-container {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  width: 100%;
-  overflow: hidden;
-}
-
 .note-input {
   width: 100%;
   border: none;
-  padding: 0 25%;
   outline: none;
   resize: none;
   background: none;
   color: var(--black-color);
   font-size: 1.2rem;
+  margin-top: 20px;
+  padding: 0 1rem;
 }
 
 .note-title {
-  display: block;
   font-size: 2rem;
   font-weight: 500;
   text-overflow: ellipsis;
-  border-bottom: none;
-  padding-bottom: 0;
-  margin-top: 20px;
-  flex: none;
 }
 
 .note-text {
+  flex-grow: 1;
   box-sizing: border-box;
   overflow: auto;
-  flex: 1;
-  margin-bottom: 20px;
-  margin-top: 20px;
+  padding-bottom: 10px;
 }
-.hint .button {
-  margin-top: 20px;
+.note-control {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--content-block);
+  padding: 5px 1rem;
+  .note-info,
+  .note-control-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .note-info {
+    color: #a5a5a5;
+    span {
+      font-size: 13px;
+    }
+    .created {
+      margin-right: 15px;
+    }
+  }
 }
 @media screen and (max-width: 768px) {
   .note-header {

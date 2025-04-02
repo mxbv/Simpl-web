@@ -9,12 +9,9 @@ defineProps({
 
 <template>
   <router-link :to="`/note/${note.id}`" class="note-item">
-    <div class="note-head">
-      <h3 class="note-title">
-        {{ note.title || "Untitled" }}
-      </h3>
-      <div class="note-date">{{ note.date }}</div>
-    </div>
+    <h3 class="note-title">
+      {{ note.title || "Untitled" }}
+    </h3>
     <h4 class="note-text" v-if="note.content">
       {{ note.content }}
     </h4>
@@ -25,14 +22,10 @@ defineProps({
 .note-item {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   width: 100%;
-  height: fit-content;
   margin: 0 auto;
-  margin-bottom: 10px;
-  padding: 1rem;
-  background: var(--content-block);
-  border-radius: 12px;
+  padding: 10px;
+  border-radius: 10px;
   text-decoration: none;
   overflow: hidden;
   color: var(--text);
@@ -49,7 +42,6 @@ defineProps({
 }
 .note-title {
   margin: 0;
-  font-size: 1.1rem;
   font-weight: 400;
   width: 100%;
   height: fit-content;

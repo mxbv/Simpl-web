@@ -1,6 +1,6 @@
 <script setup>
 import { defineEmits, ref, watch } from "vue";
-import SearchIcon from "@/assets/icons/SearchIcon.vue";
+import SearchIcon from "@/assets/icons-control/SearchIcon.vue";
 const emit = defineEmits(["update:searchQuery"]);
 const searchInput = ref("");
 
@@ -27,9 +27,8 @@ watch(searchInput, (newQuery) => {
   align-items: center;
   width: 100%;
   padding: 10px;
-  border-radius: 13px;
-  margin-right: 10px;
-  background-color: var(--content-block);
+  border-radius: 12px;
+  background-color: var(--content-block-hover);
   transition: 0.3s;
 }
 .search:focus {
