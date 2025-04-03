@@ -28,7 +28,7 @@ onMounted(() => {
     if (note.value && (note.value.title || note.value.content)) {
       saveNoteToDB(note.value);
     }
-  }, 1000); // Interval increased to 1 second
+  }, 200); // Interval increased to 1 second
 });
 
 // Clean up on unmount
@@ -103,10 +103,7 @@ const exportNote = () => {
       ></textarea>
       <div class="note-control">
         <div class="note-info">
-          <a
-            href="https://github.com/mxbv/Simpl"
-            class="button note-info-link"
-          >
+          <a href="https://github.com/mxbv/Simpl" class="button note-info-link">
             <LogoIcon /> View Source
           </a>
           <span class="created">Created: {{ note.date }}</span>
@@ -156,9 +153,6 @@ const exportNote = () => {
   height: 100%;
   color: var(--text);
   animation: fadeIn 0.3s ease;
-}
-.export-button {
-  margin-right: 10px;
 }
 .note-input {
   width: 100%;

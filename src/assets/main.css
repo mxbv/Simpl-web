@@ -51,8 +51,3 @@ html {
   color: #626262;
   font-size: 2rem;
 }
-@media screen and (max-width: 768px) {
-  body {
-    min-width: 100%;
-  }
-}

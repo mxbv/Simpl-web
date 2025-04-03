@@ -12,9 +12,9 @@ defineProps({
     <h3 class="note-title">
       {{ note.title || "Untitled" }}
     </h3>
-    <h4 class="note-text" v-if="note.content">
+    <!-- <h4 class="note-text" v-if="note.content">
       {{ note.content }}
-    </h4>
+    </h4> -->
   </router-link>
 </template>
 

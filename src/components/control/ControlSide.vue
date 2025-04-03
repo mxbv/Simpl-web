@@ -1,6 +1,6 @@
 <script setup>
 import SearchBox from "./control-items/SearchBox.vue";
-import { ref, onMounted, watch } from "vue";
+import { ref, onMounted, watch, } from "vue";
 import { getNotesFromDB, saveNoteToDB } from "@/utils/db";
 import { useRouter } from "vue-router";
 // Components
@@ -19,17 +19,21 @@ onMounted(async () => {
 });
 
 const addNewNote = async () => {
-  const currentDate = new Date().toLocaleString("ru-RU", {
+  const currentDate = new Date();
+  const formattedDate = `${currentDate.toLocaleString("en-GB", {
     day: "2-digit",
-    month: "2-digit",
+    month: "short",
     year: "numeric",
-  });
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  })}`;
 
   const newNote = {
     id: Date.now(),
     title: "",
     content: "",
-    date: currentDate,
+    date: formattedDate,
     createdAt: Date.now(),
   };
 
@@ -37,14 +41,8 @@ const addNewNote = async () => {
   notes.value.unshift(newNote); // Add new note to the beginning
   filteredNotes.value = [...notes.value]; // Обновляем filteredNotes
   searchNotes(searchQuery.value); // Перезапускаем фильтрацию с текущим запросом
-
   router.replace(`/note/${newNote.id}`);
 };
-
-// // Refresh notes (reload from DB)
-// const refreshNotes = async () => {
-//   notes.value = await getNotesFromDB();
-// };
 
 // Search notes based on query
 const searchNotes = (query) => {
@@ -61,6 +59,21 @@ const searchNotes = (query) => {
   }
 };
 
+
+// Refresh notes (reload from DB)
+const refreshNotes = async () => {
+  notes.value = await getNotesFromDB();
+  filteredNotes.value = [...notes.value];
+  searchNotes(searchQuery.value);
+};
+
+// const refreshNotes = async () => {
+//   const updatedNotes = await getNotesFromDB();
+//   notes.value = updatedNotes; // Обновляем список
+//   await nextTick(); // Дожидаемся обновления реактивных данных
+
+//   searchNotes(searchQuery.value); // Применяем фильтр
+// };
 // Watch search query to filter notes
 watch(searchQuery, searchNotes);
 </script>
@@ -80,6 +93,7 @@ watch(searchQuery, searchNotes);
     </div>
     <div v-if="filteredNotes.length" class="note-list">
       <NoteItem
+        @click="refreshNotes"
         v-for="note in filteredNotes"
         :key="note.id"
         :note="note"
