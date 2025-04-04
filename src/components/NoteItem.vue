@@ -31,7 +31,7 @@ defineProps({
   margin: 0 auto;
   margin-bottom: 10px;
   padding: 1rem;
-  background: var(--content-block);
+  background: var(--item);
   border-radius: 12px;
   text-decoration: none;
   overflow: hidden;
@@ -39,7 +39,7 @@ defineProps({
 }
 
 .note-item:hover {
-  background-color: var(--content-block-hover);
+  background-color: var(--item-hover);
 }
 .note-head {
   display: flex;
@@ -71,11 +71,11 @@ defineProps({
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  color: #818181;
+  color: #8e8e8e;
   font-weight: 300;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 992px) {
   .note-item {
     width: 95%;
     margin: 0 auto;

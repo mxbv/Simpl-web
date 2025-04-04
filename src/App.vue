@@ -1,6 +1,6 @@
 <template>
-  <div>
+  <main>
     <!-- Main content for routes -->
-    <router-view/>
-  </div>
+    <router-view />
+  </main>
 </template>

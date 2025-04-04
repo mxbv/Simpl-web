@@ -105,7 +105,7 @@ defineExpose({ open });
   background-color: var(--content-block);
   margin: 20px 0;
 }
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 992px) {
   .settings-modal {
     width: 95%;
   }

@@ -29,7 +29,7 @@ onMounted(() => {
     if (note.value && (note.value.title || note.value.content)) {
       saveNoteToDB(note.value);
     }
-  }, 1000); // Interval increased to 1 second
+  }, 200); // Interval increased to 1 second
 });
 
 // Clean up on unmount
@@ -151,7 +151,6 @@ const goBack = async () => {
   width: 100%;
   height: 100%;
   min-height: 100dvh;
-  background-color: var(--main-bg);
   top: 0;
   left: 0;
   justify-content: center;
@@ -191,7 +190,7 @@ const goBack = async () => {
   outline: none;
   resize: none;
   background: none;
-  color: var(--black-color);
+  color: var(--text);
   font-size: 1.2rem;
 }
 
@@ -216,7 +215,7 @@ const goBack = async () => {
 .hint .button {
   margin-top: 20px;
 }
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 992px) {
   .note-header {
     width: 100%;
     margin-top: 10px;

@@ -75,7 +75,6 @@ const openSettings = () => {
 
 <template>
   <div>
-    <!-- Navigation bar with settings and search -->
     <nav>
       <button class="settings button" @click="openSettings" title="Settings">
         <SettingsIcon />
@@ -91,7 +90,6 @@ const openSettings = () => {
       </button>
     </nav>
 
-    <!-- Notes List -->
     <div v-if="filteredNotes.length" class="note-list">
       <NoteItem
         v-for="note in filteredNotes"
@@ -113,41 +111,34 @@ const openSettings = () => {
 nav {
   display: flex;
   position: fixed;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   width: 50%;
+  height: fit-content;
+  border-radius: 12px;
+  z-index: 100;
   top: 20px;
   left: 50%;
   transform: translateX(-50%);
   background-color: var(--bg);
-  padding: 5px;
-  border-radius: 12px;
-  z-index: 100;
-  box-shadow: 3px 3px 3px #0e0e0e;
-  border: solid 0.2px var(--content-block-hover);
+  padding: 3px;
+  border: solid 1px var(--item);
 }
-
 .settings {
   margin-right: 10px;
 }
-
 .note-add:hover svg {
   transform: rotate(180deg);
 }
-
 .note-list {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  width: 100%;
-  padding-top: 7rem;
+  padding-top: 6rem;
 }
 
 .hint .button {
   margin-top: 20px;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 992px) {
   nav {
     width: 95%;
     top: 10px;
