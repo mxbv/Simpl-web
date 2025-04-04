@@ -12,16 +12,14 @@ defineProps({
     <h3 class="note-title">
       {{ note.title || "Untitled" }}
     </h3>
-    <!-- <h4 class="note-text" v-if="note.content">
-      {{ note.content }}
-    </h4> -->
+    <!-- <h4 class="note-text" v-if="note.content">— {{ note.content }}</h4> -->
   </router-link>
 </template>
 
 <style scoped>
 .note-item {
   display: flex;
-  flex-direction: column;
+  align-items: center;
   width: 100%;
   margin: 0 auto;
   padding: 10px;
@@ -34,39 +32,25 @@ defineProps({
 .note-item:hover {
   background-color: var(--block-hover);
 }
-.note-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-}
 .note-title {
-  margin: 0;
+  width: fit-content;
   font-weight: 400;
-  width: 100%;
-  height: fit-content;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.note-date {
-  margin-left: 1rem;
-  color: var(--text);
-  font-weight: 300;
-}
-.note-text {
-  margin: 0;
-  font-size: 1rem;
-  font-weight: 400;
-  width: 100%;
-  margin-top: 10px;
+
+/* .note-text {
+  width: fit-content;
+  max-width: 50%;
+  min-width: 10%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   color: #818181;
   font-weight: 300;
-}
-
+  margin-left: 5px;
+} */
 @media screen and (max-width: 768px) {
   .note-item {
     width: 95%;

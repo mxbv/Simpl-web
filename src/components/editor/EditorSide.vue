@@ -1,6 +1,6 @@
 <script setup>
 import { useRoute, useRouter } from "vue-router";
-import { ref, onMounted, onUnmounted, watch } from "vue";
+import { ref, onUnmounted, watch } from "vue"; //onMounted, 
 import { getNotesFromDB, deleteNoteFromDB, saveNoteToDB } from "@/utils/db";
 // Icons
 import ExportIcon from "@/assets/icons-editor/ExportIcon.vue";
@@ -20,30 +20,16 @@ const loadNote = async () => {
   note.value = notes.find((n) => n.id === noteId.value) || null;
 };
 
-onMounted(() => {
-  loadNote();
+// Auto save 
+const startAutoSave = () => {
+  if (autoSaveInterval) clearInterval(autoSaveInterval);
 
-  // Auto-save only when the note is modified
   autoSaveInterval = setInterval(() => {
     if (note.value && (note.value.title || note.value.content)) {
       saveNoteToDB(note.value);
     }
-  }, 200); // Interval increased to 1 second
-});
-
-// Clean up on unmount
-onUnmounted(() => {
-  clearInterval(autoSaveInterval);
-});
-
-// Watch for noteId changes and reload the note
-watch(
-  () => route.params.id,
-  (newId) => {
-    noteId.value = parseInt(newId);
-    loadNote();
-  }
-);
+  }, 200); // autosave interval
+};
 
 // Deleting the note
 const deleteNote = async () => {
@@ -67,6 +53,24 @@ const deleteNote = async () => {
   }
 };
 
+// Delete note if empty
+const deleteIfEmptyNote = async () => {
+  const noteData = note.value;
+  if (
+    noteData &&
+    !noteData.title?.trim() &&
+    !noteData.content?.trim() &&
+    noteData.id
+  ) {
+    try {
+      await deleteNoteFromDB(noteData.id);
+      console.log("Пустая заметка удалена");
+    } catch (error) {
+      console.error("Ошибка при удалении пустой заметки:", error);
+    }
+  }
+};
+
 // Exporting the note
 const exportNote = () => {
   if (!note.value) return;
@@ -80,6 +84,29 @@ const exportNote = () => {
   link.click();
   URL.revokeObjectURL(link.href);
 };
+
+watch(
+  () => route.params.id,
+  async (newId) => {
+    await deleteIfEmptyNote(); // delete the old one if it's empty
+
+    noteId.value = parseInt(newId);
+    await loadNote(); // we'll upload a new one
+
+    if (note.value) {
+      startAutoSave(); // autosave for a new
+    } else {
+      clearInterval(autoSaveInterval); // in case you come to a blank page
+      autoSaveInterval = null;
+    }
+  }
+);
+
+// Clean up on unmount
+onUnmounted(async () => {
+  clearInterval(autoSaveInterval);
+  await deleteIfEmptyNote();
+});
 </script>
 
 <template>
@@ -161,7 +188,6 @@ const exportNote = () => {
   resize: none;
   background: none;
   color: var(--black-color);
-  font-size: 1.2rem;
   margin-top: 20px;
   padding: 0 1rem;
 }

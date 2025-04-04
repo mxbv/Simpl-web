@@ -1,6 +1,6 @@
 <script setup>
 import SearchBox from "./control-items/SearchBox.vue";
-import { ref, onMounted, watch, } from "vue";
+import { ref, onMounted, watch } from "vue";
 import { getNotesFromDB, saveNoteToDB } from "@/utils/db";
 import { useRouter } from "vue-router";
 // Components
@@ -39,8 +39,8 @@ const addNewNote = async () => {
 
   await saveNoteToDB(newNote);
   notes.value.unshift(newNote); // Add new note to the beginning
-  filteredNotes.value = [...notes.value]; // Обновляем filteredNotes
-  searchNotes(searchQuery.value); // Перезапускаем фильтрацию с текущим запросом
+  filteredNotes.value = [...notes.value]; // Updating filteredNotes
+  searchNotes(searchQuery.value); // Restart filtering with the current request
   router.replace(`/note/${newNote.id}`);
 };
 
@@ -59,27 +59,18 @@ const searchNotes = (query) => {
   }
 };
 
-
 // Refresh notes (reload from DB)
 const refreshNotes = async () => {
   notes.value = await getNotesFromDB();
   filteredNotes.value = [...notes.value];
   searchNotes(searchQuery.value);
 };
-
-// const refreshNotes = async () => {
-//   const updatedNotes = await getNotesFromDB();
-//   notes.value = updatedNotes; // Обновляем список
-//   await nextTick(); // Дожидаемся обновления реактивных данных
-
-//   searchNotes(searchQuery.value); // Применяем фильтр
-// };
 // Watch search query to filter notes
 watch(searchQuery, searchNotes);
 </script>
 
 <template>
-  <div class="container-control">
+  <div class="container-control" @click="refreshNotes">
     <div class="control">
       <SearchBox />
       <button
@@ -93,7 +84,6 @@ watch(searchQuery, searchNotes);
     </div>
     <div v-if="filteredNotes.length" class="note-list">
       <NoteItem
-        @click="refreshNotes"
         v-for="note in filteredNotes"
         :key="note.id"
         :note="note"
