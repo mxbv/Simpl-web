@@ -1,7 +1,7 @@
 :root {
   --bg: #171717;
   --item-hover: #2a2a2a;
-  --item: #1f1f1f;
+  --item: #1b1b1b;
   --text: #f2f2f5;
   --accent: #32d74b;
 }
@@ -45,12 +45,12 @@ body {
   margin: 0 auto;
   background-color: var(--bg);
 }
-.button {
+.control-item {
   display: flex;
   justify-content: center;
   align-items: center;
   width: fit-content;
-  background-color: var(--item);
+  background: none;
   padding: 13px;
   border: none;
   border-radius: 13px;
@@ -58,8 +58,10 @@ body {
   color: var(--text);
   text-decoration: none;
 }
-.button:hover {
-  background-color: var(--item-hover);
+.control-item:hover {
+  svg path {
+    stroke: #fff;
+  }
 }
 .hint {
   display: flex;
@@ -75,6 +77,9 @@ body {
   color: #626262;
   font-size: 2rem;
 }
+svg path {
+  transition: 0.3s;
+}
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -86,5 +91,8 @@ body {
 @media screen and (max-width: 992px) {
   body {
     min-width: 100%;
+  }
+  svg path {
+    stroke: #fff;
   }
 }

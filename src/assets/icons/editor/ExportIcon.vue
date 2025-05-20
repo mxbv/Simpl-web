@@ -7,8 +7,8 @@
     xmlns="http://www.w3.org/2000/svg"
   >
     <path
-      d="M21 12H3M3 12L10 5M3 12L10 19"
-      stroke="#ffffff"
+      d="M12 3V17M12 17L6 11M12 17L18 11M3 21H21"
+      stroke="#b3b3b3"
       stroke-width="1.5"
       stroke-linecap="round"
       stroke-linejoin="round"

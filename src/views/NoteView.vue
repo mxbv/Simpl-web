@@ -3,9 +3,10 @@ import { useRoute, useRouter } from "vue-router";
 import { ref, onMounted, onUnmounted, watch } from "vue";
 import { getNotesFromDB, deleteNoteFromDB, saveNoteToDB } from "@/utils/db";
 // Icons
-import BackIcon from "@/assets/icons/BackIcon.vue";
-import ExportIcon from "@/assets/icons/ExportIcon.vue";
-import DeleteIcon from "@/assets/icons/DeleteIcon.vue";
+import BackIcon from "@/assets/icons/editor/BackIcon.vue";
+import ExportIcon from "@/assets/icons/editor/ExportIcon.vue";
+import DeleteIcon from "@/assets/icons/editor/DeleteIcon.vue";
+import StarIcon from "@/assets/icons/editor/StarIcon.vue";
 
 // Emits for events
 const emit = defineEmits(["noteDeleted", "refreshNotes"]);
@@ -100,12 +101,19 @@ const goBack = async () => {
   <div v-if="note" class="note">
     <div class="note-container">
       <div class="note-header">
-        <button @click="goBack" class="button go-back-button" title="Go Back">
+        <button
+          @click="goBack"
+          class="control-item go-back-button"
+          title="Go Back"
+        >
           <BackIcon />
         </button>
         <div class="note-header-right">
+          <button class="control-item star-button" title="Add to Favorite">
+            <StarIcon />
+          </button>
           <button
-            class="button export-button"
+            class="control-item export-button"
             type="button"
             title="Export"
             @click="exportNote"
@@ -114,7 +122,7 @@ const goBack = async () => {
           </button>
           <button
             @click="deleteNote"
-            class="button delete-button"
+            class="control-item delete-button"
             title="Delete"
           >
             <DeleteIcon />
@@ -140,7 +148,7 @@ const goBack = async () => {
   </div>
   <div v-else class="hint">
     Note not found
-    <router-link to="/" class="button">Back to main page</router-link>
+    <router-link to="/" class="control-item">Back to main page</router-link>
   </div>
 </template>
 
@@ -164,17 +172,26 @@ const goBack = async () => {
   justify-content: space-between;
   align-items: center;
   width: 50%;
+  height: fit-content;
+  z-index: 100;
   margin: 0 auto;
-  margin-top: 20px;
-  flex: none;
+  margin-top: 10px;
+  background-color: var(--item);
+  border: solid 1px #242424;
+  border-radius: 13px;
+  box-shadow: 0px 2px #0c0c0c;
 }
 .note-header-right {
   display: flex;
   justify-content: center;
 }
+.star-button {
+  margin-right: 10px;
+}
 .export-button {
   margin-right: 10px;
 }
+
 .note-container {
   display: flex;
   flex-direction: column;
@@ -217,15 +234,10 @@ const goBack = async () => {
 }
 @media screen and (max-width: 992px) {
   .note-header {
-    width: 100%;
-    margin-top: 10px;
-  }
-  .note-container {
     width: 95%;
-    height: 100%;
   }
   .note-input {
-    padding: 0 0;
+    padding: 0 15px;
   }
 }
 </style>

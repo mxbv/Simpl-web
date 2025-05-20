@@ -8,8 +8,8 @@ import NoteItem from "@/components/NoteItem.vue";
 const SettingsModal = defineAsyncComponent(() =>
   import("@/components/SettingsModal.vue")
 );
-import AddIcon from "@/assets/icons/AddIcon.vue";
-import SettingsIcon from "@/assets/icons/SettingsIcon.vue";
+import AddIcon from "@/assets/icons/nav/AddIcon.vue";
+import SettingsIcon from "@/assets/icons/nav/SettingsIcon.vue";
 
 const notes = ref([]);
 const filteredNotes = ref([]);
@@ -76,13 +76,17 @@ const openSettings = () => {
 <template>
   <div>
     <nav>
-      <button class="settings button" @click="openSettings" title="Settings">
+      <button
+        class="settings control-item"
+        @click="openSettings"
+        title="Settings"
+      >
         <SettingsIcon />
       </button>
       <SettingsModal ref="settingsModal" />
       <SearchBox v-model:searchQuery="searchQuery" />
       <button
-        class="note-add button"
+        class="note-add control-item"
         @click="addNewNote"
         title="Create new record"
       >
@@ -115,17 +119,18 @@ nav {
   align-items: center;
   width: 50%;
   height: fit-content;
-  border-radius: 12px;
   z-index: 100;
-  top: 20px;
+  top: 10px;
   left: 50%;
   transform: translateX(-50%);
-  background-color: var(--bg);
-  padding: 3px;
-  border: solid 1px var(--item);
+  background-color: var(--item);
+  border: solid 1px #242424;
+  border-radius: 13px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4), 0 4px 8px rgba(0, 0, 0, 0.15);
 }
-.settings {
-  margin-right: 10px;
+.note-add {
+  border-left: solid 1px #242424;
+  background-color: #1a1a1a;
 }
 .note-add:hover svg {
   transform: rotate(180deg);
@@ -134,17 +139,16 @@ nav {
   padding-top: 6rem;
 }
 
-.hint .button {
+.hint .control-item {
   margin-top: 20px;
 }
 
-@media screen and (max-width: 992px) {
+@media(max-width: 992px) {
   nav {
     width: 95%;
-    top: 10px;
   }
   .note-list {
-    padding-top: 6rem;
+    padding: 5rem 10px 0px 10px;
   }
 }
 </style>

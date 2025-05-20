@@ -1,7 +1,7 @@
 <script setup>
 import { ref, defineExpose } from "vue";
-import CloseIcon from "@/assets/icons/CloseIcon.vue";
-import LogoIcon from "@/assets/icons/LogoIcon.vue";
+import CloseIcon from "@/assets/icons/settings/CloseIcon.vue";
+import LogoIcon from "@/assets/icons/settings/LogoIcon.vue";
 const isOpen = ref(false);
 
 const open = () => {
@@ -21,11 +21,11 @@ defineExpose({ open });
       <div class="settings-modal">
         <div class="settings-header">
           <h3>Settings</h3>
-          <button @click="close" class="button"><CloseIcon /></button>
+          <button @click="close" class="control-item"><CloseIcon /></button>
         </div>
         <div class="setting-item">
           <span class="setting-item-name">Themes ( in the next versions )</span>
-          <select name="theme" id="theme-toggle" class="button">
+          <select name="theme" id="theme-toggle" class="control-item">
             <option value="dark">Dark theme ( Default )</option>
             <option value="light">Light theme</option>
           </select>
@@ -38,7 +38,7 @@ defineExpose({ open });
             notes locally using IndexedDB for quick access, and you can export
             them as TXT files for backup or sharing.
           </p>
-          <a href="https://github.com/mxbv/Simpl" class="button">
+          <a href="https://github.com/mxbv/Simpl-web" class="control-item">
             <LogoIcon /> <span>View source</span>
           </a>
         </div>

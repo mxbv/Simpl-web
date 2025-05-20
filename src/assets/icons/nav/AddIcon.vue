@@ -8,8 +8,8 @@
   >
     <path
       d="M12 4V20M4 12H20"
-      stroke="#ffffff"
-      stroke-width="1.5"
+      stroke="#b3b3b3"
+      stroke-width="1.6"
       stroke-linecap="round"
       stroke-linejoin="round"
     ></path>

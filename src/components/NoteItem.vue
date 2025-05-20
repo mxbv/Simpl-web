@@ -32,10 +32,13 @@ defineProps({
   margin-bottom: 10px;
   padding: 1rem;
   background: var(--item);
-  border-radius: 12px;
+  border-radius: 13px;
   text-decoration: none;
   overflow: hidden;
   color: var(--text);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4), 0 4px 8px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  transition: all 0.2s ease;
 }
 
 .note-item:hover {
@@ -61,6 +64,8 @@ defineProps({
   margin-left: 1rem;
   color: var(--text);
   font-weight: 300;
+  color: #b3b3b3;
+
 }
 .note-text {
   margin: 0;
@@ -71,14 +76,13 @@ defineProps({
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  color: #8e8e8e;
+  color: #b3b3b3;
   font-weight: 300;
 }
 
 @media screen and (max-width: 992px) {
   .note-item {
-    width: 95%;
-    margin: 0 auto;
+    width: 100%;
     margin-bottom: 1.2rem;
   }
 }

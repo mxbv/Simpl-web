@@ -8,7 +8,7 @@
   >
     <path
       d="M5 5L19 19M5 19L19 5"
-      stroke="#ffffff"
+      stroke="#b3b3b3"
       stroke-width="1.5"
       stroke-linecap="round"
       stroke-linejoin="round"
